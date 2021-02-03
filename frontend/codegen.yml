@@ -1,0 +1,13 @@
+overwrite: true
+schema: "http://localhost:3000/api/graphql"
+documents: "graphql/*.graphql"
+generates:
+  types/generated-queries.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      - "named-operations-object"
+    config:
+      identifierName: ListAllOperations
+      withHooks: true
