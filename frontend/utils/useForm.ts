@@ -4,18 +4,21 @@ type Inputs = {
   name?: string;
   price?: number;
   description?: string;
+  image?: File;
 };
 
 type InputTypes = {
   name: string;
   type: string;
-  value: string | number;
+  value: string | number | File;
 };
 
 function useForm(initial: Inputs = {}) {
   const [inputs, setInputs] = useState<Inputs>(initial);
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleChange(
+    event: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLTextAreaElement>
+  ) {
     let { name, type, value }: InputTypes = event.target;
 
     if (type === 'number') {
@@ -23,9 +26,7 @@ function useForm(initial: Inputs = {}) {
     }
 
     if (type === 'file') {
-      value[0] = event.target.files;
-      console.log(typeof value);
-      console.log(typeof value[0]);
+      value = event.target.files[0];
     }
 
     setInputs({
