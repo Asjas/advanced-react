@@ -1,4 +1,5 @@
 import { SyntheticEvent } from 'react';
+import Router from 'next/router';
 import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
 import useForm from '../utils/useForm';
@@ -26,6 +27,9 @@ function CreateProduct() {
     event.preventDefault();
     await createProductMutation();
     clearForm();
+    void Router.push({
+      pathname: `/product/${data.createProduct.id}`,
+    });
   }
 
   return (
