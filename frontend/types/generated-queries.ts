@@ -1069,6 +1069,9 @@ export function useAllProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type AllProductsQueryHookResult = ReturnType<typeof useAllProductsQuery>;
 export type AllProductsLazyQueryHookResult = ReturnType<typeof useAllProductsLazyQuery>;
 export type AllProductsQueryResult = Apollo.QueryResult<AllProductsQuery, AllProductsQueryVariables>;
+export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
+      return { query: AllProductsDocument, variables: variables }
+    }
 export const CreateProductDocument = gql`
     mutation createProduct($name: String!, $description: String!, $price: Int!, $image: Upload) {
   createProduct(
@@ -1107,11 +1110,3 @@ export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
 export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
-export const ListAllOperations = {
-  Query: {
-    allProducts: 'allProducts'
-  },
-  Mutation: {
-    createProduct: 'createProduct'
-  }
-}

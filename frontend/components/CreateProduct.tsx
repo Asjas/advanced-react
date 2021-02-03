@@ -2,7 +2,10 @@ import { SyntheticEvent } from 'react';
 import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
 import useForm from '../utils/useForm';
-import { useCreateProductMutation } from '../types/generated-queries';
+import {
+  useCreateProductMutation,
+  refetchAllProductsQuery,
+} from '../types/generated-queries';
 
 function CreateProduct() {
   const { inputs, handleChange, clearForm } = useForm({
@@ -14,7 +17,10 @@ function CreateProduct() {
   const [
     createProductMutation,
     { data, error, loading },
-  ] = useCreateProductMutation({ variables: inputs });
+  ] = useCreateProductMutation({
+    variables: inputs,
+    refetchQueries: [refetchAllProductsQuery()],
+  });
 
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
