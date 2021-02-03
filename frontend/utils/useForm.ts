@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 
 type Inputs = {
-  name?: string;
-  price?: number;
-  description?: string;
+  name: string;
+  price: number;
+  description: string;
   image?: File;
 };
 
@@ -13,7 +13,7 @@ type InputTypes = {
   value: string | number | File;
 };
 
-function useForm(initial: Inputs = {}) {
+function useForm(initial: Inputs) {
   const [inputs, setInputs] = useState<Inputs>(initial);
 
   function handleChange(
@@ -42,9 +42,9 @@ function useForm(initial: Inputs = {}) {
   function clearForm() {
     const blankState = Object.fromEntries(
       Object.entries(inputs).map(([key, value]) => [key, ''])
-    );
+    ) as unknown;
 
-    setInputs(blankState);
+    setInputs(blankState as Inputs);
   }
 
   return { inputs, handleChange, resetForm, clearForm };

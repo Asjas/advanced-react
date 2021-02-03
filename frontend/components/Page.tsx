@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-
 import Header from './Header';
 
 type PageProps = {

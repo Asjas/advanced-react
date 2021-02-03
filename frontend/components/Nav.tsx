@@ -1,5 +1,4 @@
 import Link from 'next/link';
-
 import NavStyles from './styles/NavStyles';
 
 function Nav() {

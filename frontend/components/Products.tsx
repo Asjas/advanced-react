@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-
 import Product from './Product';
-
 import { useAllProductsQuery } from '../types/generated-queries';
 
 const ProductsListStyles = styled.div`

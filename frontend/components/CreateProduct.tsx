@@ -1,22 +1,31 @@
 import { SyntheticEvent } from 'react';
+import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
-
 import useForm from '../utils/useForm';
+import { useCreateProductMutation } from '../types/generated-queries';
 
 function CreateProduct() {
-  const { inputs, handleChange } = useForm({
+  const { inputs, handleChange, clearForm } = useForm({
     name: 'Nice Shoes',
     price: 34234,
     description: 'These are the best shoes',
   });
 
-  function handleSubmit(event: SyntheticEvent) {
+  const [
+    createProductMutation,
+    { data, error, loading },
+  ] = useCreateProductMutation({ variables: inputs });
+
+  async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
+    await createProductMutation();
+    clearForm();
   }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <fieldset>
+      <DisplayError error={error} />
+      <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor="image">
           Image
           <input type="file" name="image" id="image" onChange={handleChange} />
