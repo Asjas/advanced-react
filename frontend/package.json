@@ -47,7 +47,7 @@
     "@graphql-codegen/typescript-react-apollo": "2.2.1",
     "@testing-library/jest-dom": "5.11.6",
     "@testing-library/react": "11.2.5",
-    "@testing-library/user-event": "12.3.0",
+    "@testing-library/user-event": "12.6.3",
     "@types/nprogress": "0.2.0",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
