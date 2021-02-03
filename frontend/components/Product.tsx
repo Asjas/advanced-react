@@ -2,12 +2,12 @@ import Link from 'next/link';
 import ItemStyles from './styles/ItemStyles';
 import PriceTag from './styles/PriceTag';
 import Title from './styles/Title';
-import { Product } from '../types/generated-queries';
+import { Product as productType } from '../types/generated-queries';
 import formatMoney from '../utils/formatMoney';
 
-type ProductProps = { product: Product };
+type ProductProps = { product: productType };
 
-function SingleProduct({ product }: ProductProps) {
+function Product({ product }: ProductProps) {
   return (
     <ItemStyles>
       <img
@@ -23,4 +23,4 @@ function SingleProduct({ product }: ProductProps) {
   );
 }
 
-export default SingleProduct;
+export default Product;

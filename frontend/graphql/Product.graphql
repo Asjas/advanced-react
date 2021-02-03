@@ -1,0 +1,14 @@
+query Product($id: ID!) {
+  Product(where: { id: $id }) {
+    id
+    name
+    description
+    photo {
+      image {
+        publicUrlTransformed
+      }
+      altText
+    }
+    price
+  }
+}
