@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-
 import Product from './Product';
-
 import { useAllProductsQuery } from '../types/generated-queries';
 
 const ProductsListStyles = styled.div`
@@ -24,7 +22,7 @@ function Products() {
   return (
     <ProductsListStyles>
       {data.allProducts.map((product) => (
-        <Product product={product} />
+        <Product key={product.id} product={product} />
       ))}
     </ProductsListStyles>
   );

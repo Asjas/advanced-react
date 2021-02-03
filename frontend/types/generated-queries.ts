@@ -991,6 +991,27 @@ export enum KeystoneAdminUiSortDirection {
   Desc = 'DESC'
 }
 
+export type ProductQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ProductQuery = (
+  { __typename?: 'Query' }
+  & { Product?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'name' | 'description' | 'price'>
+    & { photo?: Maybe<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'altText'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+      )> }
+    )> }
+  )> }
+);
+
 export type AllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1010,7 +1031,68 @@ export type AllProductsQuery = (
   )>>> }
 );
 
+export type CreateProductMutationVariables = Exact<{
+  name: Scalars['String'];
+  description: Scalars['String'];
+  price: Scalars['Int'];
+  image?: Maybe<Scalars['Upload']>;
+}>;
 
+
+export type CreateProductMutation = (
+  { __typename?: 'Mutation' }
+  & { createProduct?: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'name'>
+  )> }
+);
+
+
+export const ProductDocument = gql`
+    query Product($id: ID!) {
+  Product(where: {id: $id}) {
+    id
+    name
+    description
+    photo {
+      image {
+        publicUrlTransformed
+      }
+      altText
+    }
+    price
+  }
+}
+    `;
+
+/**
+ * __useProductQuery__
+ *
+ * To run a query within a React component, call `useProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProductQuery(baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>) {
+        return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, baseOptions);
+      }
+export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>) {
+          return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, baseOptions);
+        }
+export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
+export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
+export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
+export function refetchProductQuery(variables?: ProductQueryVariables) {
+      return { query: ProductDocument, variables: variables }
+    }
 export const AllProductsDocument = gql`
     query allProducts {
   allProducts {
@@ -1053,8 +1135,44 @@ export function useAllProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type AllProductsQueryHookResult = ReturnType<typeof useAllProductsQuery>;
 export type AllProductsLazyQueryHookResult = ReturnType<typeof useAllProductsLazyQuery>;
 export type AllProductsQueryResult = Apollo.QueryResult<AllProductsQuery, AllProductsQueryVariables>;
-export const ListAllOperations = {
-  Query: {
-    allProducts: 'allProducts'
+export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
+      return { query: AllProductsDocument, variables: variables }
+    }
+export const CreateProductDocument = gql`
+    mutation createProduct($name: String!, $description: String!, $price: Int!, $image: Upload) {
+  createProduct(
+    data: {name: $name, description: $description, price: $price, status: "AVAILABLE", photo: {create: {image: $image, altText: $name}}}
+  ) {
+    id
+    name
   }
 }
+    `;
+export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+
+/**
+ * __useCreateProductMutation__
+ *
+ * To run a mutation, you first call `useCreateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProductMutation, { data, loading, error }] = useCreateProductMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *      price: // value for 'price'
+ *      image: // value for 'image'
+ *   },
+ * });
+ */
+export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, baseOptions);
+      }
+export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
+export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;

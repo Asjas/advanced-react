@@ -1,7 +1,13 @@
+import Head from 'next/head';
+import CreateProduct from '../components/CreateProduct';
+
 function SellPage() {
   return (
     <div>
-      <p>home page</p>
+      <Head>
+        <title>Sick Fits | Sell</title>
+      </Head>
+      <CreateProduct />
     </div>
   );
 }
