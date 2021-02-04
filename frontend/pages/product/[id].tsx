@@ -1,12 +1,12 @@
 import SingleProduct from '../../components/SingleProduct';
 
-type SingleProductsPageProps = {
+type SingleProductPageProps = {
   query: {
     id: string;
   };
 };
 
-function SingleProductPage({ query }: SingleProductsPageProps) {
+function SingleProductPage({ query }: SingleProductPageProps) {
   return <SingleProduct id={query.id} />;
 }
 
