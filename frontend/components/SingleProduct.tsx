@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import DisplayError from './ErrorMessage';
 import { useProductQuery } from '../types/generated-queries';
 
-type SingleProductsProps = {
-  id: string;
-};
-
 const ProductStyles = styled.div`
   display: grid;
   grid-auto-columns: 1fr;
@@ -22,7 +18,7 @@ const ProductStyles = styled.div`
   }
 `;
 
-function SingleProduct({ id }: SingleProductsProps) {
+function SingleProduct({ id }: { id: string }) {
   const { data, loading, error } = useProductQuery({
     variables: { id },
   });
