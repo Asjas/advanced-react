@@ -11,7 +11,7 @@
     "seed-data": "keystone-next --seed-data"
   },
   "dependencies": {
-    "@keystone-next/admin-ui": "8.0.0",
+    "@keystone-next/admin-ui": "8.0.1",
     "@keystone-next/auth": "13.0.0",
     "@keystone-next/cloudinary": "2.0.8",
     "@keystone-next/fields": "4.1.0",
