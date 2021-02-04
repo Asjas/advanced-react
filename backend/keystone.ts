@@ -1,7 +1,10 @@
 import 'dotenv/config';
 import { config, createSchema } from '@keystone-next/keystone/schema';
 import { createAuth } from '@keystone-next/auth';
-import { withItemData, statelessSessions} from '@keystone-next/keystone/session'
+import {
+  withItemData,
+  statelessSessions,
+} from '@keystone-next/keystone/session';
 
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
@@ -23,37 +26,36 @@ const { withAuth } = createAuth({
   secretField: 'password',
   initFirstItem: {
     fields: ['name', 'email', 'password'],
-  }
-})
+  },
+});
 
-export default withAuth(config({
-  server: {
-    cors: {
-      origin: [process.env.FRONTEND_URL],
-      credentials: true,
+export default withAuth(
+  config({
+    server: {
+      cors: {
+        origin: [process.env.FRONTEND_URL],
+        credentials: true,
+      },
     },
-  },
-  db: {
-    adapter: 'mongoose',
-    url: databaseURL,
-    async onConnect(keystone) {
-      if (process.argv.includes('--seed-data')) {
-        await insertSeedData(keystone);
-      }
+    db: {
+      adapter: 'mongoose',
+      url: databaseURL,
+      async onConnect(keystone) {
+        if (process.argv.includes('--seed-data')) {
+          await insertSeedData(keystone);
+        }
+      },
     },
-  },
-  lists: createSchema({
-    User,
-    Product,
-    ProductImage,
-  }),
-  ui: {
-    isAccessAllowed: ({ session }) => {
-
-      return session?.data;
+    lists: createSchema({
+      User,
+      Product,
+      ProductImage,
+    }),
+    ui: {
+      isAccessAllowed: ({ session }) => session?.data,
     },
-  },
-  session: withItemData(statelessSessions(sessionConfig), {
-    User: `id`
+    session: withItemData(statelessSessions(sessionConfig), {
+      User: 'id',
+    }),
   })
-}));
+);
