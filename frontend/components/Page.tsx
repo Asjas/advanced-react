@@ -1,9 +1,9 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Header from './Header';
 
 type PageProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const GlobalStyles = createGlobalStyle`

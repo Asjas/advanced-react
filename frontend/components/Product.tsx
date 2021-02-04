@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import DeleteProduct from './DeleteProduct';
 import ItemStyles from './styles/ItemStyles';
 import PriceTag from './styles/PriceTag';
 import Title from './styles/Title';
-import { Product as productType } from '../types/generated-queries';
 import formatMoney from '../utils/formatMoney';
+import { Product as productType } from '../types/generated-queries';
 
 type ProductProps = { product: productType };
 
@@ -30,6 +31,7 @@ function Product({ product }: ProductProps) {
         >
           Edit ✏️
         </Link>
+        <DeleteProduct id={product.id}>Delete Item 🗑️</DeleteProduct>
       </div>
     </ItemStyles>
   );

@@ -1,4 +1,4 @@
-mutation UpdateProduct(
+mutation updateProduct(
   $id: ID!
   $name: String
   $description: String
