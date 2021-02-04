@@ -1,14 +1,26 @@
+import { ApolloCache, Cache } from '@apollo/client';
 import { ReactNode } from 'react';
-import { useDeleteProductMutation } from '../types/generated-queries';
+import { Product, useDeleteProductMutation } from '../types/generated-queries';
 
 type DeleteProductProps = {
   id: string;
   children: ReactNode;
 };
 
+type UpdateFnPayloadProps = {
+  data: {
+    deleteProduct: Product;
+  };
+};
+
+function update(cache: ApolloCache<any>, payload: UpdateFnPayloadProps) {
+  cache.evict(cache.identify(payload.data.deleteProduct) as Cache.EvictOptions);
+}
+
 function DeleteProduct({ id, children }: DeleteProductProps) {
   const [deleteProduct, { loading, error }] = useDeleteProductMutation({
     variables: { id },
+    update,
   });
 
   async function handleClick() {
@@ -17,6 +29,8 @@ function DeleteProduct({ id, children }: DeleteProductProps) {
       await deleteProduct().catch((err) => alert(err));
     }
   }
+
+  if (error) return alert('There was an error while deleting the product');
 
   return (
     <button type="button" disabled={loading} onClick={handleClick}>
