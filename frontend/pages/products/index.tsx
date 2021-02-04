@@ -8,7 +8,8 @@ function ProductsPage() {
   return (
     <>
       <Pagination page={Number(query.page) || 1} />
-      <Products />
+      <Products page={Number(query.page) || 1} />
+      <Pagination page={Number(query.page) || 1} />
     </>
   );
 }

@@ -1012,7 +1012,10 @@ export type ProductQuery = (
   )> }
 );
 
-export type AllProductsQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllProductsQueryVariables = Exact<{
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+}>;
 
 
 export type AllProductsQuery = (
@@ -1134,8 +1137,8 @@ export function refetchProductQuery(variables?: ProductQueryVariables) {
       return { query: ProductDocument, variables: variables }
     }
 export const AllProductsDocument = gql`
-    query allProducts {
-  allProducts {
+    query allProducts($skip: Int = 0, $first: Int) {
+  allProducts(skip: $skip, first: $first) {
     id
     name
     description
@@ -1163,6 +1166,8 @@ export const AllProductsDocument = gql`
  * @example
  * const { data, loading, error } = useAllProductsQuery({
  *   variables: {
+ *      skip: // value for 'skip'
+ *      first: // value for 'first'
  *   },
  * });
  */

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Product from './Product';
 import { useAllProductsQuery } from '../types/generated-queries';
+import { perPage } from '../config';
 
 const ProductsListStyles = styled.div`
   display: grid;
@@ -8,8 +9,10 @@ const ProductsListStyles = styled.div`
   grid-gap: 60px;
 `;
 
-function Products() {
-  const { data, error, loading } = useAllProductsQuery();
+function Products({ page }: { page: number }) {
+  const { data, error, loading } = useAllProductsQuery({
+    variables: { skip: page * perPage - perPage, first: perPage },
+  });
 
   if (loading) {
     return <p>Loading...</p>;
