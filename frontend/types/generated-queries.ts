@@ -1031,6 +1031,17 @@ export type AllProductsQuery = (
   )>>> }
 );
 
+export type AllProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllProductsCountQuery = (
+  { __typename?: 'Query' }
+  & { _allProductsMeta?: Maybe<(
+    { __typename?: '_QueryMeta' }
+    & Pick<_QueryMeta, 'count'>
+  )> }
+);
+
 export type CreateProductMutationVariables = Exact<{
   name: Scalars['String'];
   description: Scalars['String'];
@@ -1166,6 +1177,41 @@ export type AllProductsLazyQueryHookResult = ReturnType<typeof useAllProductsLaz
 export type AllProductsQueryResult = Apollo.QueryResult<AllProductsQuery, AllProductsQueryVariables>;
 export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
       return { query: AllProductsDocument, variables: variables }
+    }
+export const AllProductsCountDocument = gql`
+    query allProductsCount {
+  _allProductsMeta {
+    count
+  }
+}
+    `;
+
+/**
+ * __useAllProductsCountQuery__
+ *
+ * To run a query within a React component, call `useAllProductsCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllProductsCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllProductsCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllProductsCountQuery(baseOptions?: Apollo.QueryHookOptions<AllProductsCountQuery, AllProductsCountQueryVariables>) {
+        return Apollo.useQuery<AllProductsCountQuery, AllProductsCountQueryVariables>(AllProductsCountDocument, baseOptions);
+      }
+export function useAllProductsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllProductsCountQuery, AllProductsCountQueryVariables>) {
+          return Apollo.useLazyQuery<AllProductsCountQuery, AllProductsCountQueryVariables>(AllProductsCountDocument, baseOptions);
+        }
+export type AllProductsCountQueryHookResult = ReturnType<typeof useAllProductsCountQuery>;
+export type AllProductsCountLazyQueryHookResult = ReturnType<typeof useAllProductsCountLazyQuery>;
+export type AllProductsCountQueryResult = Apollo.QueryResult<AllProductsCountQuery, AllProductsCountQueryVariables>;
+export function refetchAllProductsCountQuery(variables?: AllProductsCountQueryVariables) {
+      return { query: AllProductsCountDocument, variables: variables }
     }
 export const CreateProductDocument = gql`
     mutation createProduct($name: String!, $description: String!, $price: Int!, $image: Upload) {

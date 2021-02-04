@@ -1,12 +1,10 @@
-import Head from 'next/head';
+import Pagination from '../components/Pagination';
 import Products from '../components/Products';
 
 function ProductsPage() {
   return (
     <div>
-      <Head>
-        <title>Sick Fits | Products</title>
-      </Head>
+      <Pagination page={1} />
       <Products />
     </div>
   );
