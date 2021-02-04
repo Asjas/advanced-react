@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -1329,3 +1330,325 @@ export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
 export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
 export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
+export type UserKeySpecifier = ('id' | 'name' | 'email' | 'password_is_set' | 'passwordResetToken_is_set' | 'passwordResetIssuedAt' | 'passwordResetRedeemedAt' | 'magicAuthToken_is_set' | 'magicAuthIssuedAt' | 'magicAuthRedeemedAt' | UserKeySpecifier)[];
+export type UserFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	email?: FieldPolicy<any> | FieldReadFunction<any>,
+	password_is_set?: FieldPolicy<any> | FieldReadFunction<any>,
+	passwordResetToken_is_set?: FieldPolicy<any> | FieldReadFunction<any>,
+	passwordResetIssuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	passwordResetRedeemedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	magicAuthToken_is_set?: FieldPolicy<any> | FieldReadFunction<any>,
+	magicAuthIssuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	magicAuthRedeemedAt?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProductKeySpecifier = ('id' | 'name' | 'description' | 'photo' | 'status' | 'price' | ProductKeySpecifier)[];
+export type ProductFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	photo?: FieldPolicy<any> | FieldReadFunction<any>,
+	status?: FieldPolicy<any> | FieldReadFunction<any>,
+	price?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CloudinaryImage_FileKeySpecifier = ('id' | 'path' | 'filename' | 'originalFilename' | 'mimetype' | 'encoding' | 'publicUrl' | 'publicUrlTransformed' | CloudinaryImage_FileKeySpecifier)[];
+export type CloudinaryImage_FileFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
+	filename?: FieldPolicy<any> | FieldReadFunction<any>,
+	originalFilename?: FieldPolicy<any> | FieldReadFunction<any>,
+	mimetype?: FieldPolicy<any> | FieldReadFunction<any>,
+	encoding?: FieldPolicy<any> | FieldReadFunction<any>,
+	publicUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	publicUrlTransformed?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProductImageKeySpecifier = ('id' | 'image' | 'altText' | 'product' | ProductImageKeySpecifier)[];
+export type ProductImageFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	image?: FieldPolicy<any> | FieldReadFunction<any>,
+	altText?: FieldPolicy<any> | FieldReadFunction<any>,
+	product?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListAccessKeySpecifier = ('create' | 'read' | 'update' | 'delete' | 'auth' | _ListAccessKeySpecifier)[];
+export type _ListAccessFieldPolicy = {
+	create?: FieldPolicy<any> | FieldReadFunction<any>,
+	read?: FieldPolicy<any> | FieldReadFunction<any>,
+	update?: FieldPolicy<any> | FieldReadFunction<any>,
+	delete?: FieldPolicy<any> | FieldReadFunction<any>,
+	auth?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListQueriesKeySpecifier = ('item' | 'list' | 'meta' | _ListQueriesKeySpecifier)[];
+export type _ListQueriesFieldPolicy = {
+	item?: FieldPolicy<any> | FieldReadFunction<any>,
+	list?: FieldPolicy<any> | FieldReadFunction<any>,
+	meta?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListMutationsKeySpecifier = ('create' | 'createMany' | 'update' | 'updateMany' | 'delete' | 'deleteMany' | _ListMutationsKeySpecifier)[];
+export type _ListMutationsFieldPolicy = {
+	create?: FieldPolicy<any> | FieldReadFunction<any>,
+	createMany?: FieldPolicy<any> | FieldReadFunction<any>,
+	update?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateMany?: FieldPolicy<any> | FieldReadFunction<any>,
+	delete?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteMany?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListInputTypesKeySpecifier = ('whereInput' | 'whereUniqueInput' | 'createInput' | 'createManyInput' | 'updateInput' | 'updateManyInput' | _ListInputTypesKeySpecifier)[];
+export type _ListInputTypesFieldPolicy = {
+	whereInput?: FieldPolicy<any> | FieldReadFunction<any>,
+	whereUniqueInput?: FieldPolicy<any> | FieldReadFunction<any>,
+	createInput?: FieldPolicy<any> | FieldReadFunction<any>,
+	createManyInput?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateInput?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateManyInput?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListSchemaFieldsKeySpecifier = ('path' | 'name' | 'type' | _ListSchemaFieldsKeySpecifier)[];
+export type _ListSchemaFieldsFieldPolicy = {
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListSchemaRelatedFieldsKeySpecifier = ('type' | 'fields' | _ListSchemaRelatedFieldsKeySpecifier)[];
+export type _ListSchemaRelatedFieldsFieldPolicy = {
+	type?: FieldPolicy<any> | FieldReadFunction<any>,
+	fields?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListSchemaKeySpecifier = ('type' | 'queries' | 'mutations' | 'inputTypes' | 'fields' | 'relatedFields' | _ListSchemaKeySpecifier)[];
+export type _ListSchemaFieldPolicy = {
+	type?: FieldPolicy<any> | FieldReadFunction<any>,
+	queries?: FieldPolicy<any> | FieldReadFunction<any>,
+	mutations?: FieldPolicy<any> | FieldReadFunction<any>,
+	inputTypes?: FieldPolicy<any> | FieldReadFunction<any>,
+	fields?: FieldPolicy<any> | FieldReadFunction<any>,
+	relatedFields?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _ListMetaKeySpecifier = ('key' | 'name' | 'description' | 'label' | 'singular' | 'plural' | 'path' | 'access' | 'schema' | _ListMetaKeySpecifier)[];
+export type _ListMetaFieldPolicy = {
+	key?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	label?: FieldPolicy<any> | FieldReadFunction<any>,
+	singular?: FieldPolicy<any> | FieldReadFunction<any>,
+	plural?: FieldPolicy<any> | FieldReadFunction<any>,
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
+	access?: FieldPolicy<any> | FieldReadFunction<any>,
+	schema?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type _QueryMetaKeySpecifier = ('count' | _QueryMetaKeySpecifier)[];
+export type _QueryMetaFieldPolicy = {
+	count?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | '_UsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | '_ProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | '_ProductImagesMeta' | '_ksListsMeta' | 'appVersion' | 'authenticatedItem' | 'keystone' | QueryKeySpecifier)[];
+export type QueryFieldPolicy = {
+	allUsers?: FieldPolicy<any> | FieldReadFunction<any>,
+	User?: FieldPolicy<any> | FieldReadFunction<any>,
+	_allUsersMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	_UsersMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	allProducts?: FieldPolicy<any> | FieldReadFunction<any>,
+	Product?: FieldPolicy<any> | FieldReadFunction<any>,
+	_allProductsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	_ProductsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	allProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
+	ProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
+	_allProductImagesMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	_ProductImagesMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	_ksListsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	appVersion?: FieldPolicy<any> | FieldReadFunction<any>,
+	authenticatedItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	keystone?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'authenticateUserWithPassword' | 'createInitialUser' | 'endSession' | MutationKeySpecifier)[];
+export type MutationFieldPolicy = {
+	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
+	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateUser?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateUsers?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteUser?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteUsers?: FieldPolicy<any> | FieldReadFunction<any>,
+	createProduct?: FieldPolicy<any> | FieldReadFunction<any>,
+	createProducts?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateProduct?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateProducts?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteProduct?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteProducts?: FieldPolicy<any> | FieldReadFunction<any>,
+	createProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
+	createProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
+	authenticateUserWithPassword?: FieldPolicy<any> | FieldReadFunction<any>,
+	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
+	endSession?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type UserAuthenticationWithPasswordSuccessKeySpecifier = ('sessionToken' | 'item' | UserAuthenticationWithPasswordSuccessKeySpecifier)[];
+export type UserAuthenticationWithPasswordSuccessFieldPolicy = {
+	sessionToken?: FieldPolicy<any> | FieldReadFunction<any>,
+	item?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type UserAuthenticationWithPasswordFailureKeySpecifier = ('code' | 'message' | UserAuthenticationWithPasswordFailureKeySpecifier)[];
+export type UserAuthenticationWithPasswordFailureFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneMetaKeySpecifier = ('adminMeta' | KeystoneMetaKeySpecifier)[];
+export type KeystoneMetaFieldPolicy = {
+	adminMeta?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneAdminMetaKeySpecifier = ('enableSignout' | 'enableSessionItem' | 'lists' | 'list' | KeystoneAdminMetaKeySpecifier)[];
+export type KeystoneAdminMetaFieldPolicy = {
+	enableSignout?: FieldPolicy<any> | FieldReadFunction<any>,
+	enableSessionItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	lists?: FieldPolicy<any> | FieldReadFunction<any>,
+	list?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneAdminUIListMetaKeySpecifier = ('key' | 'itemQueryName' | 'listQueryName' | 'hideCreate' | 'hideDelete' | 'path' | 'label' | 'singular' | 'plural' | 'description' | 'initialColumns' | 'pageSize' | 'labelField' | 'fields' | 'initialSort' | 'isHidden' | KeystoneAdminUIListMetaKeySpecifier)[];
+export type KeystoneAdminUIListMetaFieldPolicy = {
+	key?: FieldPolicy<any> | FieldReadFunction<any>,
+	itemQueryName?: FieldPolicy<any> | FieldReadFunction<any>,
+	listQueryName?: FieldPolicy<any> | FieldReadFunction<any>,
+	hideCreate?: FieldPolicy<any> | FieldReadFunction<any>,
+	hideDelete?: FieldPolicy<any> | FieldReadFunction<any>,
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
+	label?: FieldPolicy<any> | FieldReadFunction<any>,
+	singular?: FieldPolicy<any> | FieldReadFunction<any>,
+	plural?: FieldPolicy<any> | FieldReadFunction<any>,
+	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	initialColumns?: FieldPolicy<any> | FieldReadFunction<any>,
+	pageSize?: FieldPolicy<any> | FieldReadFunction<any>,
+	labelField?: FieldPolicy<any> | FieldReadFunction<any>,
+	fields?: FieldPolicy<any> | FieldReadFunction<any>,
+	initialSort?: FieldPolicy<any> | FieldReadFunction<any>,
+	isHidden?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneAdminUISortKeySpecifier = ('field' | 'direction' | KeystoneAdminUISortKeySpecifier)[];
+export type KeystoneAdminUISortFieldPolicy = {
+	field?: FieldPolicy<any> | FieldReadFunction<any>,
+	direction?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneAdminUIFieldMetaKeySpecifier = ('path' | 'label' | 'isOrderable' | 'fieldMeta' | 'viewsHash' | 'customViewsHash' | 'createView' | 'listView' | 'itemView' | KeystoneAdminUIFieldMetaKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaFieldPolicy = {
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
+	label?: FieldPolicy<any> | FieldReadFunction<any>,
+	isOrderable?: FieldPolicy<any> | FieldReadFunction<any>,
+	fieldMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	viewsHash?: FieldPolicy<any> | FieldReadFunction<any>,
+	customViewsHash?: FieldPolicy<any> | FieldReadFunction<any>,
+	createView?: FieldPolicy<any> | FieldReadFunction<any>,
+	listView?: FieldPolicy<any> | FieldReadFunction<any>,
+	itemView?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneAdminUIFieldMetaCreateViewKeySpecifier = ('fieldMode' | KeystoneAdminUIFieldMetaCreateViewKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaCreateViewFieldPolicy = {
+	fieldMode?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneAdminUIFieldMetaListViewKeySpecifier = ('fieldMode' | KeystoneAdminUIFieldMetaListViewKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaListViewFieldPolicy = {
+	fieldMode?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type KeystoneAdminUIFieldMetaItemViewKeySpecifier = ('fieldMode' | KeystoneAdminUIFieldMetaItemViewKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaItemViewFieldPolicy = {
+	fieldMode?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TypedTypePolicies = TypePolicies & {
+	User?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UserKeySpecifier | (() => undefined | UserKeySpecifier),
+		fields?: UserFieldPolicy,
+	},
+	Product?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductKeySpecifier | (() => undefined | ProductKeySpecifier),
+		fields?: ProductFieldPolicy,
+	},
+	CloudinaryImage_File?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CloudinaryImage_FileKeySpecifier | (() => undefined | CloudinaryImage_FileKeySpecifier),
+		fields?: CloudinaryImage_FileFieldPolicy,
+	},
+	ProductImage?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductImageKeySpecifier | (() => undefined | ProductImageKeySpecifier),
+		fields?: ProductImageFieldPolicy,
+	},
+	_ListAccess?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListAccessKeySpecifier | (() => undefined | _ListAccessKeySpecifier),
+		fields?: _ListAccessFieldPolicy,
+	},
+	_ListQueries?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListQueriesKeySpecifier | (() => undefined | _ListQueriesKeySpecifier),
+		fields?: _ListQueriesFieldPolicy,
+	},
+	_ListMutations?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListMutationsKeySpecifier | (() => undefined | _ListMutationsKeySpecifier),
+		fields?: _ListMutationsFieldPolicy,
+	},
+	_ListInputTypes?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListInputTypesKeySpecifier | (() => undefined | _ListInputTypesKeySpecifier),
+		fields?: _ListInputTypesFieldPolicy,
+	},
+	_ListSchemaFields?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListSchemaFieldsKeySpecifier | (() => undefined | _ListSchemaFieldsKeySpecifier),
+		fields?: _ListSchemaFieldsFieldPolicy,
+	},
+	_ListSchemaRelatedFields?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListSchemaRelatedFieldsKeySpecifier | (() => undefined | _ListSchemaRelatedFieldsKeySpecifier),
+		fields?: _ListSchemaRelatedFieldsFieldPolicy,
+	},
+	_ListSchema?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListSchemaKeySpecifier | (() => undefined | _ListSchemaKeySpecifier),
+		fields?: _ListSchemaFieldPolicy,
+	},
+	_ListMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _ListMetaKeySpecifier | (() => undefined | _ListMetaKeySpecifier),
+		fields?: _ListMetaFieldPolicy,
+	},
+	_QueryMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | _QueryMetaKeySpecifier | (() => undefined | _QueryMetaKeySpecifier),
+		fields?: _QueryMetaFieldPolicy,
+	},
+	Query?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | QueryKeySpecifier | (() => undefined | QueryKeySpecifier),
+		fields?: QueryFieldPolicy,
+	},
+	Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier),
+		fields?: MutationFieldPolicy,
+	},
+	UserAuthenticationWithPasswordSuccess?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UserAuthenticationWithPasswordSuccessKeySpecifier | (() => undefined | UserAuthenticationWithPasswordSuccessKeySpecifier),
+		fields?: UserAuthenticationWithPasswordSuccessFieldPolicy,
+	},
+	UserAuthenticationWithPasswordFailure?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | UserAuthenticationWithPasswordFailureKeySpecifier | (() => undefined | UserAuthenticationWithPasswordFailureKeySpecifier),
+		fields?: UserAuthenticationWithPasswordFailureFieldPolicy,
+	},
+	KeystoneMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneMetaKeySpecifier | (() => undefined | KeystoneMetaKeySpecifier),
+		fields?: KeystoneMetaFieldPolicy,
+	},
+	KeystoneAdminMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneAdminMetaKeySpecifier | (() => undefined | KeystoneAdminMetaKeySpecifier),
+		fields?: KeystoneAdminMetaFieldPolicy,
+	},
+	KeystoneAdminUIListMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneAdminUIListMetaKeySpecifier | (() => undefined | KeystoneAdminUIListMetaKeySpecifier),
+		fields?: KeystoneAdminUIListMetaFieldPolicy,
+	},
+	KeystoneAdminUISort?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneAdminUISortKeySpecifier | (() => undefined | KeystoneAdminUISortKeySpecifier),
+		fields?: KeystoneAdminUISortFieldPolicy,
+	},
+	KeystoneAdminUIFieldMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneAdminUIFieldMetaKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaKeySpecifier),
+		fields?: KeystoneAdminUIFieldMetaFieldPolicy,
+	},
+	KeystoneAdminUIFieldMetaCreateView?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneAdminUIFieldMetaCreateViewKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaCreateViewKeySpecifier),
+		fields?: KeystoneAdminUIFieldMetaCreateViewFieldPolicy,
+	},
+	KeystoneAdminUIFieldMetaListView?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneAdminUIFieldMetaListViewKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaListViewKeySpecifier),
+		fields?: KeystoneAdminUIFieldMetaListViewFieldPolicy,
+	},
+	KeystoneAdminUIFieldMetaItemView?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | KeystoneAdminUIFieldMetaItemViewKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaItemViewKeySpecifier),
+		fields?: KeystoneAdminUIFieldMetaItemViewFieldPolicy,
+	}
+};

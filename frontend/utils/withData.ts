@@ -5,6 +5,12 @@ import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 import { endpoint, prodEndpoint } from '../config';
 import paginationField from './paginationField';
+import { TypedTypePolicies } from '../types/generated-queries';
+
+const allProductsTypePolicy: TypedTypePolicies = {
+  // Keys in this object will be validated against the typed on your schema
+  allProducts: paginationField(),
+};
 
 function createClient({ headers, initialState }) {
   return new ApolloClient({
@@ -32,13 +38,13 @@ function createClient({ headers, initialState }) {
       }),
     ]),
     cache: new InMemoryCache({
-      // typePolicies: {
-      //   Query: {
-      //     fields: {
-      //       allProducts: paginationField(),
-      //     },
-      //   },
-      // },
+      typePolicies: {
+        Query: {
+          fields: {
+            ...allProductsTypePolicy,
+          },
+        },
+      },
     }).restore(initialState || {}),
   });
 }
