@@ -15,9 +15,9 @@ function UpdateProduct({ id }: { id: string }) {
   ] = useUpdateProductMutation();
 
   const { inputs, handleChange, clearForm } = useForm({
-    name: data?.Product.name,
-    price: data?.Product.price,
-    description: data?.Product.description,
+    name: data?.Product.name || '',
+    price: data?.Product.price || 0,
+    description: data?.Product.description || '',
   });
 
   if (loading) return <p>Loading....</p>;
@@ -35,6 +35,8 @@ function UpdateProduct({ id }: { id: string }) {
       },
     });
   }
+
+  console.log(inputs);
 
   return (
     <Form onSubmit={handleSubmit}>
