@@ -36,8 +36,6 @@ function UpdateProduct({ id }: { id: string }) {
     });
   }
 
-  console.log(inputs);
-
   return (
     <Form onSubmit={handleSubmit}>
       <DisplayError error={updateError} />

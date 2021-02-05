@@ -1,5 +1,6 @@
 import { ApolloError } from '@apollo/client';
 import styled from 'styled-components';
+import { UserAuthenticationWithPasswordFailure } from '../types/generated-queries';
 
 const ErrorStyles = styled.div`
   padding: 2rem;
@@ -17,13 +18,13 @@ const ErrorStyles = styled.div`
 `;
 
 type DisplayErrorProps = {
-  error: ApolloError;
+  error: ApolloError | UserAuthenticationWithPasswordFailure;
 };
 
 const DisplayError = ({ error }: DisplayErrorProps) => {
   if (!error || !error.message) return null;
-  console.log({ error });
   if (
+    error instanceof ApolloError &&
     error.networkError &&
     error.networkError.result &&
     error.networkError.result.errors.length

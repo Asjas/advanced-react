@@ -1,13 +1,14 @@
 import Head from 'next/head';
+import SignIn from '../components/SignIn';
 
 function SignInPage() {
   return (
-    <div>
+    <>
       <Head>
         <title>Sick Fits | Sign In</title>
       </Head>
-      <p>Sign In</p>
-    </div>
+      <SignIn />
+    </>
   );
 }
 

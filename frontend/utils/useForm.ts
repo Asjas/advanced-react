@@ -1,11 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-type Inputs = {
-  name: string;
-  price: number;
-  description: string;
+type ProductInputs = {
+  name?: string;
+  price?: number;
+  description?: string;
   image?: File;
 };
+
+type UserInputs = {
+  email?: string;
+  password?: string;
+};
+
+type Inputs = ProductInputs & UserInputs;
 
 type InputTypes = {
   name: string;

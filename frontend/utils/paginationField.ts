@@ -37,35 +37,25 @@ export default function paginationField() {
         .filter((x) => x);
       // 4. Account for the last page, where there is incomplete data but we dont have any more so we just send it
       if (items.length && items.length !== args.first && page === pages) {
-        console.log(
-          `We don't have ${first} items, but it's the last page so we're just gonna send it!`
-        );
         return items;
       }
       // 5. If there are enough items, return them.
       // It's possible that we only have 3 of the 4 items because we deleted something on the previous page, so if that is the case we need to go to the network
       if (items.length !== args.first) {
         // TODO: This breaks the last page where we might only have a few items....
-        console.log(
-          `We only have ${items.length} and we want ${args.first} so we're going to the network to fetch them`
-        );
         return; // return undefined so it hits the network
       }
       // 6. If there are items, return them.
       if (items.length) {
-        console.log(
-          `We have ${items.length} items! Gonna serve them from the cache`
-        );
         return items;
       }
       // 7. Otherwise this function returns undefined and it will hit the network for the items, and call merge() for us
-      console.log('No items! Requesting from network');
     },
 
     // 8. When items come back from the network, we need to merge them into our cache. We get the existing cache and the new incoming items. It's our job to merge them
     merge(existing, incoming, { args, field }) {
       const { skip, first } = args;
-      console.log('merging items from network...');
+
       // 9. Take a copy of the existing array, or make a new empty one
       const merged = existing ? existing.slice(0) : [];
       // 10. Insert the items into our array at the spot which they belong.
