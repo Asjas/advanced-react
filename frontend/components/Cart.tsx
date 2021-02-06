@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
-import { useUser } from './User';
-import { CartItem as CartItemType } from '../types/generated-queries';
-import formatMoney from '../utils/formatMoney';
+import CloseButton from './styles/CloseButton';
 import calcTotalPrice from '../utils/calcTotalPrice';
+import formatMoney from '../utils/formatMoney';
+import { CartItem as CartItemType } from '../types/generated-queries';
+import { useCart } from '../hooks/Cart';
+import { useUser } from '../hooks/User';
 
 const CartItemStyles = styled.li`
   display: grid;
@@ -26,6 +28,7 @@ type CartItemProps = { cartItem: CartItemType };
 
 function CartItem({ cartItem }: CartItemProps) {
   const { product } = cartItem;
+
   return (
     <CartItemStyles>
       <img
@@ -36,11 +39,9 @@ function CartItem({ cartItem }: CartItemProps) {
       <div>
         <h3>{product.name}</h3>
         <p>
-          {formatMoney(product.price * cartItem.quantity)} -
-          <em>
-            {cartItem.quantity} &times; {formatMoney(product.price)} each
-          </em>
+          {formatMoney(product.price * cartItem.quantity)}
         </p>
+        <p><em>{cartItem.quantity} &times; {formatMoney(product.price)} each</em></p>
       </div>
     </CartItemStyles>
   );
@@ -48,12 +49,16 @@ function CartItem({ cartItem }: CartItemProps) {
 
 function Cart() {
   const me = useUser();
-  console.log({ me });
+  const { cartOpen, closeCart } = useCart();
+
   if (!me) return null;
   return (
-    <CartStyles open>
+    <CartStyles open={cartOpen}>
       <header>
         <Supreme>{me.name}'s Cart</Supreme>
+      <CloseButton type="button" onClick={closeCart}>
+        &times;
+      </CloseButton>
       </header>
       <ul>
         {me.cart.map((cartItem) => (

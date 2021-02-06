@@ -19,7 +19,11 @@ function CreateProduct() {
     createProductMutation,
     { data, error, loading },
   ] = useCreateProductMutation({
-    variables: inputs,
+    variables: {
+      name: inputs.name,
+      price: inputs.price,
+      description: inputs.description,
+    },
     refetchQueries: [refetchAllProductsQuery()],
   });
 

@@ -30,8 +30,6 @@ function DeleteProduct({ id, children }: DeleteProductProps) {
     }
   }
 
-  if (error) return alert('There was an error while deleting the product');
-
   return (
     <button type="button" disabled={loading} onClick={handleClick}>
       {children}

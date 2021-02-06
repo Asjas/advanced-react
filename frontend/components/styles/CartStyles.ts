@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+type Props = {
+  open: boolean;
+}
+
 const CartStyles = styled.div`
   padding: 20px;
   position: relative;
@@ -17,7 +21,7 @@ const CartStyles = styled.div`
   z-index: 5;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  ${(props) => props.open && 'transform: translateX(0);'};
+  ${(props: Props) => props.open && 'transform: translateX(0);'};
   header {
     border-bottom: 5px solid var(--black);
     margin-bottom: 2rem;
