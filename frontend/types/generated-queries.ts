@@ -924,6 +924,7 @@ export type Mutation = {
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   sendUserPasswordResetLink?: Maybe<SendUserPasswordResetLinkResult>;
   redeemUserPasswordResetToken?: Maybe<RedeemUserPasswordResetTokenResult>;
+  addToCart?: Maybe<CartItem>;
   endSession: Scalars['Boolean'];
 };
 
@@ -1072,6 +1073,11 @@ export type MutationRedeemUserPasswordResetTokenArgs = {
   email: Scalars['String'];
   token: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationAddToCartArgs = {
+  productId?: Maybe<Scalars['ID']>;
 };
 
 
@@ -1235,6 +1241,19 @@ export enum KeystoneAdminUiSortDirection {
   Asc = 'ASC',
   Desc = 'DESC'
 }
+
+export type AddToCartMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AddToCartMutation = (
+  { __typename?: 'Mutation' }
+  & { addToCart?: Maybe<(
+    { __typename?: 'CartItem' }
+    & Pick<CartItem, 'id'>
+  )> }
+);
 
 export type AllProductsQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
@@ -1433,6 +1452,38 @@ export type UpdateProductMutation = (
 );
 
 
+export const AddToCartDocument = gql`
+    mutation addToCart($id: ID!) {
+  addToCart(productId: $id) {
+    id
+  }
+}
+    `;
+export type AddToCartMutationFn = Apollo.MutationFunction<AddToCartMutation, AddToCartMutationVariables>;
+
+/**
+ * __useAddToCartMutation__
+ *
+ * To run a mutation, you first call `useAddToCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddToCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addToCartMutation, { data, loading, error }] = useAddToCartMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAddToCartMutation(baseOptions?: Apollo.MutationHookOptions<AddToCartMutation, AddToCartMutationVariables>) {
+        return Apollo.useMutation<AddToCartMutation, AddToCartMutationVariables>(AddToCartDocument, baseOptions);
+      }
+export type AddToCartMutationHookResult = ReturnType<typeof useAddToCartMutation>;
+export type AddToCartMutationResult = Apollo.MutationResult<AddToCartMutation>;
+export type AddToCartMutationOptions = Apollo.BaseMutationOptions<AddToCartMutation, AddToCartMutationVariables>;
 export const AllProductsDocument = gql`
     query allProducts($skip: Int = 0, $first: Int) {
   allProducts(skip: $skip, first: $first) {
@@ -2042,7 +2093,7 @@ export type QueryFieldPolicy = {
 	validateUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	keystone?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'endSession' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'addToCart' | 'endSession' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2072,6 +2123,7 @@ export type MutationFieldPolicy = {
 	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	sendUserPasswordResetLink?: FieldPolicy<any> | FieldReadFunction<any>,
 	redeemUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
+	addToCart?: FieldPolicy<any> | FieldReadFunction<any>,
 	endSession?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type UserAuthenticationWithPasswordSuccessKeySpecifier = ('sessionToken' | 'item' | UserAuthenticationWithPasswordSuccessKeySpecifier)[];

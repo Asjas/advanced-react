@@ -38,10 +38,12 @@ function CartItem({ cartItem }: CartItemProps) {
       />
       <div>
         <h3>{product.name}</h3>
+        <p>{formatMoney(product.price * cartItem.quantity)}</p>
         <p>
-          {formatMoney(product.price * cartItem.quantity)}
+          <em>
+            {cartItem.quantity} &times; {formatMoney(product.price)} each
+          </em>
         </p>
-        <p><em>{cartItem.quantity} &times; {formatMoney(product.price)} each</em></p>
       </div>
     </CartItemStyles>
   );
@@ -56,9 +58,9 @@ function Cart() {
     <CartStyles open={cartOpen}>
       <header>
         <Supreme>{me.name}'s Cart</Supreme>
-      <CloseButton type="button" onClick={closeCart}>
-        &times;
-      </CloseButton>
+        <CloseButton type="button" onClick={closeCart}>
+          &times;
+        </CloseButton>
       </header>
       <ul>
         {me.cart.map((cartItem) => (

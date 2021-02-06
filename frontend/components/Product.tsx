@@ -5,6 +5,7 @@ import PriceTag from './styles/PriceTag';
 import Title from './styles/Title';
 import formatMoney from '../utils/formatMoney';
 import { Product as productType } from '../types/generated-queries';
+import AddToCart from './AddToCart';
 
 type ProductProps = { product: productType };
 
@@ -31,6 +32,7 @@ function Product({ product }: ProductProps) {
         >
           Edit ✏️
         </Link>
+        <AddToCart id={product.id} />
         <DeleteProduct id={product.id}>Delete Item 🗑️</DeleteProduct>
       </div>
     </ItemStyles>
