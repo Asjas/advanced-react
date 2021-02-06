@@ -633,6 +633,7 @@ export type Query = {
   /** The version of the Keystone application serving this API. */
   appVersion?: Maybe<Scalars['String']>;
   authenticatedItem?: Maybe<AuthenticatedItem>;
+  validateUserPasswordResetToken?: Maybe<ValidateUserPasswordResetTokenResult>;
   keystone: KeystoneMeta;
 };
 
@@ -716,6 +717,12 @@ export type Query_KsListsMetaArgs = {
   where?: Maybe<_KsListsMetaInput>;
 };
 
+
+export type QueryValidateUserPasswordResetTokenArgs = {
+  email: Scalars['String'];
+  token: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /**  Create a single User item.  */
@@ -756,6 +763,8 @@ export type Mutation = {
   deleteProductImages?: Maybe<Array<Maybe<ProductImage>>>;
   authenticateUserWithPassword: UserAuthenticationWithPasswordResult;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
+  sendUserPasswordResetLink?: Maybe<SendUserPasswordResetLinkResult>;
+  redeemUserPasswordResetToken?: Maybe<RedeemUserPasswordResetTokenResult>;
   endSession: Scalars['Boolean'];
 };
 
@@ -864,6 +873,18 @@ export type MutationCreateInitialUserArgs = {
 };
 
 
+export type MutationSendUserPasswordResetLinkArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationRedeemUserPasswordResetTokenArgs = {
+  email: Scalars['String'];
+  token: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
 export type AuthenticatedItem = User;
 
 export type UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure;
@@ -893,6 +914,39 @@ export type CreateInitialUserInput = {
   email?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
 };
+
+export type SendUserPasswordResetLinkResult = {
+  __typename?: 'SendUserPasswordResetLinkResult';
+  code: PasswordResetRequestErrorCode;
+  message: Scalars['String'];
+};
+
+export enum PasswordResetRequestErrorCode {
+  IdentityNotFound = 'IDENTITY_NOT_FOUND',
+  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES'
+}
+
+export type ValidateUserPasswordResetTokenResult = {
+  __typename?: 'ValidateUserPasswordResetTokenResult';
+  code: PasswordResetRedemptionErrorCode;
+  message: Scalars['String'];
+};
+
+export type RedeemUserPasswordResetTokenResult = {
+  __typename?: 'RedeemUserPasswordResetTokenResult';
+  code: PasswordResetRedemptionErrorCode;
+  message: Scalars['String'];
+};
+
+export enum PasswordResetRedemptionErrorCode {
+  Failure = 'FAILURE',
+  IdentityNotFound = 'IDENTITY_NOT_FOUND',
+  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES',
+  TokenNotSet = 'TOKEN_NOT_SET',
+  TokenMismatch = 'TOKEN_MISMATCH',
+  TokenExpired = 'TOKEN_EXPIRED',
+  TokenRedeemed = 'TOKEN_REDEEMED'
+}
 
 export type KeystoneMeta = {
   __typename?: 'KeystoneMeta';
@@ -1086,6 +1140,34 @@ export type UserQuery = (
   )> }
 );
 
+export type RequestResetMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type RequestResetMutation = (
+  { __typename?: 'Mutation' }
+  & { sendUserPasswordResetLink?: Maybe<(
+    { __typename?: 'SendUserPasswordResetLinkResult' }
+    & Pick<SendUserPasswordResetLinkResult, 'code' | 'message'>
+  )> }
+);
+
+export type RedeemPasswordResetMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+
+export type RedeemPasswordResetMutation = (
+  { __typename?: 'Mutation' }
+  & { redeemUserPasswordResetToken?: Maybe<(
+    { __typename?: 'RedeemUserPasswordResetTokenResult' }
+    & Pick<RedeemUserPasswordResetTokenResult, 'code' | 'message'>
+  )> }
+);
+
 export type SignInMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -1112,6 +1194,21 @@ export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
 export type SignOutMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'endSession'>
+);
+
+export type SignUpMutationVariables = Exact<{
+  name: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type SignUpMutation = (
+  { __typename?: 'Mutation' }
+  & { createUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'name'>
+  )> }
 );
 
 export type UpdateProductMutationVariables = Exact<{
@@ -1367,6 +1464,74 @@ export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export function refetchUserQuery(variables?: UserQueryVariables) {
       return { query: UserDocument, variables: variables }
     }
+export const RequestResetDocument = gql`
+    mutation requestReset($email: String!) {
+  sendUserPasswordResetLink(email: $email) {
+    code
+    message
+  }
+}
+    `;
+export type RequestResetMutationFn = Apollo.MutationFunction<RequestResetMutation, RequestResetMutationVariables>;
+
+/**
+ * __useRequestResetMutation__
+ *
+ * To run a mutation, you first call `useRequestResetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRequestResetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [requestResetMutation, { data, loading, error }] = useRequestResetMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useRequestResetMutation(baseOptions?: Apollo.MutationHookOptions<RequestResetMutation, RequestResetMutationVariables>) {
+        return Apollo.useMutation<RequestResetMutation, RequestResetMutationVariables>(RequestResetDocument, baseOptions);
+      }
+export type RequestResetMutationHookResult = ReturnType<typeof useRequestResetMutation>;
+export type RequestResetMutationResult = Apollo.MutationResult<RequestResetMutation>;
+export type RequestResetMutationOptions = Apollo.BaseMutationOptions<RequestResetMutation, RequestResetMutationVariables>;
+export const RedeemPasswordResetDocument = gql`
+    mutation redeemPasswordReset($email: String!, $password: String!, $token: String!) {
+  redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {
+    code
+    message
+  }
+}
+    `;
+export type RedeemPasswordResetMutationFn = Apollo.MutationFunction<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>;
+
+/**
+ * __useRedeemPasswordResetMutation__
+ *
+ * To run a mutation, you first call `useRedeemPasswordResetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRedeemPasswordResetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [redeemPasswordResetMutation, { data, loading, error }] = useRedeemPasswordResetMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useRedeemPasswordResetMutation(baseOptions?: Apollo.MutationHookOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>) {
+        return Apollo.useMutation<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>(RedeemPasswordResetDocument, baseOptions);
+      }
+export type RedeemPasswordResetMutationHookResult = ReturnType<typeof useRedeemPasswordResetMutation>;
+export type RedeemPasswordResetMutationResult = Apollo.MutationResult<RedeemPasswordResetMutation>;
+export type RedeemPasswordResetMutationOptions = Apollo.BaseMutationOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>;
 export const SignInDocument = gql`
     mutation signIn($email: String!, $password: String!) {
   authenticateUserWithPassword(email: $email, password: $password) {
@@ -1439,6 +1604,42 @@ export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<Sign
 export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
 export type SignOutMutationResult = Apollo.MutationResult<SignOutMutation>;
 export type SignOutMutationOptions = Apollo.BaseMutationOptions<SignOutMutation, SignOutMutationVariables>;
+export const SignUpDocument = gql`
+    mutation signUp($name: String!, $email: String!, $password: String!) {
+  createUser(data: {name: $name, email: $email, password: $password}) {
+    id
+    email
+    name
+  }
+}
+    `;
+export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
+
+/**
+ * __useSignUpMutation__
+ *
+ * To run a mutation, you first call `useSignUpMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignUpMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signUpMutation, { data, loading, error }] = useSignUpMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
+        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, baseOptions);
+      }
+export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
+export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
+export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
 export const UpdateProductDocument = gql`
     mutation updateProduct($id: ID!, $name: String, $description: String, $price: Int) {
   updateProduct(
@@ -1588,7 +1789,7 @@ export type _QueryMetaKeySpecifier = ('count' | _QueryMetaKeySpecifier)[];
 export type _QueryMetaFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | '_UsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | '_ProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | '_ProductImagesMeta' | '_ksListsMeta' | 'appVersion' | 'authenticatedItem' | 'keystone' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | '_UsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | '_ProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | '_ProductImagesMeta' | '_ksListsMeta' | 'appVersion' | 'authenticatedItem' | 'validateUserPasswordResetToken' | 'keystone' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	allUsers?: FieldPolicy<any> | FieldReadFunction<any>,
 	User?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1605,9 +1806,10 @@ export type QueryFieldPolicy = {
 	_ksListsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	appVersion?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticatedItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	validateUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	keystone?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'authenticateUserWithPassword' | 'createInitialUser' | 'endSession' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'endSession' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1629,6 +1831,8 @@ export type MutationFieldPolicy = {
 	deleteProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticateUserWithPassword?: FieldPolicy<any> | FieldReadFunction<any>,
 	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
+	sendUserPasswordResetLink?: FieldPolicy<any> | FieldReadFunction<any>,
+	redeemUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	endSession?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type UserAuthenticationWithPasswordSuccessKeySpecifier = ('sessionToken' | 'item' | UserAuthenticationWithPasswordSuccessKeySpecifier)[];
@@ -1638,6 +1842,21 @@ export type UserAuthenticationWithPasswordSuccessFieldPolicy = {
 };
 export type UserAuthenticationWithPasswordFailureKeySpecifier = ('code' | 'message' | UserAuthenticationWithPasswordFailureKeySpecifier)[];
 export type UserAuthenticationWithPasswordFailureFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type SendUserPasswordResetLinkResultKeySpecifier = ('code' | 'message' | SendUserPasswordResetLinkResultKeySpecifier)[];
+export type SendUserPasswordResetLinkResultFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ValidateUserPasswordResetTokenResultKeySpecifier = ('code' | 'message' | ValidateUserPasswordResetTokenResultKeySpecifier)[];
+export type ValidateUserPasswordResetTokenResultFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type RedeemUserPasswordResetTokenResultKeySpecifier = ('code' | 'message' | RedeemUserPasswordResetTokenResultKeySpecifier)[];
+export type RedeemUserPasswordResetTokenResultFieldPolicy = {
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -1768,6 +1987,18 @@ export type TypedTypePolicies = TypePolicies & {
 	UserAuthenticationWithPasswordFailure?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | UserAuthenticationWithPasswordFailureKeySpecifier | (() => undefined | UserAuthenticationWithPasswordFailureKeySpecifier),
 		fields?: UserAuthenticationWithPasswordFailureFieldPolicy,
+	},
+	SendUserPasswordResetLinkResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | SendUserPasswordResetLinkResultKeySpecifier | (() => undefined | SendUserPasswordResetLinkResultKeySpecifier),
+		fields?: SendUserPasswordResetLinkResultFieldPolicy,
+	},
+	ValidateUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ValidateUserPasswordResetTokenResultKeySpecifier | (() => undefined | ValidateUserPasswordResetTokenResultKeySpecifier),
+		fields?: ValidateUserPasswordResetTokenResultFieldPolicy,
+	},
+	RedeemUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | RedeemUserPasswordResetTokenResultKeySpecifier | (() => undefined | RedeemUserPasswordResetTokenResultKeySpecifier),
+		fields?: RedeemUserPasswordResetTokenResultFieldPolicy,
 	},
 	KeystoneMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | KeystoneMetaKeySpecifier | (() => undefined | KeystoneMetaKeySpecifier),

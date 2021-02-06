@@ -1,6 +1,9 @@
 import { ApolloError } from '@apollo/client';
 import styled from 'styled-components';
-import { UserAuthenticationWithPasswordFailure } from '../types/generated-queries';
+import {
+  UserAuthenticationWithPasswordFailure,
+  RedeemUserPasswordResetTokenResult,
+} from '../types/generated-queries';
 
 const ErrorStyles = styled.div`
   padding: 2rem;
@@ -18,7 +21,10 @@ const ErrorStyles = styled.div`
 `;
 
 type DisplayErrorProps = {
-  error: ApolloError | UserAuthenticationWithPasswordFailure;
+  error:
+    | ApolloError
+    | UserAuthenticationWithPasswordFailure
+    | RedeemUserPasswordResetTokenResult;
 };
 
 const DisplayError = ({ error }: DisplayErrorProps) => {
