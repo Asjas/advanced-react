@@ -18,6 +18,13 @@ export type Scalars = {
   Upload: any;
 };
 
+export type CartItemRelateToManyInput = {
+  create?: Maybe<Array<Maybe<CartItemCreateInput>>>;
+  connect?: Maybe<Array<Maybe<CartItemWhereUniqueInput>>>;
+  disconnect?: Maybe<Array<Maybe<CartItemWhereUniqueInput>>>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
 /**  A keystone list  */
 export type User = {
   __typename?: 'User';
@@ -25,12 +32,36 @@ export type User = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   password_is_set?: Maybe<Scalars['Boolean']>;
+  cart: Array<CartItem>;
+  _cartMeta?: Maybe<_QueryMeta>;
   passwordResetToken_is_set?: Maybe<Scalars['Boolean']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetRedeemedAt?: Maybe<Scalars['String']>;
   magicAuthToken_is_set?: Maybe<Scalars['Boolean']>;
   magicAuthIssuedAt?: Maybe<Scalars['String']>;
   magicAuthRedeemedAt?: Maybe<Scalars['String']>;
+};
+
+
+/**  A keystone list  */
+export type UserCartArgs = {
+  where?: Maybe<CartItemWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartItemsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+/**  A keystone list  */
+export type User_CartMetaArgs = {
+  where?: Maybe<CartItemWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartItemsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
 };
 
 export type UserWhereInput = {
@@ -77,6 +108,12 @@ export type UserWhereInput = {
   email_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   email_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   password_is_set?: Maybe<Scalars['Boolean']>;
+  /**  condition must be true for all nodes  */
+  cart_every?: Maybe<CartItemWhereInput>;
+  /**  condition must be true for at least 1 node  */
+  cart_some?: Maybe<CartItemWhereInput>;
+  /**  condition must be false for all nodes  */
+  cart_none?: Maybe<CartItemWhereInput>;
   passwordResetToken_is_set?: Maybe<Scalars['Boolean']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetIssuedAt_not?: Maybe<Scalars['String']>;
@@ -124,6 +161,8 @@ export enum SortUsersBy {
   NameDesc = 'name_DESC',
   EmailAsc = 'email_ASC',
   EmailDesc = 'email_DESC',
+  CartAsc = 'cart_ASC',
+  CartDesc = 'cart_DESC',
   PasswordResetIssuedAtAsc = 'passwordResetIssuedAt_ASC',
   PasswordResetIssuedAtDesc = 'passwordResetIssuedAt_DESC',
   PasswordResetRedeemedAtAsc = 'passwordResetRedeemedAt_ASC',
@@ -138,6 +177,7 @@ export type UserUpdateInput = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  cart?: Maybe<CartItemRelateToManyInput>;
   passwordResetToken?: Maybe<Scalars['String']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetRedeemedAt?: Maybe<Scalars['String']>;
@@ -155,6 +195,7 @@ export type UserCreateInput = {
   name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  cart?: Maybe<CartItemRelateToManyInput>;
   passwordResetToken?: Maybe<Scalars['String']>;
   passwordResetIssuedAt?: Maybe<Scalars['String']>;
   passwordResetRedeemedAt?: Maybe<Scalars['String']>;
@@ -439,6 +480,79 @@ export type ProductImagesCreateInput = {
   data?: Maybe<ProductImageCreateInput>;
 };
 
+export type UserRelateToOneInput = {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput>;
+  disconnectAll?: Maybe<Scalars['Boolean']>;
+};
+
+/**  A keystone list  */
+export type CartItem = {
+  __typename?: 'CartItem';
+  id: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
+  product?: Maybe<Product>;
+  user?: Maybe<User>;
+};
+
+export type CartItemWhereInput = {
+  AND?: Maybe<Array<Maybe<CartItemWhereInput>>>;
+  OR?: Maybe<Array<Maybe<CartItemWhereInput>>>;
+  id?: Maybe<Scalars['ID']>;
+  id_not?: Maybe<Scalars['ID']>;
+  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  quantity?: Maybe<Scalars['Int']>;
+  quantity_not?: Maybe<Scalars['Int']>;
+  quantity_lt?: Maybe<Scalars['Int']>;
+  quantity_lte?: Maybe<Scalars['Int']>;
+  quantity_gt?: Maybe<Scalars['Int']>;
+  quantity_gte?: Maybe<Scalars['Int']>;
+  quantity_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  quantity_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  product?: Maybe<ProductWhereInput>;
+  product_is_null?: Maybe<Scalars['Boolean']>;
+  user?: Maybe<UserWhereInput>;
+  user_is_null?: Maybe<Scalars['Boolean']>;
+};
+
+export type CartItemWhereUniqueInput = {
+  id: Scalars['ID'];
+};
+
+export enum SortCartItemsBy {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  QuantityAsc = 'quantity_ASC',
+  QuantityDesc = 'quantity_DESC',
+  ProductAsc = 'product_ASC',
+  ProductDesc = 'product_DESC',
+  UserAsc = 'user_ASC',
+  UserDesc = 'user_DESC'
+}
+
+export type CartItemUpdateInput = {
+  quantity?: Maybe<Scalars['Int']>;
+  product?: Maybe<ProductRelateToOneInput>;
+  user?: Maybe<UserRelateToOneInput>;
+};
+
+export type CartItemsUpdateInput = {
+  id: Scalars['ID'];
+  data?: Maybe<CartItemUpdateInput>;
+};
+
+export type CartItemCreateInput = {
+  quantity?: Maybe<Scalars['Int']>;
+  product?: Maybe<ProductRelateToOneInput>;
+  user?: Maybe<UserRelateToOneInput>;
+};
+
+export type CartItemsCreateInput = {
+  data?: Maybe<CartItemCreateInput>;
+};
+
 
 export type _ListAccess = {
   __typename?: '_ListAccess';
@@ -628,6 +742,14 @@ export type Query = {
   _allProductImagesMeta?: Maybe<_QueryMeta>;
   /**  Retrieve the meta-data for the ProductImage list.  */
   _ProductImagesMeta?: Maybe<_ListMeta>;
+  /**  Search for all CartItem items which match the where clause.  */
+  allCartItems?: Maybe<Array<Maybe<CartItem>>>;
+  /**  Search for the CartItem item with the matching ID.  */
+  CartItem?: Maybe<CartItem>;
+  /**  Perform a meta-query on all CartItem items which match the where clause.  */
+  _allCartItemsMeta?: Maybe<_QueryMeta>;
+  /**  Retrieve the meta-data for the CartItem list.  */
+  _CartItemsMeta?: Maybe<_ListMeta>;
   /**  Retrieve the meta-data for all lists.  */
   _ksListsMeta?: Maybe<Array<Maybe<_ListMeta>>>;
   /** The version of the Keystone application serving this API. */
@@ -713,6 +835,31 @@ export type Query_AllProductImagesMetaArgs = {
 };
 
 
+export type QueryAllCartItemsArgs = {
+  where?: Maybe<CartItemWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartItemsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryCartItemArgs = {
+  where: CartItemWhereUniqueInput;
+};
+
+
+export type Query_AllCartItemsMetaArgs = {
+  where?: Maybe<CartItemWhereInput>;
+  search?: Maybe<Scalars['String']>;
+  sortBy?: Maybe<Array<SortCartItemsBy>>;
+  orderBy?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
 export type Query_KsListsMetaArgs = {
   where?: Maybe<_KsListsMetaInput>;
 };
@@ -761,6 +908,18 @@ export type Mutation = {
   deleteProductImage?: Maybe<ProductImage>;
   /**  Delete multiple ProductImage items by ID.  */
   deleteProductImages?: Maybe<Array<Maybe<ProductImage>>>;
+  /**  Create a single CartItem item.  */
+  createCartItem?: Maybe<CartItem>;
+  /**  Create multiple CartItem items.  */
+  createCartItems?: Maybe<Array<Maybe<CartItem>>>;
+  /**  Update a single CartItem item by ID.  */
+  updateCartItem?: Maybe<CartItem>;
+  /**  Update multiple CartItem items by ID.  */
+  updateCartItems?: Maybe<Array<Maybe<CartItem>>>;
+  /**  Delete a single CartItem item by ID.  */
+  deleteCartItem?: Maybe<CartItem>;
+  /**  Delete multiple CartItem items by ID.  */
+  deleteCartItems?: Maybe<Array<Maybe<CartItem>>>;
   authenticateUserWithPassword: UserAuthenticationWithPasswordResult;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   sendUserPasswordResetLink?: Maybe<SendUserPasswordResetLinkResult>;
@@ -858,6 +1017,37 @@ export type MutationDeleteProductImageArgs = {
 
 
 export type MutationDeleteProductImagesArgs = {
+  ids?: Maybe<Array<Scalars['ID']>>;
+};
+
+
+export type MutationCreateCartItemArgs = {
+  data?: Maybe<CartItemCreateInput>;
+};
+
+
+export type MutationCreateCartItemsArgs = {
+  data?: Maybe<Array<Maybe<CartItemsCreateInput>>>;
+};
+
+
+export type MutationUpdateCartItemArgs = {
+  id: Scalars['ID'];
+  data?: Maybe<CartItemUpdateInput>;
+};
+
+
+export type MutationUpdateCartItemsArgs = {
+  data?: Maybe<Array<Maybe<CartItemsUpdateInput>>>;
+};
+
+
+export type MutationDeleteCartItemArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteCartItemsArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
 
@@ -1137,6 +1327,21 @@ export type UserQuery = (
   & { authenticatedItem?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'email'>
+    & { cart: Array<(
+      { __typename?: 'CartItem' }
+      & Pick<CartItem, 'id' | 'quantity'>
+      & { product?: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'id' | 'name' | 'description' | 'price'>
+        & { photo?: Maybe<(
+          { __typename?: 'ProductImage' }
+          & { image?: Maybe<(
+            { __typename?: 'CloudinaryImage_File' }
+            & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+          )> }
+        )> }
+      )> }
+    )> }
   )> }
 );
 
@@ -1432,6 +1637,21 @@ export const UserDocument = gql`
       id
       name
       email
+      cart {
+        id
+        quantity
+        product {
+          id
+          name
+          description
+          price
+          photo {
+            image {
+              publicUrlTransformed
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -1681,12 +1901,14 @@ export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
 export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
 export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
-export type UserKeySpecifier = ('id' | 'name' | 'email' | 'password_is_set' | 'passwordResetToken_is_set' | 'passwordResetIssuedAt' | 'passwordResetRedeemedAt' | 'magicAuthToken_is_set' | 'magicAuthIssuedAt' | 'magicAuthRedeemedAt' | UserKeySpecifier)[];
+export type UserKeySpecifier = ('id' | 'name' | 'email' | 'password_is_set' | 'cart' | '_cartMeta' | 'passwordResetToken_is_set' | 'passwordResetIssuedAt' | 'passwordResetRedeemedAt' | 'magicAuthToken_is_set' | 'magicAuthIssuedAt' | 'magicAuthRedeemedAt' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	email?: FieldPolicy<any> | FieldReadFunction<any>,
 	password_is_set?: FieldPolicy<any> | FieldReadFunction<any>,
+	cart?: FieldPolicy<any> | FieldReadFunction<any>,
+	_cartMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	passwordResetToken_is_set?: FieldPolicy<any> | FieldReadFunction<any>,
 	passwordResetIssuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	passwordResetRedeemedAt?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1720,6 +1942,13 @@ export type ProductImageFieldPolicy = {
 	image?: FieldPolicy<any> | FieldReadFunction<any>,
 	altText?: FieldPolicy<any> | FieldReadFunction<any>,
 	product?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CartItemKeySpecifier = ('id' | 'quantity' | 'product' | 'user' | CartItemKeySpecifier)[];
+export type CartItemFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
+	product?: FieldPolicy<any> | FieldReadFunction<any>,
+	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type _ListAccessKeySpecifier = ('create' | 'read' | 'update' | 'delete' | 'auth' | _ListAccessKeySpecifier)[];
 export type _ListAccessFieldPolicy = {
@@ -1789,7 +2018,7 @@ export type _QueryMetaKeySpecifier = ('count' | _QueryMetaKeySpecifier)[];
 export type _QueryMetaFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | '_UsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | '_ProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | '_ProductImagesMeta' | '_ksListsMeta' | 'appVersion' | 'authenticatedItem' | 'validateUserPasswordResetToken' | 'keystone' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | '_UsersMeta' | 'allProducts' | 'Product' | '_allProductsMeta' | '_ProductsMeta' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | '_ProductImagesMeta' | 'allCartItems' | 'CartItem' | '_allCartItemsMeta' | '_CartItemsMeta' | '_ksListsMeta' | 'appVersion' | 'authenticatedItem' | 'validateUserPasswordResetToken' | 'keystone' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	allUsers?: FieldPolicy<any> | FieldReadFunction<any>,
 	User?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1803,13 +2032,17 @@ export type QueryFieldPolicy = {
 	ProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
 	_allProductImagesMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	_ProductImagesMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	allCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
+	CartItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	_allCartItemsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	_CartItemsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	_ksListsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
 	appVersion?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticatedItem?: FieldPolicy<any> | FieldReadFunction<any>,
 	validateUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	keystone?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'endSession' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'endSession' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1829,6 +2062,12 @@ export type MutationFieldPolicy = {
 	updateProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
+	createCartItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	createCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateCartItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteCartItem?: FieldPolicy<any> | FieldReadFunction<any>,
+	deleteCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
 	authenticateUserWithPassword?: FieldPolicy<any> | FieldReadFunction<any>,
 	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	sendUserPasswordResetLink?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1935,6 +2174,10 @@ export type TypedTypePolicies = TypePolicies & {
 	ProductImage?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductImageKeySpecifier | (() => undefined | ProductImageKeySpecifier),
 		fields?: ProductImageFieldPolicy,
+	},
+	CartItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CartItemKeySpecifier | (() => undefined | CartItemKeySpecifier),
+		fields?: CartItemFieldPolicy,
 	},
 	_ListAccess?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | _ListAccessKeySpecifier | (() => undefined | _ListAccessKeySpecifier),
