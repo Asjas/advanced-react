@@ -10,7 +10,7 @@ const transport = createTransport({
   },
 });
 
-function makeANiceEmail(text: string): string {
+function makeANiceEmail(text: string) {
   return `
     <div style="
       border: 1px solid black;
@@ -23,7 +23,7 @@ function makeANiceEmail(text: string): string {
       <p>${text}</p>
       <p>©️, A-J Roos</p>
     </div>
-  `
+  `;
 };
 
 type MailResponse = {

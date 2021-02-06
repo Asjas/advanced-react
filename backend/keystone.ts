@@ -14,6 +14,8 @@ import { CartItem } from './schemas/CartItem';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
 
+import { extendGraphqlSchema } from './mutations';
+
 const THIRTY_DAYS = 60 * 60 * 24 * 30;
 const databaseURL = process.env.DATABASE_URL || 'test';
 
@@ -59,6 +61,7 @@ export default withAuth(
       ProductImage,
       CartItem,
     }),
+    extendGraphqlSchema,
     ui: {
       isAccessAllowed: ({ session }) => session?.data,
     },
