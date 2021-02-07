@@ -5,7 +5,7 @@ type CartContext = {
   openCart: () => void;
   toggleCart: () => void;
   closeCart: () => void;
-}
+};
 
 export const LocalStateContext = createContext<CartContext>(null);
 

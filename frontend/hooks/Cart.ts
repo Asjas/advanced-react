@@ -1,5 +1,5 @@
-import { LocalStateContext } from './../context/cartState';
 import { useContext } from 'react';
+import { LocalStateContext } from '../context/Cart';
 
 function useCart() {
   const all = useContext(LocalStateContext);

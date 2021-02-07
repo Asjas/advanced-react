@@ -6,7 +6,7 @@ import { NextPageContext } from 'next';
 import Page from '../components/Page';
 import '../components/styles/nprogress.css';
 import withData from '../utils/withData';
-import { CartStateProvider } from '../context/cartState';
+import { CartStateProvider } from '../context/Cart';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
