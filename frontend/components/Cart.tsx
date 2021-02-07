@@ -7,6 +7,7 @@ import formatMoney from '../utils/formatMoney';
 import { CartItem as CartItemType } from '../types/generated-queries';
 import { useCart } from '../hooks/Cart';
 import { useUser } from '../hooks/User';
+import RemoveFromCart from './RemoveFromCart';
 
 const CartItemStyles = styled.li`
   display: grid;
@@ -45,6 +46,7 @@ function CartItem({ cartItem }: CartItemProps) {
           </em>
         </p>
       </div>
+      <RemoveFromCart id={cartItem.id} />
     </CartItemStyles>
   );
 }
@@ -58,7 +60,7 @@ function Cart() {
     <CartStyles open={cartOpen}>
       <header>
         <Supreme>{me.name}'s Cart</Supreme>
-        <CloseButton type="button" onClick={closeCart}>
+        <CloseButton title="Close cart" type="button" onClick={closeCart}>
           &times;
         </CloseButton>
       </header>
