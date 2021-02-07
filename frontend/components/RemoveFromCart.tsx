@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { useDeleteCartItemMutation } from '../types/generated-queries';
+import { ApolloCache, Cache } from '@apollo/client';
+import {
+  useDeleteCartItemMutation,
+  CartItem,
+} from '../types/generated-queries';
 
 const BigButton = styled.button`
   font-size: 3rem;
@@ -12,9 +16,22 @@ const BigButton = styled.button`
   }
 `;
 
+type UpdateFnPayloadProps = {
+  data: {
+    deleteCartItem: CartItem;
+  };
+};
+
+function update(cache: ApolloCache<any>, payload: UpdateFnPayloadProps) {
+  cache.evict(
+    cache.identify(payload.data.deleteCartItem) as Cache.EvictOptions
+  );
+}
+
 function RemoveFromCart({ id }: { id: string }) {
   const [removeFromCart, { loading }] = useDeleteCartItemMutation({
     variables: { id },
+    update,
   });
 
   async function handleClick() {
