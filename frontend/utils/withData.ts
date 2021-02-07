@@ -3,9 +3,11 @@ import { onError } from '@apollo/link-error';
 import { getDataFromTree } from '@apollo/react-ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
-import { endpoint, prodEndpoint } from '../config';
 import paginationField from './paginationField';
 import { TypedTypePolicies } from '../types/generated-queries';
+
+const { NEXT_PUBLIC_DEVELOPMENT_ENDPOINT, NEXT_PUBLIC_PRODUCTION_ENDPOINT} = process.env;
+console.log(NEXT_PUBLIC_DEVELOPMENT_ENDPOINT, NEXT_PUBLIC_PRODUCTION_ENDPOINT)
 
 const allProductsTypePolicy: TypedTypePolicies = {
   // Keys in this object will be validated against the typed on your schema
@@ -29,7 +31,7 @@ function createClient({ headers, initialState }) {
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
       createUploadLink({
-        uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
+        uri: process.env.NODE_ENV === 'development' ? NEXT_PUBLIC_DEVELOPMENT_ENDPOINT : NEXT_PUBLIC_PRODUCTION_ENDPOINT,
         fetchOptions: {
           credentials: 'include',
         },

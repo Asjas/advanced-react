@@ -3,7 +3,8 @@ import Link from 'next/link';
 import DisplayError from './ErrorMessage';
 import PaginationStyles from './styles/PaginationStyles';
 import { useAllProductsCountQuery } from '../types/generated-queries';
-import { perPage } from '../config';
+
+const NEXT_PUBLIC_PAGE = parseInt(process.env.NEXT_PUBLIC_PAGE);
 
 function Pagination({ page }: { page: number }) {
   const { data, loading, error } = useAllProductsCountQuery();
@@ -13,7 +14,7 @@ function Pagination({ page }: { page: number }) {
   if (error) return <DisplayError error={error} />;
 
   const count = data?._allProductsMeta?.count;
-  const pageCount = Math.ceil(count / perPage);
+  const pageCount = Math.ceil(count / NEXT_PUBLIC_PAGE);
 
   return (
     <PaginationStyles>
