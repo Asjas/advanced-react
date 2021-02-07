@@ -4,7 +4,7 @@
     "dev": "next -p 7777",
     "build": "next build",
     "prestart": "npm run codegen",
-    "start": "next start -p 7777",
+    "start": "next start",
     "test": "NODE_ENV=test jest --watch",
     "heroku-postbuild": "next build",
     "preinstall": "npx npm-force-resolutions",
@@ -77,6 +77,7 @@
     "extends": "wesbos/typescript.js",
     "rules": {
       "@typescript-eslint/explicit-module-boundary-types": 0,
+      "@typescript-eslint/indent": 0,
       "@typescript-eslint/no-explicit-any": 0,
       "@typescript-eslint/no-unsafe-assignment": 0,
       "@typescript-eslint/no-unsafe-call": 0,
