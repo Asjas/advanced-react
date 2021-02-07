@@ -34,8 +34,8 @@ const { withAuth } = createAuth({
   passwordResetLink: {
     async sendToken(args) {
       await sendPasswordResetEmail(args.token, args.identity);
-    }
-  }
+    },
+  },
 });
 
 export default withAuth(
@@ -53,6 +53,11 @@ export default withAuth(
         if (process.argv.includes('--seed-data')) {
           await insertSeedData(keystone);
         }
+      },
+    },
+    graphql: {
+      queryLimits: {
+        maxTotalResults: 100,
       },
     },
     lists: createSchema({
