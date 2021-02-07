@@ -1,0 +1,11 @@
+name: advanced-react
+
+services:
+- name: backend
+  github:
+    repo: Asjas/advanced-react
+    branch: main
+    deploy_on_push: true
+  source_dir: backend
+  routes:
+  - path: /
