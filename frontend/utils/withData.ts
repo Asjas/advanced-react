@@ -7,7 +7,6 @@ import paginationField from './paginationField';
 import { TypedTypePolicies } from '../types/generated-queries';
 
 const { NEXT_PUBLIC_DEVELOPMENT_ENDPOINT, NEXT_PUBLIC_PRODUCTION_ENDPOINT} = process.env;
-console.log(NEXT_PUBLIC_DEVELOPMENT_ENDPOINT, NEXT_PUBLIC_PRODUCTION_ENDPOINT)
 
 const allProductsTypePolicy: TypedTypePolicies = {
   // Keys in this object will be validated against the typed on your schema
