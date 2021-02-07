@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import casual from 'casual';
 
 // seed it so we get consistent results
