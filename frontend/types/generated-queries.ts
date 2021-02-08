@@ -1405,6 +1405,27 @@ export type RedeemPasswordResetMutation = (
   )> }
 );
 
+export type SearchProductsQueryVariables = Exact<{
+  searchTerm: Scalars['String'];
+}>;
+
+
+export type SearchProductsQuery = (
+  { __typename?: 'Query' }
+  & { searchTerms?: Maybe<Array<Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'name'>
+    & { photo?: Maybe<(
+      { __typename?: 'ProductImage' }
+      & Pick<ProductImage, 'altText'>
+      & { image?: Maybe<(
+        { __typename?: 'CloudinaryImage_File' }
+        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+      )> }
+    )> }
+  )>>> }
+);
+
 export type SignInMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -1848,6 +1869,51 @@ export function useRedeemPasswordResetMutation(baseOptions?: Apollo.MutationHook
 export type RedeemPasswordResetMutationHookResult = ReturnType<typeof useRedeemPasswordResetMutation>;
 export type RedeemPasswordResetMutationResult = Apollo.MutationResult<RedeemPasswordResetMutation>;
 export type RedeemPasswordResetMutationOptions = Apollo.BaseMutationOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>;
+export const SearchProductsDocument = gql`
+    query searchProducts($searchTerm: String!) {
+  searchTerms: allProducts(
+    where: {OR: [{name_contains_i: $searchTerm}, {description_contains_i: $searchTerm}]}
+  ) {
+    id
+    name
+    photo {
+      altText
+      image {
+        publicUrlTransformed
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchProductsQuery__
+ *
+ * To run a query within a React component, call `useSearchProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchProductsQuery({
+ *   variables: {
+ *      searchTerm: // value for 'searchTerm'
+ *   },
+ * });
+ */
+export function useSearchProductsQuery(baseOptions: Apollo.QueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+        return Apollo.useQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, baseOptions);
+      }
+export function useSearchProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+          return Apollo.useLazyQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, baseOptions);
+        }
+export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQuery>;
+export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
+export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, SearchProductsQueryVariables>;
+export function refetchSearchProductsQuery(variables?: SearchProductsQueryVariables) {
+      return { query: SearchProductsDocument, variables: variables }
+    }
 export const SignInDocument = gql`
     mutation signIn($email: String!, $password: String!) {
   authenticateUserWithPassword(email: $email, password: $password) {
