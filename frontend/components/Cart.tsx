@@ -8,6 +8,7 @@ import { CartItem as CartItemType } from '../types/generated-queries';
 import { useCart } from '../hooks/Cart';
 import { useUser } from '../hooks/User';
 import RemoveFromCart from './RemoveFromCart';
+import Checkout from './Checkout';
 
 const CartItemStyles = styled.li`
   display: grid;
@@ -71,6 +72,7 @@ function Cart() {
       </ul>
       <footer>
         <p>{formatMoney(calcTotalPrice(me.cart))}</p>
+        <Checkout />
       </footer>
     </CartStyles>
   );
