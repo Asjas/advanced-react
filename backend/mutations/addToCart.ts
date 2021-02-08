@@ -6,7 +6,7 @@ import {
 } from '../.keystone/schema-types';
 
 async function addToCart(
-  root: any,
+  _root: unknown,
   { productId }: { productId: string },
   context: KeystoneContext
 ): Promise<CartItemCreateInput> {
