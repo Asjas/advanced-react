@@ -1,12 +1,15 @@
 import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/link-error';
-import { getDataFromTree } from '@apollo/react-ssr';
+import { getDataFromTree } from '@apollo/client/react/ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
 import paginationField from './paginationField';
 import { TypedTypePolicies } from '../types/generated-queries';
 
-const { NEXT_PUBLIC_DEVELOPMENT_ENDPOINT, NEXT_PUBLIC_PRODUCTION_ENDPOINT} = process.env;
+const {
+  NEXT_PUBLIC_DEVELOPMENT_ENDPOINT,
+  NEXT_PUBLIC_PRODUCTION_ENDPOINT,
+} = process.env;
 
 const allProductsTypePolicy: TypedTypePolicies = {
   // Keys in this object will be validated against the typed on your schema
@@ -15,6 +18,7 @@ const allProductsTypePolicy: TypedTypePolicies = {
 
 function createClient({ headers, initialState }) {
   return new ApolloClient({
+    ssrMode: true,
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
@@ -30,7 +34,10 @@ function createClient({ headers, initialState }) {
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
       createUploadLink({
-        uri: process.env.NODE_ENV === 'development' ? NEXT_PUBLIC_DEVELOPMENT_ENDPOINT : NEXT_PUBLIC_PRODUCTION_ENDPOINT,
+        uri:
+          process.env.NODE_ENV === 'development'
+            ? NEXT_PUBLIC_DEVELOPMENT_ENDPOINT
+            : NEXT_PUBLIC_PRODUCTION_ENDPOINT,
         fetchOptions: {
           credentials: 'include',
         },

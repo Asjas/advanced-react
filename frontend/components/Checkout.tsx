@@ -1,6 +1,12 @@
-import { CardElement, Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { SyntheticEvent } from 'react';
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe,
+} from '@stripe/react-stripe-js';
+import { loadStripe, StripeError } from '@stripe/stripe-js';
+import nProgress from 'nprogress';
+import { SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import SickButton from './styles/SickButton';
 
@@ -13,19 +19,54 @@ const CheckoutFormStyles = styled.form`
   grid-gap: 1rem;
 `;
 
+const ErrorStyles = styled.p`
+  font-size: 14px;
+  color: var(--red);
+`;
+
 const stripeLib = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
 
-function Checkout() {
-  function handleSubmit(event: SyntheticEvent) {
+function CheckoutForm() {
+  const [error, setError] = useState<StripeError>();
+  const [loading, setLoading] = useState(false);
+  const stripe = useStripe();
+  const elements = useElements();
+
+  async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
+
+    setLoading(true);
+    nProgress.start();
+
+    const {
+      error: stripeError,
+      paymentMethod,
+    } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+    });
+
+    if (stripeError) {
+      setError(stripeError);
+    }
+
+    setLoading(false);
+    nProgress.done();
   }
 
   return (
+    <CheckoutFormStyles onSubmit={handleSubmit}>
+      {error ? <ErrorStyles>{error.message}</ErrorStyles> : null}
+      <CardElement />
+      <SickButton>Checkout Now</SickButton>
+    </CheckoutFormStyles>
+  );
+}
+
+function Checkout() {
+  return (
     <Elements stripe={stripeLib}>
-      <CheckoutFormStyles onSubmit={handleSubmit}>
-        <CardElement />
-        <SickButton>Checkout Now</SickButton>
-      </CheckoutFormStyles>
+      <CheckoutForm />
     </Elements>
   );
 }
