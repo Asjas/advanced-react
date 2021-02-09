@@ -36,6 +36,7 @@ async function addToCart(
     return context.lists.CartItem.updateOne({
       id: existingCartItem.id,
       data: { quantity: existingCartItem.quantity + 1 },
+      resolveFields: false,
     });
   }
 
@@ -48,6 +49,7 @@ async function addToCart(
         connect: { id: session.itemId },
       },
     },
+    resolveFields: false,
   });
 }
 
