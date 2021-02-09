@@ -1,9 +1,5 @@
-mutation addToCart (
-  $id: ID!
-) {
-  addToCart(
-    productId: $id
-  ) {
+mutation addToCart ($id: ID!) {
+  addToCart(productId: $id) {
     id
   }
 }

@@ -1,0 +1,11 @@
+mutation createOrder($token: String!) {
+  checkout(token: $token) {
+    id
+    charge
+    total
+    items {
+      id
+      name
+    }
+  }
+}

@@ -8,6 +8,7 @@ import { loadStripe, StripeError } from '@stripe/stripe-js';
 import nProgress from 'nprogress';
 import { SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
+import { useCreateOrderMutation } from '../types/generated-queries';
 import SickButton from './styles/SickButton';
 
 const CheckoutFormStyles = styled.form`
@@ -32,6 +33,8 @@ function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
+  const [createOrder, { error: orderError }] = useCreateOrderMutation();
+
   async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
 
@@ -48,7 +51,14 @@ function CheckoutForm() {
 
     if (stripeError) {
       setError(stripeError);
+      return;
     }
+
+    const order = await createOrder({
+      variables: { token: paymentMethod.id },
+    });
+
+    console.log({ order });
 
     setLoading(false);
     nProgress.done();
@@ -57,6 +67,7 @@ function CheckoutForm() {
   return (
     <CheckoutFormStyles onSubmit={handleSubmit}>
       {error ? <ErrorStyles>{error.message}</ErrorStyles> : null}
+      {orderError ? <ErrorStyles>{orderError.message}</ErrorStyles> : null}
       <CardElement />
       <SickButton>Checkout Now</SickButton>
     </CheckoutFormStyles>
