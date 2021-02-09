@@ -12,7 +12,7 @@ export const CartItem = list({
   },
   ui: {
     listView: {
-      initialColumns: ['product', 'quantity', 'user']
-    }
-  }
+      initialColumns: ['product', 'quantity', 'user'],
+    },
+  },
 });

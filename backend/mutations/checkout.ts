@@ -27,13 +27,17 @@ async function checkout(
       cart {
         id
         quantity
-        product
-        description
-        photo {
+        product {
           id
-          image {
+          name
+          price
+          description
+          photo {
             id
-            publicUrlTransformed
+            image {
+              id
+              publicUrlTransformed
+            }
           }
         }
       }
@@ -41,11 +45,17 @@ async function checkout(
   });
 
   const cartItems = user.cart.filter((cartItem) => cartItem.product);
+
   const amount = cartItems.reduce(
-    (tally: number, cartItem) =>
+    (tally: number, cartItem: CartItemCreateInput) =>
       tally + cartItem.quantity * cartItem.product.price,
     0
   );
+
+  console.log(
+    '🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥'
+  );
+  console.log({ amount });
 
   const charge = await stripeConfig.paymentIntents
     .create({
