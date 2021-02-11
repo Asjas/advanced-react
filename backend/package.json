@@ -45,7 +45,7 @@
     "@types/nodemailer": "6.4.0",
     "dotenv": "8.2.0",
     "next": "10.0.6",
-    "nodemailer": "6.4.17",
+    "nodemailer": "6.4.18",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "stripe": "8.135.0"
