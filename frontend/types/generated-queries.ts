@@ -1710,6 +1710,32 @@ export type AddToCartMutation = (
   )> }
 );
 
+export type AllOrdersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllOrdersQuery = (
+  { __typename?: 'Query' }
+  & { allOrders?: Maybe<Array<Maybe<(
+    { __typename?: 'Order' }
+    & Pick<Order, 'id' | 'charge' | 'total'>
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id'>
+    )>, items: Array<(
+      { __typename?: 'OrderItem' }
+      & Pick<OrderItem, 'id' | 'name' | 'description' | 'price' | 'quantity'>
+      & { photo?: Maybe<(
+        { __typename?: 'ProductImage' }
+        & Pick<ProductImage, 'altText'>
+        & { image?: Maybe<(
+          { __typename?: 'CloudinaryImage_File' }
+          & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+        )> }
+      )> }
+    )> }
+  )>>> }
+);
+
 export type AllProductsQueryVariables = Exact<{
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
@@ -2018,6 +2044,59 @@ export function useAddToCartMutation(baseOptions?: Apollo.MutationHookOptions<Ad
 export type AddToCartMutationHookResult = ReturnType<typeof useAddToCartMutation>;
 export type AddToCartMutationResult = Apollo.MutationResult<AddToCartMutation>;
 export type AddToCartMutationOptions = Apollo.BaseMutationOptions<AddToCartMutation, AddToCartMutationVariables>;
+export const AllOrdersDocument = gql`
+    query allOrders {
+  allOrders {
+    id
+    charge
+    total
+    user {
+      id
+    }
+    items {
+      id
+      name
+      description
+      price
+      quantity
+      photo {
+        altText
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllOrdersQuery__
+ *
+ * To run a query within a React component, call `useAllOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllOrdersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllOrdersQuery(baseOptions?: Apollo.QueryHookOptions<AllOrdersQuery, AllOrdersQueryVariables>) {
+        return Apollo.useQuery<AllOrdersQuery, AllOrdersQueryVariables>(AllOrdersDocument, baseOptions);
+      }
+export function useAllOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllOrdersQuery, AllOrdersQueryVariables>) {
+          return Apollo.useLazyQuery<AllOrdersQuery, AllOrdersQueryVariables>(AllOrdersDocument, baseOptions);
+        }
+export type AllOrdersQueryHookResult = ReturnType<typeof useAllOrdersQuery>;
+export type AllOrdersLazyQueryHookResult = ReturnType<typeof useAllOrdersLazyQuery>;
+export type AllOrdersQueryResult = Apollo.QueryResult<AllOrdersQuery, AllOrdersQueryVariables>;
+export function refetchAllOrdersQuery(variables?: AllOrdersQueryVariables) {
+      return { query: AllOrdersDocument, variables: variables }
+    }
 export const AllProductsDocument = gql`
     query allProducts($skip: Int = 0, $first: Int) {
   allProducts(skip: $skip, first: $first) {

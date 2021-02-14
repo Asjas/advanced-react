@@ -1,0 +1,23 @@
+query allOrders {
+  allOrders {
+    id
+    charge
+    total
+    user {
+      id
+    }
+    items {
+      id
+      name
+      description
+      price
+      quantity
+      photo {
+        altText
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+}
