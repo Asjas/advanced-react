@@ -5,10 +5,15 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import { loadStripe, StripeError } from '@stripe/stripe-js';
+import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
 import { SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
-import { useCreateOrderMutation } from '../types/generated-queries';
+import { useCart } from '../hooks/Cart';
+import {
+  useCreateOrderMutation,
+  refetchUserQuery,
+} from '../types/generated-queries';
 import SickButton from './styles/SickButton';
 
 const CheckoutFormStyles = styled.form`
@@ -32,6 +37,8 @@ function CheckoutForm() {
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter();
+  const { closeCart } = useCart();
 
   const [createOrder, { error: orderError }] = useCreateOrderMutation();
 
@@ -56,9 +63,15 @@ function CheckoutForm() {
 
     const order = await createOrder({
       variables: { token: paymentMethod.id },
+      refetchQueries: [refetchUserQuery()],
     });
 
-    console.log({ order });
+    void router.push({
+      pathname: '/order/[id]',
+      query: { id: order.data.checkout.id },
+    });
+
+    closeCart();
 
     setLoading(false);
     nProgress.done();

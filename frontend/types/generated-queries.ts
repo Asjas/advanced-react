@@ -1802,6 +1802,34 @@ export type DeleteProductMutation = (
   )> }
 );
 
+export type GetOrderQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetOrderQuery = (
+  { __typename?: 'Query' }
+  & { order?: Maybe<(
+    { __typename?: 'Order' }
+    & Pick<Order, 'id' | 'charge' | 'total'>
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id'>
+    )>, items: Array<(
+      { __typename?: 'OrderItem' }
+      & Pick<OrderItem, 'id' | 'name' | 'description' | 'price' | 'quantity'>
+      & { photo?: Maybe<(
+        { __typename?: 'ProductImage' }
+        & Pick<ProductImage, 'altText'>
+        & { image?: Maybe<(
+          { __typename?: 'CloudinaryImage_File' }
+          & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
+        )> }
+      )> }
+    )> }
+  )> }
+);
+
 export type ProductQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -2212,6 +2240,60 @@ export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
 export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
 export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
+export const GetOrderDocument = gql`
+    query getOrder($id: ID!) {
+  order: Order(where: {id: $id}) {
+    id
+    charge
+    total
+    user {
+      id
+    }
+    items {
+      id
+      name
+      description
+      price
+      quantity
+      photo {
+        altText
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOrderQuery__
+ *
+ * To run a query within a React component, call `useGetOrderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrderQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetOrderQuery(baseOptions: Apollo.QueryHookOptions<GetOrderQuery, GetOrderQueryVariables>) {
+        return Apollo.useQuery<GetOrderQuery, GetOrderQueryVariables>(GetOrderDocument, baseOptions);
+      }
+export function useGetOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrderQuery, GetOrderQueryVariables>) {
+          return Apollo.useLazyQuery<GetOrderQuery, GetOrderQueryVariables>(GetOrderDocument, baseOptions);
+        }
+export type GetOrderQueryHookResult = ReturnType<typeof useGetOrderQuery>;
+export type GetOrderLazyQueryHookResult = ReturnType<typeof useGetOrderLazyQuery>;
+export type GetOrderQueryResult = Apollo.QueryResult<GetOrderQuery, GetOrderQueryVariables>;
+export function refetchGetOrderQuery(variables?: GetOrderQueryVariables) {
+      return { query: GetOrderDocument, variables: variables }
+    }
 export const ProductDocument = gql`
     query Product($id: ID!) {
   Product(where: {id: $id}) {

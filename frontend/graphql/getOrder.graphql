@@ -1,0 +1,23 @@
+query getOrder($id: ID!) {
+  order: Order(where: { id: $id }) {
+    id
+    charge
+    total
+    user {
+      id
+    }
+    items {
+      id
+      name
+      description
+      price
+      quantity
+      photo {
+        altText
+        image {
+          publicUrlTransformed
+        }
+      }
+    }
+  }
+}
