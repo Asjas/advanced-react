@@ -11,7 +11,7 @@
     "codegen": "graphql-codegen --config codegen.yml -r dotenv/config"
   },
   "dependencies": {
-    "@apollo/client": "3.3.10",
+    "@apollo/client": "3.3.11",
     "@apollo/link-error": "2.0.0-beta.3",
     "@apollo/react-ssr": "4.0.0",
     "@stripe/react-stripe-js": "1.2.2",
