@@ -40,7 +40,7 @@
     "@keystone-next/cloudinary": "3.0.1",
     "@keystone-next/fields": "5.1.0",
     "@keystone-next/keystone": "11.0.0",
-    "@keystone-next/types": "14.0.0",
+    "@keystone-next/types": "14.0.1",
     "@keystonejs/server-side-graphql-client": "2.1.0",
     "@types/nodemailer": "6.4.0",
     "dotenv": "8.2.0",
