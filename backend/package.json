@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@keystone-next/admin-ui": "10.0.0",
-    "@keystone-next/auth": "16.0.0",
+    "@keystone-next/auth": "16.0.1",
     "@keystone-next/cloudinary": "3.0.1",
     "@keystone-next/fields": "5.1.0",
     "@keystone-next/keystone": "11.0.0",
