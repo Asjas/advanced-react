@@ -42,7 +42,7 @@
     "@keystone-next/keystone": "12.0.0",
     "@keystone-next/types": "14.0.1",
     "@keystonejs/server-side-graphql-client": "2.1.0",
-    "@types/nodemailer": "6.4.0",
+    "@types/nodemailer": "6.4.1",
     "dotenv": "8.2.0",
     "next": "10.0.8",
     "nodemailer": "6.5.0",
