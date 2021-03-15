@@ -1,4 +1,7 @@
 {
+  "engines" : {
+    "node" : ">14.15.0"
+  },
   "scripts": {
     "start": "keystone-next start",
     "build": "keystone-next build",
