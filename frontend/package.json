@@ -45,7 +45,7 @@
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-react-apollo": "2.2.3",
     "@testing-library/jest-dom": "5.11.10",
-    "@testing-library/react": "11.2.2",
+    "@testing-library/react": "11.2.6",
     "@testing-library/user-event": "13.1.1",
     "@types/dotenv": "8.2.0",
     "@types/lodash.debounce": "4.0.6",
