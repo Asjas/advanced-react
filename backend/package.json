@@ -40,7 +40,7 @@
   "dependencies": {
     "@keystone-next/admin-ui": "12.0.1",
     "@keystone-next/auth": "19.0.0",
-    "@keystone-next/cloudinary": "3.0.4",
+    "@keystone-next/cloudinary": "3.0.5",
     "@keystone-next/fields": "5.4.0",
     "@keystone-next/keystone": "14.0.0",
     "@keystone-next/types": "15.0.0",
