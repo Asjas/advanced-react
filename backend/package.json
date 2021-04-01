@@ -51,7 +51,7 @@
     "nodemailer": "6.5.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "stripe": "8.140.0"
+    "stripe": "8.141.0"
   },
   "devDependencies": {
     "@types/node": "14.14.37",
