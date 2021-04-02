@@ -3,10 +3,7 @@ import Router from 'next/router';
 import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
 import useForm from '../utils/useForm';
-import {
-  useCreateProductMutation,
-  refetchAllProductsQuery,
-} from '../types/generated-queries';
+import { useCreateProductMutation, refetchAllProductsQuery } from '../types/generated-queries';
 
 function CreateProduct() {
   const { inputs, handleChange, clearForm } = useForm({
@@ -15,10 +12,7 @@ function CreateProduct() {
     description: 'These are the best shoes',
   });
 
-  const [
-    createProductMutation,
-    { data, error, loading },
-  ] = useCreateProductMutation({
+  const [createProductMutation, { data, error, loading }] = useCreateProductMutation({
     variables: {
       name: inputs.name,
       price: inputs.price,
@@ -46,14 +40,7 @@ function CreateProduct() {
         </label>
         <label htmlFor="name">
           Name
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Name"
-            value={inputs.name}
-            onChange={handleChange}
-          />
+          <input type="text" name="name" id="name" placeholder="Name" value={inputs.name} onChange={handleChange} />
         </label>
         <label htmlFor="price">
           Price

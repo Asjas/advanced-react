@@ -1,13 +1,13 @@
 overwrite: true
 schema: ${SCHEMA_ENDPOINT}
-documents: "graphql/*.graphql"
+documents: 'graphql/*.graphql'
 generates:
   types/generated-queries.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
-      - "typescript-apollo-client-helpers"
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+      - 'typescript-apollo-client-helpers'
     config:
       withRefetchFn: true
       withHooks: true

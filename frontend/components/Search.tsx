@@ -6,10 +6,7 @@ import { useSearchProductsLazyQuery } from '../types/generated-queries';
 
 function Search() {
   const router = useRouter();
-  const [
-    searchProducts,
-    { data, loading, error },
-  ] = useSearchProductsLazyQuery({ fetchPolicy: 'no-cache' });
+  const [searchProducts, { data, loading, error }] = useSearchProductsLazyQuery({ fetchPolicy: 'no-cache' });
 
   const items = data?.searchTerms || [];
   const findItemsButChill = debounce(searchProducts, 350);
@@ -53,16 +50,8 @@ function Search() {
       <DropDown {...getMenuProps()}>
         {isOpen
           ? items.map((item, index) => (
-              <DropDownItem
-                key={item.id}
-                {...getItemProps({ item })}
-                highlighted={index === highlightedIndex}
-              >
-                <img
-                  src={item?.photo?.image?.publicUrlTransformed}
-                  alt={item?.photo?.altText}
-                  width="50"
-                />
+              <DropDownItem key={item.id} {...getItemProps({ item })} highlighted={index === highlightedIndex}>
+                <img src={item?.photo?.image?.publicUrlTransformed} alt={item?.photo?.altText} width="50" />
                 {item.name}
               </DropDownItem>
             ))

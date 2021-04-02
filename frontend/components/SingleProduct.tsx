@@ -32,10 +32,7 @@ function SingleProduct({ id }: { id: string }) {
       <Head>
         <title>Sick Fits | {data.Product.name}</title>
       </Head>
-      <img
-        src={data?.Product?.photo?.image?.publicUrlTransformed}
-        alt={data?.Product?.photo?.altText}
-      />
+      <img src={data?.Product?.photo?.image?.publicUrlTransformed} alt={data?.Product?.photo?.altText} />
       <div className="details">
         <h2>{data.Product.name}</h2>
         <p>{data.Product.description}</p>

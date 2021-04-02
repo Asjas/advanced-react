@@ -1,7 +1,4 @@
-import {
-  refetchUserQuery,
-  useSignOutMutation,
-} from '../types/generated-queries';
+import { refetchUserQuery, useSignOutMutation } from '../types/generated-queries';
 
 function SignOut() {
   const [signOut] = useSignOutMutation({

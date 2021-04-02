@@ -11,10 +11,7 @@ function Reset({ token }: { token: string }) {
     token,
   });
 
-  const [
-    redeemPasswordReset,
-    { data, loading, error },
-  ] = useRedeemPasswordResetMutation({
+  const [redeemPasswordReset, { data, loading, error }] = useRedeemPasswordResetMutation({
     variables: {
       email: inputs.email,
       password: inputs.password,
@@ -28,18 +25,14 @@ function Reset({ token }: { token: string }) {
     resetForm();
   }
 
-  const successfulError =
-    data?.redeemUserPasswordResetToken?.code &&
-    data.redeemUserPasswordResetToken;
+  const successfulError = data?.redeemUserPasswordResetToken?.code && data.redeemUserPasswordResetToken;
 
   return (
     <Form method="POST" onSubmit={handleSubmit}>
       <h2>Reset your password</h2>
       <DisplayError error={error || successfulError} />
       <fieldset disabled={loading} aria-busy={loading}>
-        {data?.redeemUserPasswordResetToken === null && (
-          <p>Success! Please sign in to your account!</p>
-        )}
+        {data?.redeemUserPasswordResetToken === null && <p>Success! Please sign in to your account!</p>}
         <label htmlFor="email">
           Email
           <input

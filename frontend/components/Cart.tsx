@@ -33,11 +33,7 @@ function CartItem({ cartItem }: CartItemProps) {
 
   return (
     <CartItemStyles>
-      <img
-        width="100"
-        src={product.photo.image.publicUrlTransformed}
-        alt={product.photo.altText}
-      />
+      <img width="100" src={product.photo.image.publicUrlTransformed} alt={product.photo.altText} />
       <div>
         <h3>{product.name}</h3>
         <p>{formatMoney(product.price * cartItem.quantity)}</p>
@@ -57,6 +53,7 @@ function Cart() {
   const { cartOpen, closeCart } = useCart();
 
   if (!me) return null;
+
   return (
     <CartStyles open={cartOpen}>
       <header>

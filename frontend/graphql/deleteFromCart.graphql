@@ -1,9 +1,5 @@
-mutation deleteCartItem (
-  $id: ID!
-) {
-  deleteCartItem(
-    id: $id
-  ) {
+mutation deleteCartItem($id: ID!) {
+  deleteCartItem(id: $id) {
     id
   }
 }

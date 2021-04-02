@@ -1,7 +1,4 @@
-import {
-  useAddToCartMutation,
-  refetchUserQuery,
-} from '../types/generated-queries';
+import { useAddToCartMutation, refetchUserQuery } from '../types/generated-queries';
 
 function AddToCart({ id }: { id: string }) {
   const [addToCart, { loading }] = useAddToCartMutation({

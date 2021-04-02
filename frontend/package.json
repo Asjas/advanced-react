@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "predev": "npm run codegen",
     "dev": "next -p 7777",
     "build": "next build",
     "prestart": "npm run codegen",
@@ -8,7 +7,12 @@
     "test": "NODE_ENV=test jest --watch",
     "heroku-postbuild": "next build",
     "preinstall": "npx npm-force-resolutions",
-    "codegen": "graphql-codegen --config codegen.yml -r dotenv/config"
+    "codegen": "graphql-codegen --config codegen.yml -r dotenv/config",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --ignore-path .eslintignore --write",
+    "check-format": "prettier --ignore-path .eslintignore --list-different",
+    "validate": "npm run check-format && npm run lint"
   },
   "dependencies": {
     "@apollo/client": "3.3.13",
@@ -54,51 +58,12 @@
     "@types/react-dom": "17.0.3",
     "@types/react-transition-group": "4.4.1",
     "@types/styled-components": "5.1.9",
-    "@typescript-eslint/eslint-plugin": "4.20.0",
-    "@typescript-eslint/parser": "4.20.0",
-    "babel-eslint": "10.1.0",
     "babel-jest": "26.6.3",
     "casual": "1.6.2",
-    "eslint": "7.23.0",
-    "eslint-config-airbnb": "18.2.1",
-    "eslint-config-airbnb-typescript": "12.3.1",
-    "eslint-config-prettier": "8.1.0",
-    "eslint-config-wesbos": "2.0.0-beta.4",
-    "eslint-plugin-html": "6.1.2",
-    "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-prettier": "3.3.1",
-    "eslint-plugin-react": "7.23.1",
-    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-config-asjas": "0.0.17",
     "jest": "26.6.3",
-    "prettier": "2.2.1",
-    "react-test-renderer": "17.0.2",
+    "react-test-renderer": "17.0.1",
     "typescript": "4.2.3"
-  },
-  "eslintConfig": {
-    "extends": "wesbos/typescript.js",
-    "rules": {
-      "@typescript-eslint/ban-ts-comment": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/indent": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-unsafe-assignment": 0,
-      "@typescript-eslint/no-unsafe-call": 0,
-      "@typescript-eslint/no-unsafe-member-access": 0,
-      "@typescript-eslint/no-unsafe-return": 0,
-      "@typescript-eslint/restrict-plus-operands": 0,
-      "@typescript-eslint/restrict-template-expressions": 0,
-      "import/no-extraneous-dependencies": 0,
-      "import/no-unresolved": 0,
-      "jsx-a11y/img-redundant-alt": 0,
-      "no-plusplus": 0,
-      "no-restricted-globals": 0,
-      "no-use-before-define": 0,
-      "no-void": 0,
-      "prefer-destructuring": 0,
-      "react/jsx-filename-extension": 0,
-      "react/jsx-props-no-spreading": 0
-    }
   },
   "jest": {
     "setupFilesAfterEnv": [

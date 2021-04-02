@@ -12,10 +12,7 @@ type ProductProps = { product: productType };
 function Product({ product }: ProductProps) {
   return (
     <ItemStyles>
-      <img
-        src={product?.photo?.image?.publicUrlTransformed}
-        alt={product?.photo?.altText}
-      />
+      <img src={product?.photo?.image?.publicUrlTransformed} alt={product?.photo?.altText} />
       <Title>
         <Link href={`/product/${product.id}`}>{product.name}</Link>
       </Title>

@@ -24,9 +24,7 @@ function RequestReset() {
       <h2>Request a password reset</h2>
       <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
-        {data?.sendUserPasswordResetLink === null && (
-          <p>Success! Check your email for a link!</p>
-        )}
+        {data?.sendUserPasswordResetLink === null && <p>Success! Check your email for a link!</p>}
         <label htmlFor="email">
           Email
           <input

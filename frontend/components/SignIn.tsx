@@ -2,10 +2,7 @@ import { SyntheticEvent } from 'react';
 import useForm from '../utils/useForm';
 import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
-import {
-  useSignInMutation,
-  refetchUserQuery,
-} from '../types/generated-queries';
+import { useSignInMutation, refetchUserQuery } from '../types/generated-queries';
 
 function SignIn() {
   const { inputs, handleChange, resetForm } = useForm({
@@ -25,8 +22,7 @@ function SignIn() {
   }
 
   const error =
-    data?.authenticateUserWithPassword.__typename ===
-      'UserAuthenticationWithPasswordFailure' &&
+    data?.authenticateUserWithPassword.__typename === 'UserAuthenticationWithPasswordFailure' &&
     data.authenticateUserWithPassword;
 
   return (

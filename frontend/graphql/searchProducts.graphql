@@ -1,14 +1,5 @@
-query searchProducts (
-  $searchTerm: String!
-) {
-  searchTerms: allProducts(
-    where: {
-      OR: [
-        { name_contains_i: $searchTerm }
-        { description_contains_i: $searchTerm }
-      ]
-    }
-  ) {
+query searchProducts($searchTerm: String!) {
+  searchTerms: allProducts(where: { OR: [{ name_contains_i: $searchTerm }, { description_contains_i: $searchTerm }] }) {
     id
     name
     photo {

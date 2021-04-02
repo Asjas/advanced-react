@@ -27,12 +27,11 @@ function useForm(initial: Inputs) {
   const initialValues = Object.values(initial).join('');
 
   useEffect(() => {
-    setInputs(initial);
-  }, [initialValues]);
+    console.log({ initial });
+    setInputs(() => initial);
+  }, [initial]);
 
-  function handleChange(
-    event: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLTextAreaElement>
-  ) {
+  function handleChange(event: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLTextAreaElement>) {
     let { name, type, value }: InputTypes = event.target;
 
     if (type === 'number') {
@@ -54,9 +53,7 @@ function useForm(initial: Inputs) {
   }
 
   function clearForm() {
-    const blankState = Object.fromEntries(
-      Object.entries(inputs).map(([key, value]) => [key, ''])
-    ) as unknown;
+    const blankState = Object.fromEntries(Object.entries(inputs).map(([key, value]) => [key, ''])) as unknown;
 
     setInputs(blankState as Inputs);
   }

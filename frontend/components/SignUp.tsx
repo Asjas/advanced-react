@@ -30,12 +30,7 @@ function SignUp() {
       <h2>Sign Up For An Account</h2>
       <DisplayError error={error} />
       <fieldset disabled={loading} aria-busy={loading}>
-        {data?.createUser && (
-          <p>
-            Signed up with {data.createUser.email} - Please go ahead and sign
-            in!
-          </p>
-        )}
+        {data?.createUser && <p>Signed up with {data.createUser.email} - Please go ahead and sign in!</p>}
         <label htmlFor="name">
           Name
           <input

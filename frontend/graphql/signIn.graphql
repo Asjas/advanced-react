@@ -1,11 +1,5 @@
-mutation signIn(
-  $email: String!
-  $password: String!
-) {
-  authenticateUserWithPassword(
-    email: $email
-    password: $password
-  ) {
+mutation signIn($email: String!, $password: String!) {
+  authenticateUserWithPassword(email: $email, password: $password) {
     ... on UserAuthenticationWithPasswordSuccess {
       item {
         id

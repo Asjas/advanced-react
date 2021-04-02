@@ -25,9 +25,7 @@ function CartStateProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <LocalStateContext.Provider
-      value={{ cartOpen, openCart, toggleCart, closeCart }}
-    >
+    <LocalStateContext.Provider value={{ cartOpen, openCart, toggleCart, closeCart }}>
       {children}
     </LocalStateContext.Provider>
   );

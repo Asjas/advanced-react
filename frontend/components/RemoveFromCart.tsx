@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { ApolloCache, Cache } from '@apollo/client';
-import {
-  useDeleteCartItemMutation,
-  CartItem,
-} from '../types/generated-queries';
+import { useDeleteCartItemMutation, CartItem } from '../types/generated-queries';
 
 const BigButton = styled.button`
   font-size: 3rem;
@@ -23,9 +20,7 @@ type UpdateFnPayloadProps = {
 };
 
 function update(cache: ApolloCache<any>, payload: UpdateFnPayloadProps) {
-  cache.evict(
-    cache.identify(payload.data.deleteCartItem) as Cache.EvictOptions
-  );
+  cache.evict(cache.identify(payload.data.deleteCartItem) as Cache.EvictOptions);
 }
 
 function RemoveFromCart({ id }: { id: string }) {
@@ -39,11 +34,7 @@ function RemoveFromCart({ id }: { id: string }) {
   }
 
   return (
-    <BigButton
-      title="Remove this item from cart"
-      type="button"
-      onClick={handleClick}
-    >
+    <BigButton title="Remove this item from cart" type="button" onClick={handleClick}>
       &times;
     </BigButton>
   );

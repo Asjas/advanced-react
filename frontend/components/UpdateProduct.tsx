@@ -1,18 +1,12 @@
 import { SyntheticEvent } from 'react';
 import DisplayError from './ErrorMessage';
 import Form from './styles/Form';
-import {
-  useProductQuery,
-  useUpdateProductMutation,
-} from '../types/generated-queries';
+import { useProductQuery, useUpdateProductMutation } from '../types/generated-queries';
 import useForm from '../utils/useForm';
 
 function UpdateProduct({ id }: { id: string }) {
   const { data, loading, error } = useProductQuery({ variables: { id } });
-  const [
-    updateProduct,
-    { data: updateData, loading: updateLoading, error: updateError },
-  ] = useUpdateProductMutation();
+  const [updateProduct, { data: updateData, loading: updateLoading, error: updateError }] = useUpdateProductMutation();
 
   const { inputs, handleChange, clearForm } = useForm({
     name: data?.Product.name || '',
@@ -42,14 +36,7 @@ function UpdateProduct({ id }: { id: string }) {
       <fieldset disabled={updateLoading} aria-busy={updateLoading}>
         <label htmlFor="name">
           Name
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Name"
-            value={inputs.name}
-            onChange={handleChange}
-          />
+          <input type="text" name="name" id="name" placeholder="Name" value={inputs.name} onChange={handleChange} />
         </label>
         <label htmlFor="price">
           Price

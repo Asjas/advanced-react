@@ -6,10 +6,7 @@ import withApollo from 'next-with-apollo';
 import paginationField from './paginationField';
 import { TypedTypePolicies } from '../types/generated-queries';
 
-const {
-  NEXT_PUBLIC_DEVELOPMENT_ENDPOINT,
-  NEXT_PUBLIC_PRODUCTION_ENDPOINT,
-} = process.env;
+const { NEXT_PUBLIC_DEVELOPMENT_ENDPOINT, NEXT_PUBLIC_PRODUCTION_ENDPOINT } = process.env;
 
 const allProductsTypePolicy: TypedTypePolicies = {
   // Keys in this object will be validated against the typed on your schema
@@ -23,21 +20,14 @@ function createClient({ headers, initialState }) {
       onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
           graphQLErrors.forEach(({ message, locations, path }) =>
-            console.log(
-              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-            )
+            console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
           );
-        if (networkError)
-          console.log(
-            `[Network error]: ${networkError}. Backend is unreachable. Is it running?`
-          );
+        if (networkError) console.log(`[Network error]: ${networkError}. Backend is unreachable. Is it running?`);
       }),
       // this uses apollo-link-http under the hood, so all the options here come from that package
       createUploadLink({
         uri:
-          process.env.NODE_ENV === 'development'
-            ? NEXT_PUBLIC_DEVELOPMENT_ENDPOINT
-            : NEXT_PUBLIC_PRODUCTION_ENDPOINT,
+          process.env.NODE_ENV === 'development' ? NEXT_PUBLIC_DEVELOPMENT_ENDPOINT : NEXT_PUBLIC_PRODUCTION_ENDPOINT,
         fetchOptions: {
           credentials: 'include',
         },

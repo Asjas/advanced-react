@@ -1,19 +1,11 @@
-import {
-  CardElement,
-  Elements,
-  useElements,
-  useStripe,
-} from '@stripe/react-stripe-js';
+import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe, StripeError } from '@stripe/stripe-js';
 import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
 import { SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import { useCart } from '../hooks/Cart';
-import {
-  useCreateOrderMutation,
-  refetchUserQuery,
-} from '../types/generated-queries';
+import { useCreateOrderMutation, refetchUserQuery } from '../types/generated-queries';
 import SickButton from './styles/SickButton';
 
 const CheckoutFormStyles = styled.form`
@@ -48,10 +40,7 @@ function CheckoutForm() {
     setLoading(true);
     nProgress.start();
 
-    const {
-      error: stripeError,
-      paymentMethod,
-    } = await stripe.createPaymentMethod({
+    const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
     });
