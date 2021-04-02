@@ -1,6 +1,6 @@
-import { graphQLSchemaExtension } from '@keystone-next/keystone/schema';
-import addToCart from './addToCart';
-import checkout from './checkout';
+import { graphQLSchemaExtension } from "@keystone-next/keystone/schema";
+import addToCart from "./addToCart";
+import checkout from "./checkout";
 
 const gql = String.raw;
 export const extendGraphqlSchema = graphQLSchemaExtension({

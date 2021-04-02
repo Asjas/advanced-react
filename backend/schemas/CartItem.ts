@@ -1,5 +1,5 @@
-import { list } from '@keystone-next/keystone/schema';
-import { integer, relationship, select, text } from '@keystone-next/fields';
+import { list } from "@keystone-next/keystone/schema";
+import { integer, relationship } from "@keystone-next/fields";
 
 export const CartItem = list({
   fields: {
@@ -7,12 +7,12 @@ export const CartItem = list({
       defaultValue: 1,
       isRequired: true,
     }),
-    product: relationship({ ref: 'Product' }),
-    user: relationship({ ref: 'User.cart' }),
+    product: relationship({ ref: "Product" }),
+    user: relationship({ ref: "User.cart" }),
   },
   ui: {
     listView: {
-      initialColumns: ['product', 'quantity', 'user'],
+      initialColumns: ["product", "quantity", "user"],
     },
   },
 });

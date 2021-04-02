@@ -1,19 +1,16 @@
-import { KeystoneContext } from '@keystone-next/types';
-import { Session } from '../types';
-import {
-  CartItemCreateInput,
-  CartItemsUpdateInput,
-} from '../.keystone/schema-types';
+import { KeystoneContext } from "@keystone-next/types";
+import { Session } from "../types";
+import { CartItemCreateInput, CartItemsUpdateInput } from "../.keystone/schema-types";
 
 async function addToCart(
   _root: unknown,
   { productId }: { productId: string },
-  context: KeystoneContext
+  context: KeystoneContext,
 ): Promise<CartItemCreateInput> {
   const { session }: { session?: Session } = context;
 
   if (!session.itemId) {
-    throw new Error('You must be logged in to do this!');
+    throw new Error("You must be logged in to do this!");
   }
 
   type AllCartItems = CartItemCreateInput[] & CartItemsUpdateInput[];
@@ -27,7 +24,7 @@ async function addToCart(
         id: productId,
       },
     },
-    resolveFields: 'id,quantity',
+    resolveFields: "id,quantity",
   })) as AllCartItems;
 
   const [existingCartItem] = allCartItems;

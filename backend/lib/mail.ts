@@ -1,5 +1,5 @@
-import 'dotenv/config';
-import { createTransport, getTestMessageUrl, SentMessageInfo } from 'nodemailer';
+import "dotenv/config";
+import { createTransport, getTestMessageUrl, SentMessageInfo } from "nodemailer";
 
 const transport = createTransport({
   host: process.env.MAIL_HOST,
@@ -24,32 +24,34 @@ function makeANiceEmail(text: string) {
       <p>©️, A-J Roos</p>
     </div>
   `;
-};
-
-type MailResponse = {
-  accepted?: string[] | null,
-  rejected?: string[] | null,
-  envelopeTime: number,
-  messageTime: number,
-  messageSize: number,
-  response: string,
-  envelope: {
-    from: string, to?: string[] | null
-  },
-  messageId: string
 }
 
+type MailResponse = {
+  accepted?: string[] | null;
+  rejected?: string[] | null;
+  envelopeTime: number;
+  messageTime: number;
+  messageSize: number;
+  response: string;
+  envelope: {
+    from: string;
+    to?: string[] | null;
+  };
+  messageId: string;
+};
+
 export async function sendPasswordResetEmail(resetToken: string, to: string): Promise<void> {
-  const info = await transport.sendMail({
+  const info = (await transport.sendMail({
     to,
-    from: 'test@example.com',
-    subject: 'Your Sick Fits password reset token!',
+    from: "test@example.com",
+    subject: "Your Sick Fits password reset token!",
     html: makeANiceEmail(`Your Password reset token is here!
       <a href="${process.env.FRONTEND_URL}/reset?token=${resetToken}">Click here to reset</a>
-    `)
-  }) as MailResponse;
+    `),
+  })) as MailResponse;
 
-  if(process.env.MAIL_USER.includes('ethereal.email')) {
-    console.log(`📬 Message Sent! Preview it at ${getTestMessageUrl(info as SentMessageInfo)}`)
+  if (process.env.MAIL_USER.includes("ethereal.email")) {
+    /* eslint no-console: 0 */
+    console.log(`📬 Message Sent! Preview it at ${getTestMessageUrl(info as SentMessageInfo)}`);
   }
 }
