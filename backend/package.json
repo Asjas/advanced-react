@@ -32,7 +32,7 @@
     "@keystone-next/admin-ui": "13.0.0",
     "@keystone-next/auth": "19.0.0",
     "@keystone-next/cloudinary": "3.0.5",
-    "@keystone-next/fields": "5.4.0",
+    "@keystone-next/fields": "6.0.0",
     "@keystone-next/keystone": "14.0.1",
     "@keystone-next/types": "16.0.0",
     "@keystonejs/server-side-graphql-client": "2.1.0",
