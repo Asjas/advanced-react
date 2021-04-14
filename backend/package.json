@@ -35,7 +35,7 @@
     "@keystone-next/fields": "6.0.0",
     "@keystone-next/keystone": "15.0.0",
     "@keystone-next/types": "16.0.0",
-    "@keystonejs/server-side-graphql-client": "2.1.0",
+    "@keystonejs/server-side-graphql-client": "2.1.1",
     "@types/nodemailer": "6.4.1",
     "dotenv": "8.2.0",
     "next": "10.1.3",
