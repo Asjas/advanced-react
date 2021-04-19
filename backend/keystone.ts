@@ -16,7 +16,7 @@ import { sendPasswordResetEmail } from "./lib/mail";
 import { extendGraphqlSchema } from "./mutations";
 
 const THIRTY_DAYS = 60 * 60 * 24 * 30;
-const databaseURL = process.env.DATABASE_URL || "test";
+const databaseURL = process.env.DATABASE_URL || "file:./keystone.db";
 
 const sessionConfig = {
   maxAge: THIRTY_DAYS,
@@ -45,15 +45,18 @@ export default withAuth(
         credentials: true,
       },
     },
-    db: {
-      adapter: "mongoose",
-      url: databaseURL,
-      async onConnect(keystone) {
-        if (process.argv.includes("--seed-data")) {
-          await insertSeedData(keystone);
-        }
-      },
-    },
+    db: process.env.DATABASE_URL
+      ? { provider: "postgresql", url: process.env.DATABASE_URL }
+      : {
+          provider: "sqlite",
+          url: databaseURL,
+          async onConnect(keystone) {
+            console.log("Connected to the database!");
+            if (process.argv.includes("--seed-data")) {
+              await insertSeedData(keystone);
+            }
+          },
+        },
     graphql: {
       queryLimits: {
         maxTotalResults: 100,
