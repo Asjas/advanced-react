@@ -38,7 +38,7 @@
     "@keystone-next/auth": "20.0.0",
     "@keystone-next/cloudinary": "3.0.6",
     "@keystone-next/fields": "6.0.0",
-    "@keystone-next/keystone": "15.0.0",
+    "@keystone-next/keystone": "16.0.0",
     "@keystone-next/types": "16.0.0",
     "@keystonejs/server-side-graphql-client": "2.1.1",
     "@types/nodemailer": "6.4.1",
