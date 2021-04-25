@@ -58,6 +58,10 @@ export default withAuth(
           },
         },
     graphql: {
+      apolloConfig: {
+        introspection: true,
+        playground: true,
+      },
       queryLimits: {
         maxTotalResults: 100,
       },
