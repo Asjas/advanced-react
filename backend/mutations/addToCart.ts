@@ -1,15 +1,15 @@
 import { KeystoneContext } from "@keystone-next/types";
 import { Session } from "../types";
-import { CartItemCreateInput, CartItemsUpdateInput } from "../.keystone/schema-types";
+import { CartItemCreateInput, CartItemsUpdateInput } from "../node_modules/.keystone/types";
 
 async function addToCart(
   _root: unknown,
   { productId }: { productId: string },
   context: KeystoneContext,
 ): Promise<CartItemCreateInput> {
-  const { session }: { session?: Session } = context;
+  const sesh = context.session as Session;
 
-  if (!session.itemId) {
+  if (!sesh.itemId) {
     throw new Error("You must be logged in to do this!");
   }
 
@@ -18,13 +18,13 @@ async function addToCart(
   const allCartItems = (await context.lists.CartItem.findMany({
     where: {
       user: {
-        id: session.itemId,
+        id: sesh.itemId,
       },
       product: {
         id: productId,
       },
     },
-    resolveFields: "id,quantity",
+    query: "id quantity",
   })) as AllCartItems;
 
   const [existingCartItem] = allCartItems;
@@ -43,7 +43,7 @@ async function addToCart(
         connect: { id: productId },
       },
       user: {
-        connect: { id: session.itemId },
+        connect: { id: sesh.itemId },
       },
     },
     resolveFields: false,

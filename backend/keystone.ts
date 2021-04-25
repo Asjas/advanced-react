@@ -62,6 +62,10 @@ export default withAuth(
         maxTotalResults: 100,
       },
     },
+    experimental: {
+      generateNextGraphqlAPI: true,
+      enableNextJsGraphqlApiEndpoint: true,
+    },
     lists: createSchema({
       User,
       Product,

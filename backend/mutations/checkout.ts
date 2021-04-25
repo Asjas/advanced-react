@@ -1,5 +1,6 @@
 import { KeystoneContext } from "@keystone-next/types";
-import { CartItemCreateInput, OrderCreateInput } from "../.keystone/schema-types";
+import { Session } from "../types";
+import { CartItemCreateInput, OrderCreateInput } from "../node_modules/.keystone/types";
 import stripeConfig from "../lib/stripe";
 
 const gql = String.raw;
@@ -9,15 +10,15 @@ async function checkout(
   { token }: { token: string },
   context: KeystoneContext,
 ): Promise<OrderCreateInput> {
-  const userId = context.session.itemId;
+  const sesh = context.session as Session;
 
-  if (!userId) {
+  if (!sesh.itemId) {
     throw new Error("Sorry! You must be signed in to create an order!");
   }
 
   const user = await context.lists.User.findOne({
-    where: { id: userId },
-    resolveFields: gql`
+    where: { id: sesh.itemId },
+    query: gql`
       id
       name
       email
@@ -44,7 +45,7 @@ async function checkout(
   const cartItems = user.cart.filter((cartItem) => cartItem.product);
 
   const amount = cartItems.reduce(
-    (tally: number, cartItem: CartItemCreateInput) => tally + cartItem.quantity * cartItem.product.price,
+    (tally: number, cartItem: any) => tally + cartItem.quantity * cartItem.product.price,
     0,
   );
 
@@ -76,7 +77,7 @@ async function checkout(
       total: charge.amount,
       charge: charge.id,
       items: { create: orderItems },
-      user: { connect: { id: userId } },
+      user: { connect: { id: sesh.itemId } },
     },
     resolveFields: false,
   });
