@@ -50,7 +50,7 @@
     "stripe": "8.145.0"
   },
   "devDependencies": {
-    "@types/node": "14.14.41",
+    "@types/node": "14.14.43",
     "eslint-config-asjas": "0.0.21",
     "typescript": "4.2.4"
   }
