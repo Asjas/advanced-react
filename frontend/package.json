@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "@apollo/react-testing": "4.0.0",
-    "@babel/core": "7.13.16",
-    "@babel/preset-env": "7.13.15",
+    "@babel/core": "7.14.0",
+    "@babel/preset-env": "7.14.0",
     "@graphql-codegen/cli": "1.21.4",
     "@graphql-codegen/typescript": "1.22.0",
     "@graphql-codegen/typescript-apollo-client-helpers": "1.1.5",
