@@ -34,7 +34,7 @@
     "@babel/preset-react": "7.13.13",
     "@babel/preset-typescript": "7.13.0",
     "@babel/runtime": "7.14.0",
-    "@keystone-next/admin-ui": "14.0.0",
+    "@keystone-next/admin-ui": "14.1.1",
     "@keystone-next/auth": "21.0.0",
     "@keystone-next/cloudinary": "4.0.0",
     "@keystone-next/fields": "7.0.0",
