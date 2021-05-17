@@ -29,28 +29,28 @@
     ]
   },
   "dependencies": {
-    "@babel/plugin-transform-runtime": "7.13.15",
-    "@babel/preset-env": "7.13.15",
+    "@babel/plugin-transform-runtime": "7.14.2",
+    "@babel/preset-env": "7.14.2",
     "@babel/preset-react": "7.13.13",
     "@babel/preset-typescript": "7.13.0",
-    "@babel/runtime": "7.13.17",
-    "@keystone-next/admin-ui": "14.0.0",
-    "@keystone-next/auth": "21.0.0",
-    "@keystone-next/cloudinary": "4.0.0",
-    "@keystone-next/fields": "7.0.0",
-    "@keystone-next/keystone": "16.0.0",
-    "@keystone-next/types": "17.0.0",
+    "@babel/runtime": "7.14.0",
+    "@keystone-next/admin-ui": "14.1.3",
+    "@keystone-next/auth": "24.0.0",
+    "@keystone-next/cloudinary": "4.0.1",
+    "@keystone-next/fields": "8.2.0",
+    "@keystone-next/keystone": "17.2.0",
+    "@keystone-next/types": "17.1.0",
     "@keystonejs/server-side-graphql-client": "2.1.1",
     "@types/nodemailer": "6.4.1",
-    "dotenv": "8.2.0",
-    "next": "10.1.3",
-    "nodemailer": "6.5.0",
+    "dotenv": "9.0.2",
+    "next": "10.2.0",
+    "nodemailer": "6.6.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "stripe": "8.145.0"
+    "stripe": "8.148.0"
   },
   "devDependencies": {
-    "@types/node": "14.14.41",
+    "@types/node": "15.3.0",
     "eslint-config-asjas": "0.0.21",
     "typescript": "4.2.4"
   }
