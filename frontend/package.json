@@ -66,7 +66,7 @@
     "eslint-config-asjas": "0.0.21",
     "jest": "27.0.1",
     "react-test-renderer": "17.0.2",
-    "typescript": "4.2.4"
+    "typescript": "4.3.2"
   },
   "jest": {
     "setupFilesAfterEnv": [
