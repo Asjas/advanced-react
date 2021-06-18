@@ -22,7 +22,7 @@
     "@apollo/link-error": "2.0.0-beta.3",
     "@apollo/react-ssr": "4.0.0",
     "@stripe/react-stripe-js": "1.4.1",
-    "@stripe/stripe-js": "1.15.0",
+    "@stripe/stripe-js": "1.15.1",
     "apollo-upload-client": "16.0.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-styled-components": "1.12.0",
