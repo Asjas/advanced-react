@@ -11,4 +11,6 @@ COPY --chown=node:node . .
 
 RUN npm run build
 
+RUN npm run seed-data
+
 CMD ["./node_modules/.bin/keystone-next", "start"]
