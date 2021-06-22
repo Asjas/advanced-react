@@ -1,7 +1,4 @@
 {
-  "engines": {
-    "node": ">14.0.0"
-  },
   "scripts": {
     "dev": "next -p 7777",
     "build": "next build",
