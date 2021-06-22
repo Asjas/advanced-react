@@ -10,3 +10,4 @@ tests/
 .DS_Store
 .env
 sample.env
+keystone.db
