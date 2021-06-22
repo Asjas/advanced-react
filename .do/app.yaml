@@ -1,11 +1,10 @@
 name: advanced-react
 
 services:
-- name: backend
+- dockerfile_path: Dockerfile
   github:
-    repo: Asjas/advanced-react
     branch: main
     deploy_on_push: true
+    repo: Asjas/advanced-react
   source_dir: backend
-  routes:
-  - path: /
+  name: advanced-react
