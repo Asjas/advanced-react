@@ -1,5 +1,5 @@
 name: advanced-react
-region: blr
+region: ams
 
 services:
 - dockerfile_path: backend/Dockerfile
