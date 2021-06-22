@@ -1,0 +1,12 @@
+node_modules/
+.keystone/
+tests/
+.vscode/
+.git
+.gitignore
+.eslintrc
+.eslintignore
+.prettierrc.js
+.DS_Store
+.env
+sample.env

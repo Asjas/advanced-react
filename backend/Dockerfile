@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-EXPOSE 3000
+EXPOSE 8080
 
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
