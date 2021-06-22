@@ -1,15 +1,15 @@
 import { KeystoneContext } from "@keystone-next/types";
 import { Session } from "../types";
-import { CartItemCreateInput, OrderCreateInput } from "../node_modules/.keystone/types";
+// import { CartItemCreateInput, OrderCreateInput } from "../node_modules/.keystone/types";
 import stripeConfig from "../lib/stripe";
 
 const gql = String.raw;
 
-async function checkout(
-  _root: unknown,
-  { token }: { token: string },
-  context: KeystoneContext,
-): Promise<OrderCreateInput> {
+interface Arguments {
+  token: string;
+}
+
+async function checkout(_root: unknown, { token }: Arguments, context: KeystoneContext): Promise<any> {
   const sesh = context.session as Session;
 
   if (!sesh.itemId) {
@@ -72,14 +72,13 @@ async function checkout(
     return orderItem;
   });
 
-  const order = await context.lists.Order.createOne({
+  const order = await context.db.lists.Order.createOne({
     data: {
       total: charge.amount,
       charge: charge.id,
       items: { create: orderItems },
       user: { connect: { id: sesh.itemId } },
     },
-    resolveFields: false,
   });
 
   const cartItemsIds = user.cart.map((cartItem) => cartItem.id);

@@ -1,19 +1,14 @@
 import { KeystoneContext } from "@keystone-next/types";
 import { Session } from "../types";
-import { CartItemCreateInput, CartItemsUpdateInput } from "../node_modules/.keystone/types";
 
-async function addToCart(
-  _root: unknown,
-  { productId }: { productId: string },
-  context: KeystoneContext,
-): Promise<CartItemCreateInput> {
+async function addToCart(_root: unknown, { productId }: { productId: string }, context: KeystoneContext): Promise<any> {
   const sesh = context.session as Session;
 
   if (!sesh.itemId) {
     throw new Error("You must be logged in to do this!");
   }
 
-  type AllCartItems = CartItemCreateInput[] & CartItemsUpdateInput[];
+  // type AllCartItems = CartItemCreateInput[] & CartItemsUpdateInput[];
 
   const allCartItems = (await context.lists.CartItem.findMany({
     where: {
@@ -25,28 +20,22 @@ async function addToCart(
       },
     },
     query: "id quantity",
-  })) as AllCartItems;
+  })) as any;
 
   const [existingCartItem] = allCartItems;
 
   if (existingCartItem) {
-    return context.lists.CartItem.updateOne({
+    return await context.db.lists.CartItem.updateOne({
       id: existingCartItem.id,
       data: { quantity: existingCartItem.quantity + 1 },
-      resolveFields: false,
     });
   }
 
-  return context.lists.CartItem.createOne({
+  return await context.db.lists.CartItem.createOne({
     data: {
-      product: {
-        connect: { id: productId },
-      },
-      user: {
-        connect: { id: sesh.itemId },
-      },
+      product: { connect: { id: productId } },
+      user: { connect: { id: sesh.itemId } },
     },
-    resolveFields: false,
   });
 }
 

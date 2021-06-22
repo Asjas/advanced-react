@@ -3,6 +3,7 @@ import addToCart from "./addToCart";
 import checkout from "./checkout";
 
 const gql = String.raw;
+
 export const extendGraphqlSchema = graphQLSchemaExtension({
   typeDefs: gql`
     type Mutation {

@@ -1,17 +1,3 @@
-input CartItemRelateToManyInput {
-  create: [CartItemCreateInput]
-  connect: [CartItemWhereUniqueInput]
-  disconnect: [CartItemWhereUniqueInput]
-  disconnectAll: Boolean
-}
-
-input OrderRelateToManyInput {
-  create: [OrderCreateInput]
-  connect: [OrderWhereUniqueInput]
-  disconnect: [OrderWhereUniqueInput]
-  disconnectAll: Boolean
-}
-
 """
  A keystone list
 """
@@ -19,47 +5,67 @@ type User {
   id: ID!
   name: String
   email: String
-  password_is_set: Boolean
+  password: PasswordState
   cart(
-    where: CartItemWhereInput
+    where: CartItemWhereInput! = {}
     search: String
     sortBy: [SortCartItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [CartItem!]!
+    skip: Int! = 0
+  ): [CartItem!]
   _cartMeta(
-    where: CartItemWhereInput
+    where: CartItemWhereInput! = {}
     search: String
     sortBy: [SortCartItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use cartCount instead."
+    )
+  cartCount(where: CartItemWhereInput! = {}): Int
   orders(
-    where: OrderWhereInput
+    where: OrderWhereInput! = {}
     search: String
     sortBy: [SortOrdersBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [Order!]!
+    skip: Int! = 0
+  ): [Order!]
   _ordersMeta(
-    where: OrderWhereInput
+    where: OrderWhereInput! = {}
     search: String
     sortBy: [SortOrdersBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
-  passwordResetToken_is_set: Boolean
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use ordersCount instead."
+    )
+  ordersCount(where: OrderWhereInput! = {}): Int
+  passwordResetToken: PasswordState
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
 }
 
+type PasswordState {
+  isSet: Boolean!
+}
+
+type _QueryMeta {
+  count: Int
+}
+
 input UserWhereInput {
-  AND: [UserWhereInput]
-  OR: [UserWhereInput]
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
   id: ID
   id_not: ID
   id_lt: ID
@@ -131,7 +137,8 @@ input UserWhereInput {
 }
 
 input UserWhereUniqueInput {
-  id: ID!
+  id: ID
+  email: String
 }
 
 enum SortUsersBy {
@@ -141,14 +148,23 @@ enum SortUsersBy {
   name_DESC
   email_ASC
   email_DESC
-  cart_ASC
-  cart_DESC
-  orders_ASC
-  orders_DESC
   passwordResetIssuedAt_ASC
   passwordResetIssuedAt_DESC
   passwordResetRedeemedAt_ASC
   passwordResetRedeemedAt_DESC
+}
+
+input UserOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  email: OrderDirection
+  passwordResetIssuedAt: OrderDirection
+  passwordResetRedeemedAt: OrderDirection
+}
+
+enum OrderDirection {
+  asc
+  desc
 }
 
 input UserUpdateInput {
@@ -160,6 +176,20 @@ input UserUpdateInput {
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
+}
+
+input CartItemRelateToManyInput {
+  create: [CartItemCreateInput]
+  connect: [CartItemWhereUniqueInput]
+  disconnect: [CartItemWhereUniqueInput]
+  disconnectAll: Boolean
+}
+
+input OrderRelateToManyInput {
+  create: [OrderCreateInput]
+  connect: [OrderWhereUniqueInput]
+  disconnect: [OrderWhereUniqueInput]
+  disconnectAll: Boolean
 }
 
 input UsersUpdateInput {
@@ -182,13 +212,6 @@ input UsersCreateInput {
   data: UserCreateInput
 }
 
-input ProductImageRelateToOneInput {
-  create: ProductImageCreateInput
-  connect: ProductImageWhereUniqueInput
-  disconnect: ProductImageWhereUniqueInput
-  disconnectAll: Boolean
-}
-
 """
  A keystone list
 """
@@ -202,8 +225,8 @@ type Product {
 }
 
 input ProductWhereInput {
-  AND: [ProductWhereInput]
-  OR: [ProductWhereInput]
+  AND: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
   id: ID
   id_not: ID
   id_lt: ID
@@ -241,7 +264,7 @@ input ProductWhereInput {
 }
 
 input ProductWhereUniqueInput {
-  id: ID!
+  id: ID
 }
 
 enum SortProductsBy {
@@ -251,12 +274,18 @@ enum SortProductsBy {
   name_DESC
   description_ASC
   description_DESC
-  photo_ASC
-  photo_DESC
   status_ASC
   status_DESC
   price_ASC
   price_DESC
+}
+
+input ProductOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  status: OrderDirection
+  price: OrderDirection
 }
 
 input ProductUpdateInput {
@@ -265,6 +294,13 @@ input ProductUpdateInput {
   photo: ProductImageRelateToOneInput
   status: String
   price: Int
+}
+
+input ProductImageRelateToOneInput {
+  create: ProductImageCreateInput
+  connect: ProductImageWhereUniqueInput
+  disconnect: ProductImageWhereUniqueInput
+  disconnectAll: Boolean
 }
 
 input ProductsUpdateInput {
@@ -284,9 +320,18 @@ input ProductsCreateInput {
   data: ProductCreateInput
 }
 
+"""
+ A keystone list
+"""
+type ProductImage {
+  id: ID!
+  image: CloudinaryImage_File
+  altText: String
+  product: Product
+}
+
 type CloudinaryImage_File {
   id: ID
-  path: String
   filename: String
   originalFilename: String
   mimetype: String
@@ -334,26 +379,9 @@ input CloudinaryImageFormat {
   transformation: String
 }
 
-input ProductRelateToOneInput {
-  create: ProductCreateInput
-  connect: ProductWhereUniqueInput
-  disconnect: ProductWhereUniqueInput
-  disconnectAll: Boolean
-}
-
-"""
- A keystone list
-"""
-type ProductImage {
-  id: ID!
-  image: CloudinaryImage_File
-  altText: String
-  product: Product
-}
-
 input ProductImageWhereInput {
-  AND: [ProductImageWhereInput]
-  OR: [ProductImageWhereInput]
+  AND: [ProductImageWhereInput!]
+  OR: [ProductImageWhereInput!]
   id: ID
   id_not: ID
   id_lt: ID
@@ -377,7 +405,7 @@ input ProductImageWhereInput {
 }
 
 input ProductImageWhereUniqueInput {
-  id: ID!
+  id: ID
 }
 
 enum SortProductImagesBy {
@@ -385,14 +413,29 @@ enum SortProductImagesBy {
   id_DESC
   altText_ASC
   altText_DESC
-  product_ASC
-  product_DESC
+}
+
+input ProductImageOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
 }
 
 input ProductImageUpdateInput {
   image: Upload
   altText: String
   product: ProductRelateToOneInput
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input ProductRelateToOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+  disconnect: ProductWhereUniqueInput
+  disconnectAll: Boolean
 }
 
 input ProductImagesUpdateInput {
@@ -410,13 +453,6 @@ input ProductImagesCreateInput {
   data: ProductImageCreateInput
 }
 
-input UserRelateToOneInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  disconnectAll: Boolean
-}
-
 """
  A keystone list
 """
@@ -428,8 +464,8 @@ type CartItem {
 }
 
 input CartItemWhereInput {
-  AND: [CartItemWhereInput]
-  OR: [CartItemWhereInput]
+  AND: [CartItemWhereInput!]
+  OR: [CartItemWhereInput!]
   id: ID
   id_not: ID
   id_lt: ID
@@ -453,7 +489,7 @@ input CartItemWhereInput {
 }
 
 input CartItemWhereUniqueInput {
-  id: ID!
+  id: ID
 }
 
 enum SortCartItemsBy {
@@ -461,16 +497,24 @@ enum SortCartItemsBy {
   id_DESC
   quantity_ASC
   quantity_DESC
-  product_ASC
-  product_DESC
-  user_ASC
-  user_DESC
+}
+
+input CartItemOrderByInput {
+  id: OrderDirection
+  quantity: OrderDirection
 }
 
 input CartItemUpdateInput {
   quantity: Int
   product: ProductRelateToOneInput
   user: UserRelateToOneInput
+}
+
+input UserRelateToOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: UserWhereUniqueInput
+  disconnectAll: Boolean
 }
 
 input CartItemsUpdateInput {
@@ -488,13 +532,6 @@ input CartItemsCreateInput {
   data: CartItemCreateInput
 }
 
-input OrderRelateToOneInput {
-  create: OrderCreateInput
-  connect: OrderWhereUniqueInput
-  disconnect: OrderWhereUniqueInput
-  disconnectAll: Boolean
-}
-
 """
  A keystone list
 """
@@ -509,8 +546,8 @@ type OrderItem {
 }
 
 input OrderItemWhereInput {
-  AND: [OrderItemWhereInput]
-  OR: [OrderItemWhereInput]
+  AND: [OrderItemWhereInput!]
+  OR: [OrderItemWhereInput!]
   id: ID
   id_not: ID
   id_lt: ID
@@ -554,7 +591,7 @@ input OrderItemWhereInput {
 }
 
 input OrderItemWhereUniqueInput {
-  id: ID!
+  id: ID
 }
 
 enum SortOrderItemsBy {
@@ -564,14 +601,18 @@ enum SortOrderItemsBy {
   name_DESC
   description_ASC
   description_DESC
-  photo_ASC
-  photo_DESC
   price_ASC
   price_DESC
   quantity_ASC
   quantity_DESC
-  order_ASC
-  order_DESC
+}
+
+input OrderItemOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  price: OrderDirection
+  quantity: OrderDirection
 }
 
 input OrderItemUpdateInput {
@@ -581,6 +622,13 @@ input OrderItemUpdateInput {
   price: Int
   quantity: Int
   order: OrderRelateToOneInput
+}
+
+input OrderRelateToOneInput {
+  create: OrderCreateInput
+  connect: OrderWhereUniqueInput
+  disconnect: OrderWhereUniqueInput
+  disconnectAll: Boolean
 }
 
 input OrderItemsUpdateInput {
@@ -601,13 +649,6 @@ input OrderItemsCreateInput {
   data: OrderItemCreateInput
 }
 
-input OrderItemRelateToManyInput {
-  create: [OrderItemCreateInput]
-  connect: [OrderItemWhereUniqueInput]
-  disconnect: [OrderItemWhereUniqueInput]
-  disconnectAll: Boolean
-}
-
 """
  A keystone list
 """
@@ -616,28 +657,34 @@ type Order {
   label: String
   total: Int
   items(
-    where: OrderItemWhereInput
+    where: OrderItemWhereInput! = {}
     search: String
     sortBy: [SortOrderItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderItemOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [OrderItem!]!
+    skip: Int! = 0
+  ): [OrderItem!]
   _itemsMeta(
-    where: OrderItemWhereInput
+    where: OrderItemWhereInput! = {}
     search: String
     sortBy: [SortOrderItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderItemOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use itemsCount instead."
+    )
+  itemsCount(where: OrderItemWhereInput! = {}): Int
   user: User
   charge: String
 }
 
 input OrderWhereInput {
-  AND: [OrderWhereInput]
-  OR: [OrderWhereInput]
+  AND: [OrderWhereInput!]
+  OR: [OrderWhereInput!]
   id: ID
   id_not: ID
   id_lt: ID
@@ -680,7 +727,7 @@ input OrderWhereInput {
 }
 
 input OrderWhereUniqueInput {
-  id: ID!
+  id: ID
 }
 
 enum SortOrdersBy {
@@ -688,12 +735,14 @@ enum SortOrdersBy {
   id_DESC
   total_ASC
   total_DESC
-  items_ASC
-  items_DESC
-  user_ASC
-  user_DESC
   charge_ASC
   charge_DESC
+}
+
+input OrderOrderByInput {
+  id: OrderDirection
+  total: OrderDirection
+  charge: OrderDirection
 }
 
 input OrderUpdateInput {
@@ -701,6 +750,13 @@ input OrderUpdateInput {
   items: OrderItemRelateToManyInput
   user: UserRelateToOneInput
   charge: String
+}
+
+input OrderItemRelateToManyInput {
+  create: [OrderItemCreateInput]
+  connect: [OrderItemWhereUniqueInput]
+  disconnect: [OrderItemWhereUniqueInput]
+  disconnectAll: Boolean
 }
 
 input OrdersUpdateInput {
@@ -726,10 +782,6 @@ scalar JSON
   @specifiedBy(
     url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
   )
-
-type _QueryMeta {
-  count: Int
-}
 
 type Mutation {
   """
@@ -929,11 +981,6 @@ type Mutation {
   endSession: Boolean!
 }
 
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
-
 union AuthenticatedItem = User
 
 union UserAuthenticationWithPasswordResult =
@@ -999,13 +1046,14 @@ type Query {
    Search for all User items which match the where clause.
   """
   allUsers(
-    where: UserWhereInput
+    where: UserWhereInput! = {}
     search: String
     sortBy: [SortUsersBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [User]
+    skip: Int! = 0
+  ): [User!]
 
   """
    Search for the User item with the matching ID.
@@ -1016,25 +1064,31 @@ type Query {
    Perform a meta-query on all User items which match the where clause.
   """
   _allUsersMeta(
-    where: UserWhereInput
+    where: UserWhereInput! = {}
     search: String
     sortBy: [SortUsersBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [UserOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use usersCount instead."
+    )
+  usersCount(where: UserWhereInput! = {}): Int
 
   """
    Search for all Product items which match the where clause.
   """
   allProducts(
-    where: ProductWhereInput
+    where: ProductWhereInput! = {}
     search: String
     sortBy: [SortProductsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [ProductOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [Product]
+    skip: Int! = 0
+  ): [Product!]
 
   """
    Search for the Product item with the matching ID.
@@ -1045,25 +1099,31 @@ type Query {
    Perform a meta-query on all Product items which match the where clause.
   """
   _allProductsMeta(
-    where: ProductWhereInput
+    where: ProductWhereInput! = {}
     search: String
     sortBy: [SortProductsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [ProductOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use productsCount instead."
+    )
+  productsCount(where: ProductWhereInput! = {}): Int
 
   """
    Search for all ProductImage items which match the where clause.
   """
   allProductImages(
-    where: ProductImageWhereInput
+    where: ProductImageWhereInput! = {}
     search: String
     sortBy: [SortProductImagesBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [ProductImageOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [ProductImage]
+    skip: Int! = 0
+  ): [ProductImage!]
 
   """
    Search for the ProductImage item with the matching ID.
@@ -1074,25 +1134,31 @@ type Query {
    Perform a meta-query on all ProductImage items which match the where clause.
   """
   _allProductImagesMeta(
-    where: ProductImageWhereInput
+    where: ProductImageWhereInput! = {}
     search: String
     sortBy: [SortProductImagesBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [ProductImageOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use productImagesCount instead."
+    )
+  productImagesCount(where: ProductImageWhereInput! = {}): Int
 
   """
    Search for all CartItem items which match the where clause.
   """
   allCartItems(
-    where: CartItemWhereInput
+    where: CartItemWhereInput! = {}
     search: String
     sortBy: [SortCartItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [CartItem]
+    skip: Int! = 0
+  ): [CartItem!]
 
   """
    Search for the CartItem item with the matching ID.
@@ -1103,25 +1169,31 @@ type Query {
    Perform a meta-query on all CartItem items which match the where clause.
   """
   _allCartItemsMeta(
-    where: CartItemWhereInput
+    where: CartItemWhereInput! = {}
     search: String
     sortBy: [SortCartItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [CartItemOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use cartItemsCount instead."
+    )
+  cartItemsCount(where: CartItemWhereInput! = {}): Int
 
   """
    Search for all OrderItem items which match the where clause.
   """
   allOrderItems(
-    where: OrderItemWhereInput
+    where: OrderItemWhereInput! = {}
     search: String
     sortBy: [SortOrderItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderItemOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [OrderItem]
+    skip: Int! = 0
+  ): [OrderItem!]
 
   """
    Search for the OrderItem item with the matching ID.
@@ -1132,25 +1204,31 @@ type Query {
    Perform a meta-query on all OrderItem items which match the where clause.
   """
   _allOrderItemsMeta(
-    where: OrderItemWhereInput
+    where: OrderItemWhereInput! = {}
     search: String
     sortBy: [SortOrderItemsBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderItemOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use orderItemsCount instead."
+    )
+  orderItemsCount(where: OrderItemWhereInput! = {}): Int
 
   """
    Search for all Order items which match the where clause.
   """
   allOrders(
-    where: OrderWhereInput
+    where: OrderWhereInput! = {}
     search: String
     sortBy: [SortOrdersBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderOrderByInput!]! = []
     first: Int
-    skip: Int
-  ): [Order]
+    skip: Int! = 0
+  ): [Order!]
 
   """
    Search for the Order item with the matching ID.
@@ -1161,13 +1239,18 @@ type Query {
    Perform a meta-query on all Order items which match the where clause.
   """
   _allOrdersMeta(
-    where: OrderWhereInput
+    where: OrderWhereInput! = {}
     search: String
     sortBy: [SortOrdersBy!]
-    orderBy: String
+      @deprecated(reason: "sortBy has been deprecated in favour of orderBy")
+    orderBy: [OrderOrderByInput!]! = []
     first: Int
-    skip: Int
+    skip: Int! = 0
   ): _QueryMeta
+    @deprecated(
+      reason: "This query will be removed in a future version. Please use ordersCount instead."
+    )
+  ordersCount(where: OrderWhereInput! = {}): Int
   authenticatedItem: AuthenticatedItem
   validateUserPasswordResetToken(
     email: String!
