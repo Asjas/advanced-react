@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import DisplayError from './ErrorMessage';
-import PaginationStyles from './styles/PaginationStyles';
-import { useAllProductsCountQuery } from '../types/generated-queries';
+import Head from "next/head";
+import Link from "next/link";
+import DisplayError from "./ErrorMessage";
+import PaginationStyles from "./styles/PaginationStyles";
+import { useAllProductsCountQuery } from "../types/generated-queries";
 
 const NEXT_PUBLIC_PAGE = parseInt(process.env.NEXT_PUBLIC_PAGE);
 
@@ -24,14 +24,14 @@ function Pagination({ page }: { page: number }) {
         </title>
       </Head>
       <Link href={`/products/${page - 1}`}>
-        <a aria-disabled={page <= 1}>🠔 Prev</a>
+        <a aria-disabled={page <= 1}>← Prev</a>
       </Link>
       <p>
         Page {page} of {pageCount}
       </p>
       <p>{count} Items Total</p>
       <Link href={`/products/${page + 1}`}>
-        <a aria-disabled={page >= pageCount}>Next 🠖</a>
+        <a aria-disabled={page >= pageCount}>Next →</a>
       </Link>
     </PaginationStyles>
   );
