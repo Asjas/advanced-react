@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { config, createSchema } from "@keystone-next/keystone/schema";
 import { createAuth } from "@keystone-next/auth";
-import { withItemData, statelessSessions } from "@keystone-next/keystone/session";
+import { statelessSessions } from "@keystone-next/keystone/session";
 
 import { User } from "./schemas/User";
 import { Product } from "./schemas/Product";
@@ -35,6 +35,7 @@ const { withAuth } = createAuth({
       await sendPasswordResetEmail(args.token, args.identity);
     },
   },
+  sessionData: `id name email`,
 });
 
 export default withAuth(
@@ -82,8 +83,6 @@ export default withAuth(
     ui: {
       isAccessAllowed: ({ session }) => session?.data,
     },
-    session: withItemData(statelessSessions(sessionConfig), {
-      User: "id",
-    }),
+    session: statelessSessions(sessionConfig),
   }),
 );
