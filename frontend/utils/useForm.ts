@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from "react";
 
 type ProductInputs = {
   name?: string;
@@ -24,21 +24,20 @@ type InputTypes = {
 
 function useForm(initial: Inputs) {
   const [inputs, setInputs] = useState<Inputs>(initial);
-  const initialValues = Object.values(initial).join('');
+  const initialValues = Object.values(initial).join("");
 
   useEffect(() => {
-    console.log({ initial });
-    setInputs(() => initial);
-  }, [initial]);
+    setInputs(initial);
+  }, [initialValues]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLTextAreaElement>) {
     let { name, type, value }: InputTypes = event.target;
 
-    if (type === 'number') {
+    if (type === "number") {
       value = parseInt(value);
     }
 
-    if (type === 'file') {
+    if (type === "file") {
       value = event.target.files[0];
     }
 
@@ -53,7 +52,7 @@ function useForm(initial: Inputs) {
   }
 
   function clearForm() {
-    const blankState = Object.fromEntries(Object.entries(inputs).map(([key, value]) => [key, ''])) as unknown;
+    const blankState = Object.fromEntries(Object.entries(inputs).map(([key, value]) => [key, ""])) as unknown;
 
     setInputs(blankState as Inputs);
   }
