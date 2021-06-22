@@ -1,10 +1,16 @@
 name: advanced-react
+region: blr
 
 services:
-- dockerfile_path: Dockerfile
+- dockerfile_path: backend/Dockerfile
   github:
     branch: main
     deploy_on_push: true
     repo: Asjas/advanced-react
-  source_dir: backend
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
   name: advanced-react
+  routes:
+  - path: /
+  source_dir: backend
