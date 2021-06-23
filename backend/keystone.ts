@@ -20,7 +20,8 @@ const databaseURL = process.env.DATABASE_URL || "file:./keystone.db";
 
 const sessionConfig = {
   maxAge: THIRTY_DAYS,
-  secret: process.env.COOKIE_SECRET || "secret",
+  secret:
+    process.env.COOKIE_SECRET || "dafj80934j90j9fASDJ()jd9032jd0SAJD9JASDjaskldjlkasJDIASODJ)(@J90jsadlkj8jvvije8rj8j",
 };
 
 const { withAuth } = createAuth({
@@ -47,7 +48,16 @@ export default withAuth(
       },
     },
     db: process.env.DATABASE_URL
-      ? { provider: "postgresql", url: process.env.DATABASE_URL }
+      ? {
+          provider: "postgresql",
+          url: process.env.DATABASE_URL,
+          async onConnect(keystone) {
+            console.log("Connected to the database!");
+            if (process.argv.includes("--seed-data")) {
+              await insertSeedData(keystone);
+            }
+          },
+        }
       : {
           provider: "sqlite",
           url: databaseURL,
@@ -66,10 +76,6 @@ export default withAuth(
       queryLimits: {
         maxTotalResults: 100,
       },
-    },
-    experimental: {
-      generateNextGraphqlAPI: true,
-      enableNextJsGraphqlApiEndpoint: true,
     },
     lists: createSchema({
       User,
