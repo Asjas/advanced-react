@@ -2,6 +2,10 @@ FROM node:16-alpine
 
 EXPOSE 8080
 
+ARG CLOUDINARY_CLOUD_NAME
+ARG CLOUDINARY_KEY
+ARG CLOUDINARY_SECRET
+
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 USER node
