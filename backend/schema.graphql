@@ -78,36 +78,12 @@ input UserWhereInput {
   name_not: String
   name_contains: String
   name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  name_i: String
-  name_not_i: String
-  name_contains_i: String
-  name_not_contains_i: String
-  name_starts_with_i: String
-  name_not_starts_with_i: String
-  name_ends_with_i: String
-  name_not_ends_with_i: String
   name_in: [String]
   name_not_in: [String]
   email: String
   email_not: String
   email_contains: String
   email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  email_i: String
-  email_not_i: String
-  email_contains_i: String
-  email_not_contains_i: String
-  email_starts_with_i: String
-  email_not_starts_with_i: String
-  email_ends_with_i: String
-  email_not_ends_with_i: String
   email_in: [String]
   email_not_in: [String]
   password_is_set: Boolean
@@ -263,36 +239,12 @@ input ProductWhereInput {
   name_not: String
   name_contains: String
   name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  name_i: String
-  name_not_i: String
-  name_contains_i: String
-  name_not_contains_i: String
-  name_starts_with_i: String
-  name_not_starts_with_i: String
-  name_ends_with_i: String
-  name_not_ends_with_i: String
   name_in: [String]
   name_not_in: [String]
   description: String
   description_not: String
   description_contains: String
   description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  description_i: String
-  description_not_i: String
-  description_contains_i: String
-  description_not_contains_i: String
-  description_starts_with_i: String
-  description_not_starts_with_i: String
-  description_ends_with_i: String
-  description_not_ends_with_i: String
   description_in: [String]
   description_not_in: [String]
   photo: ProductImageWhereInput
@@ -446,18 +398,6 @@ input ProductImageWhereInput {
   altText_not: String
   altText_contains: String
   altText_not_contains: String
-  altText_starts_with: String
-  altText_not_starts_with: String
-  altText_ends_with: String
-  altText_not_ends_with: String
-  altText_i: String
-  altText_not_i: String
-  altText_contains_i: String
-  altText_not_contains_i: String
-  altText_starts_with_i: String
-  altText_not_starts_with_i: String
-  altText_ends_with_i: String
-  altText_not_ends_with_i: String
   altText_in: [String]
   altText_not_in: [String]
   product: ProductWhereInput
@@ -620,36 +560,12 @@ input OrderItemWhereInput {
   name_not: String
   name_contains: String
   name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  name_i: String
-  name_not_i: String
-  name_contains_i: String
-  name_not_contains_i: String
-  name_starts_with_i: String
-  name_not_starts_with_i: String
-  name_ends_with_i: String
-  name_not_ends_with_i: String
   name_in: [String]
   name_not_in: [String]
   description: String
   description_not: String
   description_contains: String
   description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  description_i: String
-  description_not_i: String
-  description_contains_i: String
-  description_not_contains_i: String
-  description_starts_with_i: String
-  description_not_starts_with_i: String
-  description_ends_with_i: String
-  description_not_ends_with_i: String
   description_in: [String]
   description_not_in: [String]
   photo: ProductImageWhereInput
@@ -806,18 +722,6 @@ input OrderWhereInput {
   charge_not: String
   charge_contains: String
   charge_not_contains: String
-  charge_starts_with: String
-  charge_not_starts_with: String
-  charge_ends_with: String
-  charge_not_ends_with: String
-  charge_i: String
-  charge_not_i: String
-  charge_contains_i: String
-  charge_not_contains_i: String
-  charge_starts_with_i: String
-  charge_not_starts_with_i: String
-  charge_ends_with_i: String
-  charge_not_ends_with_i: String
   charge_in: [String]
   charge_not_in: [String]
 }

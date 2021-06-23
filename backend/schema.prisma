@@ -1,6 +1,6 @@
-datasource postgresql {
+datasource sqlite {
   url      = env("DATABASE_URL")
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 generator client {
@@ -33,7 +33,7 @@ model Product {
 
 model ProductImage {
   id                   Int         @id @default(autoincrement())
-  image                Json?
+  image                String?
   altText              String?
   product              Product?    @relation("Product_photo")
   from_OrderItem_photo OrderItem[] @relation("OrderItem_photo")
