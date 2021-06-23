@@ -5,7 +5,7 @@
   "scripts": {
     "start": "keystone-next start",
     "deploy": "keystone-next build && keystone-next prisma migrate deploy",
-    "postinstall": "keystone-next postinstall --fix",
+    "predeploy": "keystone-next postinstall --fix",
     "dev": "keystone-next dev",
     "seed-data": "keystone-next --seed-data"
   },
