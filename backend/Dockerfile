@@ -20,8 +20,8 @@ COPY --chown=node:node package.json package-lock.json ./
 RUN npm ci --production
 COPY --chown=node:node . .
 
-RUN npm run build
-
 CMD ["./node_modules/.bin/keystone-next", "postinstall --fix"]
+
+RUN npm run build
 
 CMD ["./node_modules/.bin/keystone-next", "start"]
