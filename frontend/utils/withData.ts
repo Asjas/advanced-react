@@ -32,8 +32,9 @@ function createClient({ headers, initialState }) {
         fetchOptions: {
           credentials: "include",
         },
-        // pass the headers along from this request. This enables SSR with logged in state
-        headers,
+        headers: {
+          cookie: headers?.cookie,
+        },
       }),
     ]),
     cache: new InMemoryCache({
