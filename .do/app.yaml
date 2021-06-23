@@ -3,6 +3,37 @@ region: ams
 
 services:
 - dockerfile_path: backend/Dockerfile
+  envs:
+  - key: FRONTEND_URL
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: COOKIE_SECRET
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: CLOUDINARY_CLOUD_NAME
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: CLOUDINARY_KEY
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: CLOUDINARY_SECRET
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: STRIPE_SECRET
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: MAIL_HOST
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: MAIL_PORT
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: MAIL_USER
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
+  - key: MAIL_PASS
+    scope: RUN_AND_BUILD_TIME
+    value: change_me_on_digital_ocean
   github:
     branch: main
     deploy_on_push: true
