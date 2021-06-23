@@ -51,6 +51,7 @@ export default withAuth(
       ? {
           provider: "postgresql",
           url: process.env.DATABASE_URL,
+          useMigrations: true,
           async onConnect(keystone) {
             console.log("Connected to the database!");
             if (process.argv.includes("--seed-data")) {
@@ -60,6 +61,7 @@ export default withAuth(
         }
       : {
           provider: "sqlite",
+          useMigrations: true,
           url: databaseURL,
           async onConnect(keystone) {
             console.log("Connected to the database!");
