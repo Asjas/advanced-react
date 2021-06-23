@@ -1,62 +1,68 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "name" TEXT,
     "email" TEXT,
     "password" TEXT,
     "passwordResetToken" TEXT,
-    "passwordResetIssuedAt" DATETIME,
-    "passwordResetRedeemedAt" DATETIME
+    "passwordResetIssuedAt" TIMESTAMP(3),
+    "passwordResetRedeemedAt" TIMESTAMP(3),
+
+    PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Product" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "name" TEXT,
     "description" TEXT,
     "photo" INTEGER,
     "status" TEXT,
     "price" INTEGER,
-    FOREIGN KEY ("photo") REFERENCES "ProductImage" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+
+    PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ProductImage" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "image" TEXT,
-    "altText" TEXT
+    "id" SERIAL NOT NULL,
+    "image" JSONB,
+    "altText" TEXT,
+
+    PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "CartItem" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "quantity" INTEGER,
     "product" INTEGER,
     "user" INTEGER,
-    FOREIGN KEY ("product") REFERENCES "Product" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY ("user") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+
+    PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "OrderItem" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "name" TEXT,
     "description" TEXT,
     "photo" INTEGER,
     "price" INTEGER,
     "quantity" INTEGER,
     "order" INTEGER,
-    FOREIGN KEY ("photo") REFERENCES "ProductImage" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY ("order") REFERENCES "Order" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+
+    PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Order" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "total" INTEGER,
     "user" INTEGER,
     "charge" TEXT,
-    FOREIGN KEY ("user") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+
+    PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -79,3 +85,21 @@ CREATE INDEX "OrderItem.order_index" ON "OrderItem"("order");
 
 -- CreateIndex
 CREATE INDEX "Order.user_index" ON "Order"("user");
+
+-- AddForeignKey
+ALTER TABLE "Product" ADD FOREIGN KEY ("photo") REFERENCES "ProductImage"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CartItem" ADD FOREIGN KEY ("product") REFERENCES "Product"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CartItem" ADD FOREIGN KEY ("user") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderItem" ADD FOREIGN KEY ("photo") REFERENCES "ProductImage"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderItem" ADD FOREIGN KEY ("order") REFERENCES "Order"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD FOREIGN KEY ("user") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
