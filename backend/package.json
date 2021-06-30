@@ -39,7 +39,7 @@
     "@keystone-next/auth": "28.0.0",
     "@keystone-next/cloudinary": "6.0.2",
     "@keystone-next/fields": "11.0.2",
-    "@keystone-next/keystone": "21.0.1",
+    "@keystone-next/keystone": "21.0.2",
     "@keystone-next/types": "21.0.0",
     "@keystonejs/server-side-graphql-client": "2.1.2",
     "dotenv": "10.0.0",
