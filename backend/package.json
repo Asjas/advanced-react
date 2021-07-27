@@ -37,7 +37,7 @@
     "@babel/runtime": "7.14.8",
     "@keystone-next/admin-ui": "14.1.3",
     "@keystone-next/auth": "29.0.0",
-    "@keystone-next/cloudinary": "6.0.4",
+    "@keystone-next/cloudinary": "6.0.5",
     "@keystone-next/fields": "12.0.0",
     "@keystone-next/keystone": "22.0.0",
     "@keystone-next/types": "22.0.0",
