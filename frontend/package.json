@@ -43,7 +43,7 @@
     "@apollo/react-testing": "4.0.0",
     "@babel/core": "7.14.8",
     "@babel/preset-env": "7.14.8",
-    "@graphql-codegen/cli": "1.21.7",
+    "@graphql-codegen/cli": "1.21.8",
     "@graphql-codegen/typescript": "1.23.0",
     "@graphql-codegen/typescript-apollo-client-helpers": "1.1.10",
     "@graphql-codegen/typescript-operations": "1.18.4",
