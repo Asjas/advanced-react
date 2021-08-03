@@ -15,7 +15,7 @@
     "validate": "npm run check-format && npm run lint"
   },
   "dependencies": {
-    "@apollo/client": "3.4.2",
+    "@apollo/client": "3.4.3",
     "@apollo/link-error": "2.0.0-beta.3",
     "@apollo/react-ssr": "4.0.0",
     "@stripe/react-stripe-js": "1.4.1",
