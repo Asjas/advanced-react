@@ -3,7 +3,7 @@ version: "2.4"
 services:
   db:
     container_name: sickfits-backend
-    image: postgres:13.4-alpine
+    image: postgres:14.0-alpine
     restart: always
     ports:
       - 5777:5432
