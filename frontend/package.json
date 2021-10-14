@@ -20,6 +20,7 @@
     "@apollo/react-ssr": "4.0.0",
     "@stripe/react-stripe-js": "1.6.0",
     "@stripe/stripe-js": "1.19.1",
+    "@types/jest": "^27.0.2",
     "apollo-upload-client": "16.0.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-styled-components": "1.13.2",
@@ -43,6 +44,7 @@
     "@apollo/react-testing": "4.0.0",
     "@babel/core": "7.15.8",
     "@babel/preset-env": "7.15.8",
+    "@babel/preset-typescript": "7.15.0",
     "@graphql-codegen/cli": "2.2.1",
     "@graphql-codegen/typescript": "2.2.4",
     "@graphql-codegen/typescript-apollo-client-helpers": "2.1.6",
@@ -102,6 +104,7 @@
       },
       "test": {
         "presets": [
+          "@babel/preset-typescript",
           [
             "next/babel",
             {
