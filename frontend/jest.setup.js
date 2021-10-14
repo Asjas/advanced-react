@@ -1,3 +1,1 @@
-import '@testing-library/jest-dom';
-
-window.alert = console.log;
+import "@testing-library/jest-dom";
