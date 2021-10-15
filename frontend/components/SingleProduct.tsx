@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import styled from 'styled-components';
-import DisplayError from './ErrorMessage';
-import { useProductQuery } from '../types/generated-queries';
+import Head from "next/head";
+import styled from "styled-components";
+import DisplayError from "./ErrorMessage";
+import { useProductQuery } from "../types/generated-queries";
 
 const ProductStyles = styled.div`
   display: grid;
@@ -30,12 +30,12 @@ function SingleProduct({ id }: { id: string }) {
   return (
     <ProductStyles>
       <Head>
-        <title>Sick Fits | {data.Product.name}</title>
+        <title>Sick Fits | {data.product.name}</title>
       </Head>
-      <img src={data?.Product?.photo?.image?.publicUrlTransformed} alt={data?.Product?.photo?.altText} />
+      <img src={data?.product?.photo?.image?.publicUrlTransformed} alt={data?.product?.photo?.altText} />
       <div className="details">
-        <h2>{data.Product.name}</h2>
-        <p>{data.Product.description}</p>
+        <h2>{data.product.name}</h2>
+        <p>{data.product.description}</p>
       </div>
     </ProductStyles>
   );

@@ -1,5 +1,3 @@
 query allProductsCount {
-  _allProductsMeta {
-    count
-  }
+  productsCount
 }

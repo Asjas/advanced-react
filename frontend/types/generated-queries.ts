@@ -1,11 +1,11 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
-import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
+import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from "@apollo/client/cache";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
   /** The `Upload` scalar type represents a file upload. */
@@ -21,19 +22,24 @@ export type Scalars = {
 
 export type AuthenticatedItem = User;
 
-/**  A keystone list */
 export type CartItem = {
-  __typename?: 'CartItem';
-  id: Scalars['ID'];
-  quantity?: Maybe<Scalars['Int']>;
+  __typename?: "CartItem";
+  id: Scalars["ID"];
   product?: Maybe<Product>;
+  quantity?: Maybe<Scalars["Int"]>;
   user?: Maybe<User>;
 };
 
 export type CartItemCreateInput = {
-  quantity?: Maybe<Scalars['Int']>;
-  product?: Maybe<ProductRelateToOneInput>;
-  user?: Maybe<UserRelateToOneInput>;
+  product?: Maybe<ProductRelateToOneForCreateInput>;
+  quantity?: Maybe<Scalars["Int"]>;
+  user?: Maybe<UserRelateToOneForCreateInput>;
+};
+
+export type CartItemManyRelationFilter = {
+  every?: Maybe<CartItemWhereInput>;
+  none?: Maybe<CartItemWhereInput>;
+  some?: Maybe<CartItemWhereInput>;
 };
 
 export type CartItemOrderByInput = {
@@ -41,55 +47,41 @@ export type CartItemOrderByInput = {
   quantity?: Maybe<OrderDirection>;
 };
 
-export type CartItemRelateToManyInput = {
-  create?: Maybe<Array<Maybe<CartItemCreateInput>>>;
-  connect?: Maybe<Array<Maybe<CartItemWhereUniqueInput>>>;
-  disconnect?: Maybe<Array<Maybe<CartItemWhereUniqueInput>>>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
+export type CartItemRelateToManyForCreateInput = {
+  connect?: Maybe<Array<CartItemWhereUniqueInput>>;
+  create?: Maybe<Array<CartItemCreateInput>>;
+};
+
+export type CartItemRelateToManyForUpdateInput = {
+  connect?: Maybe<Array<CartItemWhereUniqueInput>>;
+  create?: Maybe<Array<CartItemCreateInput>>;
+  disconnect?: Maybe<Array<CartItemWhereUniqueInput>>;
+  set?: Maybe<Array<CartItemWhereUniqueInput>>;
+};
+
+export type CartItemUpdateArgs = {
+  data: CartItemUpdateInput;
+  where: CartItemWhereUniqueInput;
 };
 
 export type CartItemUpdateInput = {
-  quantity?: Maybe<Scalars['Int']>;
-  product?: Maybe<ProductRelateToOneInput>;
-  user?: Maybe<UserRelateToOneInput>;
+  product?: Maybe<ProductRelateToOneForUpdateInput>;
+  quantity?: Maybe<Scalars["Int"]>;
+  user?: Maybe<UserRelateToOneForUpdateInput>;
 };
 
 export type CartItemWhereInput = {
   AND?: Maybe<Array<CartItemWhereInput>>;
+  NOT?: Maybe<Array<CartItemWhereInput>>;
   OR?: Maybe<Array<CartItemWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  quantity?: Maybe<Scalars['Int']>;
-  quantity_not?: Maybe<Scalars['Int']>;
-  quantity_lt?: Maybe<Scalars['Int']>;
-  quantity_lte?: Maybe<Scalars['Int']>;
-  quantity_gt?: Maybe<Scalars['Int']>;
-  quantity_gte?: Maybe<Scalars['Int']>;
-  quantity_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  quantity_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  id?: Maybe<IdFilter>;
   product?: Maybe<ProductWhereInput>;
-  product_is_null?: Maybe<Scalars['Boolean']>;
+  quantity?: Maybe<IntNullableFilter>;
   user?: Maybe<UserWhereInput>;
-  user_is_null?: Maybe<Scalars['Boolean']>;
 };
 
 export type CartItemWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type CartItemsCreateInput = {
-  data?: Maybe<CartItemCreateInput>;
-};
-
-export type CartItemsUpdateInput = {
-  id: Scalars['ID'];
-  data?: Maybe<CartItemUpdateInput>;
+  id?: Maybe<Scalars["ID"]>;
 };
 
 /**
@@ -97,1821 +89,1385 @@ export type CartItemsUpdateInput = {
  * All options are strings as they ultimately end up in a URL.
  */
 export type CloudinaryImageFormat = {
+  angle?: Maybe<Scalars["String"]>;
+  aspect_ratio?: Maybe<Scalars["String"]>;
+  background?: Maybe<Scalars["String"]>;
+  border?: Maybe<Scalars["String"]>;
+  color?: Maybe<Scalars["String"]>;
+  color_space?: Maybe<Scalars["String"]>;
+  crop?: Maybe<Scalars["String"]>;
+  default_image?: Maybe<Scalars["String"]>;
+  delay?: Maybe<Scalars["String"]>;
+  density?: Maybe<Scalars["String"]>;
+  dpr?: Maybe<Scalars["String"]>;
+  effect?: Maybe<Scalars["String"]>;
+  fetch_format?: Maybe<Scalars["String"]>;
+  flags?: Maybe<Scalars["String"]>;
+  format?: Maybe<Scalars["String"]>;
+  gravity?: Maybe<Scalars["String"]>;
+  height?: Maybe<Scalars["String"]>;
+  opacity?: Maybe<Scalars["String"]>;
+  overlay?: Maybe<Scalars["String"]>;
+  page?: Maybe<Scalars["String"]>;
   /**  Rewrites the filename to be this pretty string. Do not include `/` or `.` */
-  prettyName?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['String']>;
-  height?: Maybe<Scalars['String']>;
-  crop?: Maybe<Scalars['String']>;
-  aspect_ratio?: Maybe<Scalars['String']>;
-  gravity?: Maybe<Scalars['String']>;
-  zoom?: Maybe<Scalars['String']>;
-  x?: Maybe<Scalars['String']>;
-  y?: Maybe<Scalars['String']>;
-  format?: Maybe<Scalars['String']>;
-  fetch_format?: Maybe<Scalars['String']>;
-  quality?: Maybe<Scalars['String']>;
-  radius?: Maybe<Scalars['String']>;
-  angle?: Maybe<Scalars['String']>;
-  effect?: Maybe<Scalars['String']>;
-  opacity?: Maybe<Scalars['String']>;
-  border?: Maybe<Scalars['String']>;
-  background?: Maybe<Scalars['String']>;
-  overlay?: Maybe<Scalars['String']>;
-  underlay?: Maybe<Scalars['String']>;
-  default_image?: Maybe<Scalars['String']>;
-  delay?: Maybe<Scalars['String']>;
-  color?: Maybe<Scalars['String']>;
-  color_space?: Maybe<Scalars['String']>;
-  dpr?: Maybe<Scalars['String']>;
-  page?: Maybe<Scalars['String']>;
-  density?: Maybe<Scalars['String']>;
-  flags?: Maybe<Scalars['String']>;
-  transformation?: Maybe<Scalars['String']>;
+  prettyName?: Maybe<Scalars["String"]>;
+  quality?: Maybe<Scalars["String"]>;
+  radius?: Maybe<Scalars["String"]>;
+  transformation?: Maybe<Scalars["String"]>;
+  underlay?: Maybe<Scalars["String"]>;
+  width?: Maybe<Scalars["String"]>;
+  x?: Maybe<Scalars["String"]>;
+  y?: Maybe<Scalars["String"]>;
+  zoom?: Maybe<Scalars["String"]>;
 };
 
 export type CloudinaryImage_File = {
-  __typename?: 'CloudinaryImage_File';
-  id?: Maybe<Scalars['ID']>;
-  filename?: Maybe<Scalars['String']>;
-  originalFilename?: Maybe<Scalars['String']>;
-  mimetype?: Maybe<Scalars['String']>;
-  encoding?: Maybe<Scalars['String']>;
-  publicUrl?: Maybe<Scalars['String']>;
-  publicUrlTransformed?: Maybe<Scalars['String']>;
+  __typename?: "CloudinaryImage_File";
+  encoding?: Maybe<Scalars["String"]>;
+  filename?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["ID"]>;
+  mimetype?: Maybe<Scalars["String"]>;
+  originalFilename?: Maybe<Scalars["String"]>;
+  publicUrl?: Maybe<Scalars["String"]>;
+  publicUrlTransformed?: Maybe<Scalars["String"]>;
 };
-
 
 export type CloudinaryImage_FilePublicUrlTransformedArgs = {
   transformation?: Maybe<CloudinaryImageFormat>;
 };
 
 export type CreateInitialUserInput = {
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  password?: Maybe<Scalars["String"]>;
 };
 
+export type DateTimeNullableFilter = {
+  equals?: Maybe<Scalars["DateTime"]>;
+  gt?: Maybe<Scalars["DateTime"]>;
+  gte?: Maybe<Scalars["DateTime"]>;
+  in?: Maybe<Array<Scalars["DateTime"]>>;
+  lt?: Maybe<Scalars["DateTime"]>;
+  lte?: Maybe<Scalars["DateTime"]>;
+  not?: Maybe<DateTimeNullableFilter>;
+  notIn?: Maybe<Array<Scalars["DateTime"]>>;
+};
+
+export type IdFilter = {
+  equals?: Maybe<Scalars["ID"]>;
+  gt?: Maybe<Scalars["ID"]>;
+  gte?: Maybe<Scalars["ID"]>;
+  in?: Maybe<Array<Scalars["ID"]>>;
+  lt?: Maybe<Scalars["ID"]>;
+  lte?: Maybe<Scalars["ID"]>;
+  not?: Maybe<IdFilter>;
+  notIn?: Maybe<Array<Scalars["ID"]>>;
+};
+
+export type IntNullableFilter = {
+  equals?: Maybe<Scalars["Int"]>;
+  gt?: Maybe<Scalars["Int"]>;
+  gte?: Maybe<Scalars["Int"]>;
+  in?: Maybe<Array<Scalars["Int"]>>;
+  lt?: Maybe<Scalars["Int"]>;
+  lte?: Maybe<Scalars["Int"]>;
+  not?: Maybe<IntNullableFilter>;
+  notIn?: Maybe<Array<Scalars["Int"]>>;
+};
 
 export type KeystoneAdminMeta = {
-  __typename?: 'KeystoneAdminMeta';
-  enableSignout: Scalars['Boolean'];
-  enableSessionItem: Scalars['Boolean'];
-  lists: Array<KeystoneAdminUiListMeta>;
+  __typename?: "KeystoneAdminMeta";
+  enableSessionItem: Scalars["Boolean"];
+  enableSignout: Scalars["Boolean"];
   list?: Maybe<KeystoneAdminUiListMeta>;
+  lists: Array<KeystoneAdminUiListMeta>;
 };
 
-
 export type KeystoneAdminMetaListArgs = {
-  key: Scalars['String'];
+  key: Scalars["String"];
 };
 
 export type KeystoneAdminUiFieldMeta = {
-  __typename?: 'KeystoneAdminUIFieldMeta';
-  path: Scalars['String'];
-  label: Scalars['String'];
-  isOrderable: Scalars['Boolean'];
-  fieldMeta?: Maybe<Scalars['JSON']>;
-  viewsIndex: Scalars['Int'];
-  customViewsIndex?: Maybe<Scalars['Int']>;
+  __typename?: "KeystoneAdminUIFieldMeta";
   createView: KeystoneAdminUiFieldMetaCreateView;
-  listView: KeystoneAdminUiFieldMetaListView;
+  customViewsIndex?: Maybe<Scalars["Int"]>;
+  fieldMeta?: Maybe<Scalars["JSON"]>;
+  isFilterable: Scalars["Boolean"];
+  isOrderable: Scalars["Boolean"];
   itemView?: Maybe<KeystoneAdminUiFieldMetaItemView>;
+  label: Scalars["String"];
+  listView: KeystoneAdminUiFieldMetaListView;
+  path: Scalars["String"];
+  search?: Maybe<QueryMode>;
+  viewsIndex: Scalars["Int"];
 };
 
-
 export type KeystoneAdminUiFieldMetaItemViewArgs = {
-  id: Scalars['ID'];
+  id?: Maybe<Scalars["ID"]>;
 };
 
 export type KeystoneAdminUiFieldMetaCreateView = {
-  __typename?: 'KeystoneAdminUIFieldMetaCreateView';
+  __typename?: "KeystoneAdminUIFieldMetaCreateView";
   fieldMode: KeystoneAdminUiFieldMetaCreateViewFieldMode;
 };
 
 export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
-  Edit = 'edit',
-  Hidden = 'hidden'
+  Edit = "edit",
+  Hidden = "hidden",
 }
 
 export type KeystoneAdminUiFieldMetaItemView = {
-  __typename?: 'KeystoneAdminUIFieldMetaItemView';
-  fieldMode: KeystoneAdminUiFieldMetaItemViewFieldMode;
+  __typename?: "KeystoneAdminUIFieldMetaItemView";
+  fieldMode?: Maybe<KeystoneAdminUiFieldMetaItemViewFieldMode>;
 };
 
 export enum KeystoneAdminUiFieldMetaItemViewFieldMode {
-  Edit = 'edit',
-  Read = 'read',
-  Hidden = 'hidden'
+  Edit = "edit",
+  Hidden = "hidden",
+  Read = "read",
 }
 
 export type KeystoneAdminUiFieldMetaListView = {
-  __typename?: 'KeystoneAdminUIFieldMetaListView';
+  __typename?: "KeystoneAdminUIFieldMetaListView";
   fieldMode: KeystoneAdminUiFieldMetaListViewFieldMode;
 };
 
 export enum KeystoneAdminUiFieldMetaListViewFieldMode {
-  Read = 'read',
-  Hidden = 'hidden'
+  Hidden = "hidden",
+  Read = "read",
 }
 
 export type KeystoneAdminUiListMeta = {
-  __typename?: 'KeystoneAdminUIListMeta';
-  key: Scalars['String'];
-  itemQueryName: Scalars['String'];
-  listQueryName: Scalars['String'];
-  hideCreate: Scalars['Boolean'];
-  hideDelete: Scalars['Boolean'];
-  path: Scalars['String'];
-  label: Scalars['String'];
-  singular: Scalars['String'];
-  plural: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  initialColumns: Array<Scalars['String']>;
-  pageSize: Scalars['Int'];
-  labelField: Scalars['String'];
+  __typename?: "KeystoneAdminUIListMeta";
+  description?: Maybe<Scalars["String"]>;
   fields: Array<KeystoneAdminUiFieldMeta>;
+  hideCreate: Scalars["Boolean"];
+  hideDelete: Scalars["Boolean"];
+  initialColumns: Array<Scalars["String"]>;
   initialSort?: Maybe<KeystoneAdminUiSort>;
-  isHidden: Scalars['Boolean'];
+  isHidden: Scalars["Boolean"];
+  itemQueryName: Scalars["String"];
+  key: Scalars["String"];
+  label: Scalars["String"];
+  labelField: Scalars["String"];
+  listQueryName: Scalars["String"];
+  pageSize: Scalars["Int"];
+  path: Scalars["String"];
+  plural: Scalars["String"];
+  singular: Scalars["String"];
 };
 
 export type KeystoneAdminUiSort = {
-  __typename?: 'KeystoneAdminUISort';
-  field: Scalars['String'];
+  __typename?: "KeystoneAdminUISort";
   direction: KeystoneAdminUiSortDirection;
+  field: Scalars["String"];
 };
 
 export enum KeystoneAdminUiSortDirection {
-  Asc = 'ASC',
-  Desc = 'DESC'
+  Asc = "ASC",
+  Desc = "DESC",
 }
 
 export type KeystoneMeta = {
-  __typename?: 'KeystoneMeta';
+  __typename?: "KeystoneMeta";
   adminMeta: KeystoneAdminMeta;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
-  /**  Create a single User item. */
-  createUser?: Maybe<User>;
-  /**  Create multiple User items. */
-  createUsers?: Maybe<Array<Maybe<User>>>;
-  /**  Update a single User item by ID. */
-  updateUser?: Maybe<User>;
-  /**  Update multiple User items by ID. */
-  updateUsers?: Maybe<Array<Maybe<User>>>;
-  /**  Delete a single User item by ID. */
-  deleteUser?: Maybe<User>;
-  /**  Delete multiple User items by ID. */
-  deleteUsers?: Maybe<Array<Maybe<User>>>;
-  /**  Create a single Product item. */
-  createProduct?: Maybe<Product>;
-  /**  Create multiple Product items. */
-  createProducts?: Maybe<Array<Maybe<Product>>>;
-  /**  Update a single Product item by ID. */
-  updateProduct?: Maybe<Product>;
-  /**  Update multiple Product items by ID. */
-  updateProducts?: Maybe<Array<Maybe<Product>>>;
-  /**  Delete a single Product item by ID. */
-  deleteProduct?: Maybe<Product>;
-  /**  Delete multiple Product items by ID. */
-  deleteProducts?: Maybe<Array<Maybe<Product>>>;
-  /**  Create a single ProductImage item. */
-  createProductImage?: Maybe<ProductImage>;
-  /**  Create multiple ProductImage items. */
-  createProductImages?: Maybe<Array<Maybe<ProductImage>>>;
-  /**  Update a single ProductImage item by ID. */
-  updateProductImage?: Maybe<ProductImage>;
-  /**  Update multiple ProductImage items by ID. */
-  updateProductImages?: Maybe<Array<Maybe<ProductImage>>>;
-  /**  Delete a single ProductImage item by ID. */
-  deleteProductImage?: Maybe<ProductImage>;
-  /**  Delete multiple ProductImage items by ID. */
-  deleteProductImages?: Maybe<Array<Maybe<ProductImage>>>;
-  /**  Create a single CartItem item. */
-  createCartItem?: Maybe<CartItem>;
-  /**  Create multiple CartItem items. */
-  createCartItems?: Maybe<Array<Maybe<CartItem>>>;
-  /**  Update a single CartItem item by ID. */
-  updateCartItem?: Maybe<CartItem>;
-  /**  Update multiple CartItem items by ID. */
-  updateCartItems?: Maybe<Array<Maybe<CartItem>>>;
-  /**  Delete a single CartItem item by ID. */
-  deleteCartItem?: Maybe<CartItem>;
-  /**  Delete multiple CartItem items by ID. */
-  deleteCartItems?: Maybe<Array<Maybe<CartItem>>>;
-  /**  Create a single OrderItem item. */
-  createOrderItem?: Maybe<OrderItem>;
-  /**  Create multiple OrderItem items. */
-  createOrderItems?: Maybe<Array<Maybe<OrderItem>>>;
-  /**  Update a single OrderItem item by ID. */
-  updateOrderItem?: Maybe<OrderItem>;
-  /**  Update multiple OrderItem items by ID. */
-  updateOrderItems?: Maybe<Array<Maybe<OrderItem>>>;
-  /**  Delete a single OrderItem item by ID. */
-  deleteOrderItem?: Maybe<OrderItem>;
-  /**  Delete multiple OrderItem items by ID. */
-  deleteOrderItems?: Maybe<Array<Maybe<OrderItem>>>;
-  /**  Create a single Order item. */
-  createOrder?: Maybe<Order>;
-  /**  Create multiple Order items. */
-  createOrders?: Maybe<Array<Maybe<Order>>>;
-  /**  Update a single Order item by ID. */
-  updateOrder?: Maybe<Order>;
-  /**  Update multiple Order items by ID. */
-  updateOrders?: Maybe<Array<Maybe<Order>>>;
-  /**  Delete a single Order item by ID. */
-  deleteOrder?: Maybe<Order>;
-  /**  Delete multiple Order items by ID. */
-  deleteOrders?: Maybe<Array<Maybe<Order>>>;
-  authenticateUserWithPassword: UserAuthenticationWithPasswordResult;
-  createInitialUser: UserAuthenticationWithPasswordSuccess;
-  sendUserPasswordResetLink?: Maybe<SendUserPasswordResetLinkResult>;
-  redeemUserPasswordResetToken?: Maybe<RedeemUserPasswordResetTokenResult>;
+  __typename?: "Mutation";
   addToCart?: Maybe<CartItem>;
+  authenticateUserWithPassword: UserAuthenticationWithPasswordResult;
   checkout?: Maybe<Order>;
-  endSession: Scalars['Boolean'];
+  createCartItem?: Maybe<CartItem>;
+  createCartItems?: Maybe<Array<Maybe<CartItem>>>;
+  createInitialUser: UserAuthenticationWithPasswordSuccess;
+  createOrder?: Maybe<Order>;
+  createOrderItem?: Maybe<OrderItem>;
+  createOrderItems?: Maybe<Array<Maybe<OrderItem>>>;
+  createOrders?: Maybe<Array<Maybe<Order>>>;
+  createProduct?: Maybe<Product>;
+  createProductImage?: Maybe<ProductImage>;
+  createProductImages?: Maybe<Array<Maybe<ProductImage>>>;
+  createProducts?: Maybe<Array<Maybe<Product>>>;
+  createUser?: Maybe<User>;
+  createUsers?: Maybe<Array<Maybe<User>>>;
+  deleteCartItem?: Maybe<CartItem>;
+  deleteCartItems?: Maybe<Array<Maybe<CartItem>>>;
+  deleteOrder?: Maybe<Order>;
+  deleteOrderItem?: Maybe<OrderItem>;
+  deleteOrderItems?: Maybe<Array<Maybe<OrderItem>>>;
+  deleteOrders?: Maybe<Array<Maybe<Order>>>;
+  deleteProduct?: Maybe<Product>;
+  deleteProductImage?: Maybe<ProductImage>;
+  deleteProductImages?: Maybe<Array<Maybe<ProductImage>>>;
+  deleteProducts?: Maybe<Array<Maybe<Product>>>;
+  deleteUser?: Maybe<User>;
+  deleteUsers?: Maybe<Array<Maybe<User>>>;
+  endSession: Scalars["Boolean"];
+  redeemUserPasswordResetToken?: Maybe<RedeemUserPasswordResetTokenResult>;
+  sendUserPasswordResetLink: Scalars["Boolean"];
+  updateCartItem?: Maybe<CartItem>;
+  updateCartItems?: Maybe<Array<Maybe<CartItem>>>;
+  updateOrder?: Maybe<Order>;
+  updateOrderItem?: Maybe<OrderItem>;
+  updateOrderItems?: Maybe<Array<Maybe<OrderItem>>>;
+  updateOrders?: Maybe<Array<Maybe<Order>>>;
+  updateProduct?: Maybe<Product>;
+  updateProductImage?: Maybe<ProductImage>;
+  updateProductImages?: Maybe<Array<Maybe<ProductImage>>>;
+  updateProducts?: Maybe<Array<Maybe<Product>>>;
+  updateUser?: Maybe<User>;
+  updateUsers?: Maybe<Array<Maybe<User>>>;
 };
 
-
-export type MutationCreateUserArgs = {
-  data?: Maybe<UserCreateInput>;
+export type MutationAddToCartArgs = {
+  productId?: Maybe<Scalars["ID"]>;
 };
-
-
-export type MutationCreateUsersArgs = {
-  data?: Maybe<Array<Maybe<UsersCreateInput>>>;
-};
-
-
-export type MutationUpdateUserArgs = {
-  id: Scalars['ID'];
-  data?: Maybe<UserUpdateInput>;
-};
-
-
-export type MutationUpdateUsersArgs = {
-  data?: Maybe<Array<Maybe<UsersUpdateInput>>>;
-};
-
-
-export type MutationDeleteUserArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationDeleteUsersArgs = {
-  ids?: Maybe<Array<Scalars['ID']>>;
-};
-
-
-export type MutationCreateProductArgs = {
-  data?: Maybe<ProductCreateInput>;
-};
-
-
-export type MutationCreateProductsArgs = {
-  data?: Maybe<Array<Maybe<ProductsCreateInput>>>;
-};
-
-
-export type MutationUpdateProductArgs = {
-  id: Scalars['ID'];
-  data?: Maybe<ProductUpdateInput>;
-};
-
-
-export type MutationUpdateProductsArgs = {
-  data?: Maybe<Array<Maybe<ProductsUpdateInput>>>;
-};
-
-
-export type MutationDeleteProductArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationDeleteProductsArgs = {
-  ids?: Maybe<Array<Scalars['ID']>>;
-};
-
-
-export type MutationCreateProductImageArgs = {
-  data?: Maybe<ProductImageCreateInput>;
-};
-
-
-export type MutationCreateProductImagesArgs = {
-  data?: Maybe<Array<Maybe<ProductImagesCreateInput>>>;
-};
-
-
-export type MutationUpdateProductImageArgs = {
-  id: Scalars['ID'];
-  data?: Maybe<ProductImageUpdateInput>;
-};
-
-
-export type MutationUpdateProductImagesArgs = {
-  data?: Maybe<Array<Maybe<ProductImagesUpdateInput>>>;
-};
-
-
-export type MutationDeleteProductImageArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationDeleteProductImagesArgs = {
-  ids?: Maybe<Array<Scalars['ID']>>;
-};
-
-
-export type MutationCreateCartItemArgs = {
-  data?: Maybe<CartItemCreateInput>;
-};
-
-
-export type MutationCreateCartItemsArgs = {
-  data?: Maybe<Array<Maybe<CartItemsCreateInput>>>;
-};
-
-
-export type MutationUpdateCartItemArgs = {
-  id: Scalars['ID'];
-  data?: Maybe<CartItemUpdateInput>;
-};
-
-
-export type MutationUpdateCartItemsArgs = {
-  data?: Maybe<Array<Maybe<CartItemsUpdateInput>>>;
-};
-
-
-export type MutationDeleteCartItemArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationDeleteCartItemsArgs = {
-  ids?: Maybe<Array<Scalars['ID']>>;
-};
-
-
-export type MutationCreateOrderItemArgs = {
-  data?: Maybe<OrderItemCreateInput>;
-};
-
-
-export type MutationCreateOrderItemsArgs = {
-  data?: Maybe<Array<Maybe<OrderItemsCreateInput>>>;
-};
-
-
-export type MutationUpdateOrderItemArgs = {
-  id: Scalars['ID'];
-  data?: Maybe<OrderItemUpdateInput>;
-};
-
-
-export type MutationUpdateOrderItemsArgs = {
-  data?: Maybe<Array<Maybe<OrderItemsUpdateInput>>>;
-};
-
-
-export type MutationDeleteOrderItemArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationDeleteOrderItemsArgs = {
-  ids?: Maybe<Array<Scalars['ID']>>;
-};
-
-
-export type MutationCreateOrderArgs = {
-  data?: Maybe<OrderCreateInput>;
-};
-
-
-export type MutationCreateOrdersArgs = {
-  data?: Maybe<Array<Maybe<OrdersCreateInput>>>;
-};
-
-
-export type MutationUpdateOrderArgs = {
-  id: Scalars['ID'];
-  data?: Maybe<OrderUpdateInput>;
-};
-
-
-export type MutationUpdateOrdersArgs = {
-  data?: Maybe<Array<Maybe<OrdersUpdateInput>>>;
-};
-
-
-export type MutationDeleteOrderArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationDeleteOrdersArgs = {
-  ids?: Maybe<Array<Scalars['ID']>>;
-};
-
 
 export type MutationAuthenticateUserWithPasswordArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
+export type MutationCheckoutArgs = {
+  token: Scalars["String"];
+};
+
+export type MutationCreateCartItemArgs = {
+  data: CartItemCreateInput;
+};
+
+export type MutationCreateCartItemsArgs = {
+  data: Array<CartItemCreateInput>;
+};
 
 export type MutationCreateInitialUserArgs = {
   data: CreateInitialUserInput;
 };
 
-
-export type MutationSendUserPasswordResetLinkArgs = {
-  email: Scalars['String'];
+export type MutationCreateOrderArgs = {
+  data: OrderCreateInput;
 };
 
+export type MutationCreateOrderItemArgs = {
+  data: OrderItemCreateInput;
+};
+
+export type MutationCreateOrderItemsArgs = {
+  data: Array<OrderItemCreateInput>;
+};
+
+export type MutationCreateOrdersArgs = {
+  data: Array<OrderCreateInput>;
+};
+
+export type MutationCreateProductArgs = {
+  data: ProductCreateInput;
+};
+
+export type MutationCreateProductImageArgs = {
+  data: ProductImageCreateInput;
+};
+
+export type MutationCreateProductImagesArgs = {
+  data: Array<ProductImageCreateInput>;
+};
+
+export type MutationCreateProductsArgs = {
+  data: Array<ProductCreateInput>;
+};
+
+export type MutationCreateUserArgs = {
+  data: UserCreateInput;
+};
+
+export type MutationCreateUsersArgs = {
+  data: Array<UserCreateInput>;
+};
+
+export type MutationDeleteCartItemArgs = {
+  where: CartItemWhereUniqueInput;
+};
+
+export type MutationDeleteCartItemsArgs = {
+  where: Array<CartItemWhereUniqueInput>;
+};
+
+export type MutationDeleteOrderArgs = {
+  where: OrderWhereUniqueInput;
+};
+
+export type MutationDeleteOrderItemArgs = {
+  where: OrderItemWhereUniqueInput;
+};
+
+export type MutationDeleteOrderItemsArgs = {
+  where: Array<OrderItemWhereUniqueInput>;
+};
+
+export type MutationDeleteOrdersArgs = {
+  where: Array<OrderWhereUniqueInput>;
+};
+
+export type MutationDeleteProductArgs = {
+  where: ProductWhereUniqueInput;
+};
+
+export type MutationDeleteProductImageArgs = {
+  where: ProductImageWhereUniqueInput;
+};
+
+export type MutationDeleteProductImagesArgs = {
+  where: Array<ProductImageWhereUniqueInput>;
+};
+
+export type MutationDeleteProductsArgs = {
+  where: Array<ProductWhereUniqueInput>;
+};
+
+export type MutationDeleteUserArgs = {
+  where: UserWhereUniqueInput;
+};
+
+export type MutationDeleteUsersArgs = {
+  where: Array<UserWhereUniqueInput>;
+};
 
 export type MutationRedeemUserPasswordResetTokenArgs = {
-  email: Scalars['String'];
-  token: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
+  token: Scalars["String"];
 };
 
-
-export type MutationAddToCartArgs = {
-  productId?: Maybe<Scalars['ID']>;
+export type MutationSendUserPasswordResetLinkArgs = {
+  email: Scalars["String"];
 };
 
-
-export type MutationCheckoutArgs = {
-  token: Scalars['String'];
+export type MutationUpdateCartItemArgs = {
+  data: CartItemUpdateInput;
+  where: CartItemWhereUniqueInput;
 };
 
-/**  A keystone list */
+export type MutationUpdateCartItemsArgs = {
+  data: Array<CartItemUpdateArgs>;
+};
+
+export type MutationUpdateOrderArgs = {
+  data: OrderUpdateInput;
+  where: OrderWhereUniqueInput;
+};
+
+export type MutationUpdateOrderItemArgs = {
+  data: OrderItemUpdateInput;
+  where: OrderItemWhereUniqueInput;
+};
+
+export type MutationUpdateOrderItemsArgs = {
+  data: Array<OrderItemUpdateArgs>;
+};
+
+export type MutationUpdateOrdersArgs = {
+  data: Array<OrderUpdateArgs>;
+};
+
+export type MutationUpdateProductArgs = {
+  data: ProductUpdateInput;
+  where: ProductWhereUniqueInput;
+};
+
+export type MutationUpdateProductImageArgs = {
+  data: ProductImageUpdateInput;
+  where: ProductImageWhereUniqueInput;
+};
+
+export type MutationUpdateProductImagesArgs = {
+  data: Array<ProductImageUpdateArgs>;
+};
+
+export type MutationUpdateProductsArgs = {
+  data: Array<ProductUpdateArgs>;
+};
+
+export type MutationUpdateUserArgs = {
+  data: UserUpdateInput;
+  where: UserWhereUniqueInput;
+};
+
+export type MutationUpdateUsersArgs = {
+  data: Array<UserUpdateArgs>;
+};
+
+export type NestedStringFilter = {
+  contains?: Maybe<Scalars["String"]>;
+  endsWith?: Maybe<Scalars["String"]>;
+  equals?: Maybe<Scalars["String"]>;
+  gt?: Maybe<Scalars["String"]>;
+  gte?: Maybe<Scalars["String"]>;
+  in?: Maybe<Array<Scalars["String"]>>;
+  lt?: Maybe<Scalars["String"]>;
+  lte?: Maybe<Scalars["String"]>;
+  not?: Maybe<NestedStringFilter>;
+  notIn?: Maybe<Array<Scalars["String"]>>;
+  startsWith?: Maybe<Scalars["String"]>;
+};
+
+export type NestedStringNullableFilter = {
+  contains?: Maybe<Scalars["String"]>;
+  endsWith?: Maybe<Scalars["String"]>;
+  equals?: Maybe<Scalars["String"]>;
+  gt?: Maybe<Scalars["String"]>;
+  gte?: Maybe<Scalars["String"]>;
+  in?: Maybe<Array<Scalars["String"]>>;
+  lt?: Maybe<Scalars["String"]>;
+  lte?: Maybe<Scalars["String"]>;
+  not?: Maybe<NestedStringNullableFilter>;
+  notIn?: Maybe<Array<Scalars["String"]>>;
+  startsWith?: Maybe<Scalars["String"]>;
+};
+
 export type Order = {
-  __typename?: 'Order';
-  id: Scalars['ID'];
-  label?: Maybe<Scalars['String']>;
-  total?: Maybe<Scalars['Int']>;
+  __typename?: "Order";
+  charge?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
   items?: Maybe<Array<OrderItem>>;
-  /** @deprecated This query will be removed in a future version. Please use itemsCount instead. */
-  _itemsMeta?: Maybe<_QueryMeta>;
-  itemsCount?: Maybe<Scalars['Int']>;
+  itemsCount?: Maybe<Scalars["Int"]>;
+  label?: Maybe<Scalars["String"]>;
+  total?: Maybe<Scalars["Int"]>;
   user?: Maybe<User>;
-  charge?: Maybe<Scalars['String']>;
 };
 
-
-/**  A keystone list */
 export type OrderItemsArgs = {
-  where?: OrderItemWhereInput;
-  search?: Maybe<Scalars['String']>;
   orderBy?: Array<OrderItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: OrderItemWhereInput;
 };
 
-
-/**  A keystone list */
-export type Order_ItemsMetaArgs = {
-  where?: OrderItemWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<OrderItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-/**  A keystone list */
 export type OrderItemsCountArgs = {
   where?: OrderItemWhereInput;
 };
 
 export type OrderCreateInput = {
-  total?: Maybe<Scalars['Int']>;
-  items?: Maybe<OrderItemRelateToManyInput>;
-  user?: Maybe<UserRelateToOneInput>;
-  charge?: Maybe<Scalars['String']>;
+  charge?: Maybe<Scalars["String"]>;
+  items?: Maybe<OrderItemRelateToManyForCreateInput>;
+  total?: Maybe<Scalars["Int"]>;
+  user?: Maybe<UserRelateToOneForCreateInput>;
 };
 
 export enum OrderDirection {
-  Asc = 'asc',
-  Desc = 'desc'
+  Asc = "asc",
+  Desc = "desc",
 }
 
-/**  A keystone list */
 export type OrderItem = {
-  __typename?: 'OrderItem';
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  photo?: Maybe<ProductImage>;
-  price?: Maybe<Scalars['Int']>;
-  quantity?: Maybe<Scalars['Int']>;
+  __typename?: "OrderItem";
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  name?: Maybe<Scalars["String"]>;
   order?: Maybe<Order>;
+  photo?: Maybe<ProductImage>;
+  price?: Maybe<Scalars["Int"]>;
+  quantity?: Maybe<Scalars["Int"]>;
 };
 
 export type OrderItemCreateInput = {
-  name?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  photo?: Maybe<ProductImageRelateToOneInput>;
-  price?: Maybe<Scalars['Int']>;
-  quantity?: Maybe<Scalars['Int']>;
-  order?: Maybe<OrderRelateToOneInput>;
+  description?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  order?: Maybe<OrderRelateToOneForCreateInput>;
+  photo?: Maybe<ProductImageRelateToOneForCreateInput>;
+  price?: Maybe<Scalars["Int"]>;
+  quantity?: Maybe<Scalars["Int"]>;
+};
+
+export type OrderItemManyRelationFilter = {
+  every?: Maybe<OrderItemWhereInput>;
+  none?: Maybe<OrderItemWhereInput>;
+  some?: Maybe<OrderItemWhereInput>;
 };
 
 export type OrderItemOrderByInput = {
+  description?: Maybe<OrderDirection>;
   id?: Maybe<OrderDirection>;
   name?: Maybe<OrderDirection>;
-  description?: Maybe<OrderDirection>;
   price?: Maybe<OrderDirection>;
   quantity?: Maybe<OrderDirection>;
 };
 
-export type OrderItemRelateToManyInput = {
-  create?: Maybe<Array<Maybe<OrderItemCreateInput>>>;
-  connect?: Maybe<Array<Maybe<OrderItemWhereUniqueInput>>>;
-  disconnect?: Maybe<Array<Maybe<OrderItemWhereUniqueInput>>>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
+export type OrderItemRelateToManyForCreateInput = {
+  connect?: Maybe<Array<OrderItemWhereUniqueInput>>;
+  create?: Maybe<Array<OrderItemCreateInput>>;
+};
+
+export type OrderItemRelateToManyForUpdateInput = {
+  connect?: Maybe<Array<OrderItemWhereUniqueInput>>;
+  create?: Maybe<Array<OrderItemCreateInput>>;
+  disconnect?: Maybe<Array<OrderItemWhereUniqueInput>>;
+  set?: Maybe<Array<OrderItemWhereUniqueInput>>;
+};
+
+export type OrderItemUpdateArgs = {
+  data: OrderItemUpdateInput;
+  where: OrderItemWhereUniqueInput;
 };
 
 export type OrderItemUpdateInput = {
-  name?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  photo?: Maybe<ProductImageRelateToOneInput>;
-  price?: Maybe<Scalars['Int']>;
-  quantity?: Maybe<Scalars['Int']>;
-  order?: Maybe<OrderRelateToOneInput>;
+  description?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  order?: Maybe<OrderRelateToOneForUpdateInput>;
+  photo?: Maybe<ProductImageRelateToOneForUpdateInput>;
+  price?: Maybe<Scalars["Int"]>;
+  quantity?: Maybe<Scalars["Int"]>;
 };
 
 export type OrderItemWhereInput = {
   AND?: Maybe<Array<OrderItemWhereInput>>;
+  NOT?: Maybe<Array<OrderItemWhereInput>>;
   OR?: Maybe<Array<OrderItemWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  name?: Maybe<Scalars['String']>;
-  name_not?: Maybe<Scalars['String']>;
-  name_contains?: Maybe<Scalars['String']>;
-  name_not_contains?: Maybe<Scalars['String']>;
-  name_starts_with?: Maybe<Scalars['String']>;
-  name_not_starts_with?: Maybe<Scalars['String']>;
-  name_ends_with?: Maybe<Scalars['String']>;
-  name_not_ends_with?: Maybe<Scalars['String']>;
-  name_i?: Maybe<Scalars['String']>;
-  name_not_i?: Maybe<Scalars['String']>;
-  name_contains_i?: Maybe<Scalars['String']>;
-  name_not_contains_i?: Maybe<Scalars['String']>;
-  name_starts_with_i?: Maybe<Scalars['String']>;
-  name_not_starts_with_i?: Maybe<Scalars['String']>;
-  name_ends_with_i?: Maybe<Scalars['String']>;
-  name_not_ends_with_i?: Maybe<Scalars['String']>;
-  name_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  description?: Maybe<Scalars['String']>;
-  description_not?: Maybe<Scalars['String']>;
-  description_contains?: Maybe<Scalars['String']>;
-  description_not_contains?: Maybe<Scalars['String']>;
-  description_starts_with?: Maybe<Scalars['String']>;
-  description_not_starts_with?: Maybe<Scalars['String']>;
-  description_ends_with?: Maybe<Scalars['String']>;
-  description_not_ends_with?: Maybe<Scalars['String']>;
-  description_i?: Maybe<Scalars['String']>;
-  description_not_i?: Maybe<Scalars['String']>;
-  description_contains_i?: Maybe<Scalars['String']>;
-  description_not_contains_i?: Maybe<Scalars['String']>;
-  description_starts_with_i?: Maybe<Scalars['String']>;
-  description_not_starts_with_i?: Maybe<Scalars['String']>;
-  description_ends_with_i?: Maybe<Scalars['String']>;
-  description_not_ends_with_i?: Maybe<Scalars['String']>;
-  description_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  description_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  photo?: Maybe<ProductImageWhereInput>;
-  photo_is_null?: Maybe<Scalars['Boolean']>;
-  price?: Maybe<Scalars['Int']>;
-  price_not?: Maybe<Scalars['Int']>;
-  price_lt?: Maybe<Scalars['Int']>;
-  price_lte?: Maybe<Scalars['Int']>;
-  price_gt?: Maybe<Scalars['Int']>;
-  price_gte?: Maybe<Scalars['Int']>;
-  price_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  price_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  quantity?: Maybe<Scalars['Int']>;
-  quantity_not?: Maybe<Scalars['Int']>;
-  quantity_lt?: Maybe<Scalars['Int']>;
-  quantity_lte?: Maybe<Scalars['Int']>;
-  quantity_gt?: Maybe<Scalars['Int']>;
-  quantity_gte?: Maybe<Scalars['Int']>;
-  quantity_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  quantity_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  description?: Maybe<StringFilter>;
+  id?: Maybe<IdFilter>;
+  name?: Maybe<StringFilter>;
   order?: Maybe<OrderWhereInput>;
-  order_is_null?: Maybe<Scalars['Boolean']>;
+  photo?: Maybe<ProductImageWhereInput>;
+  price?: Maybe<IntNullableFilter>;
+  quantity?: Maybe<IntNullableFilter>;
 };
 
 export type OrderItemWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars["ID"]>;
 };
 
-export type OrderItemsCreateInput = {
-  data?: Maybe<OrderItemCreateInput>;
-};
-
-export type OrderItemsUpdateInput = {
-  id: Scalars['ID'];
-  data?: Maybe<OrderItemUpdateInput>;
+export type OrderManyRelationFilter = {
+  every?: Maybe<OrderWhereInput>;
+  none?: Maybe<OrderWhereInput>;
+  some?: Maybe<OrderWhereInput>;
 };
 
 export type OrderOrderByInput = {
+  charge?: Maybe<OrderDirection>;
   id?: Maybe<OrderDirection>;
   total?: Maybe<OrderDirection>;
-  charge?: Maybe<OrderDirection>;
 };
 
-export type OrderRelateToManyInput = {
-  create?: Maybe<Array<Maybe<OrderCreateInput>>>;
-  connect?: Maybe<Array<Maybe<OrderWhereUniqueInput>>>;
-  disconnect?: Maybe<Array<Maybe<OrderWhereUniqueInput>>>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
+export type OrderRelateToManyForCreateInput = {
+  connect?: Maybe<Array<OrderWhereUniqueInput>>;
+  create?: Maybe<Array<OrderCreateInput>>;
 };
 
-export type OrderRelateToOneInput = {
-  create?: Maybe<OrderCreateInput>;
+export type OrderRelateToManyForUpdateInput = {
+  connect?: Maybe<Array<OrderWhereUniqueInput>>;
+  create?: Maybe<Array<OrderCreateInput>>;
+  disconnect?: Maybe<Array<OrderWhereUniqueInput>>;
+  set?: Maybe<Array<OrderWhereUniqueInput>>;
+};
+
+export type OrderRelateToOneForCreateInput = {
   connect?: Maybe<OrderWhereUniqueInput>;
-  disconnect?: Maybe<OrderWhereUniqueInput>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
+  create?: Maybe<OrderCreateInput>;
+};
+
+export type OrderRelateToOneForUpdateInput = {
+  connect?: Maybe<OrderWhereUniqueInput>;
+  create?: Maybe<OrderCreateInput>;
+  disconnect?: Maybe<Scalars["Boolean"]>;
+};
+
+export type OrderUpdateArgs = {
+  data: OrderUpdateInput;
+  where: OrderWhereUniqueInput;
 };
 
 export type OrderUpdateInput = {
-  total?: Maybe<Scalars['Int']>;
-  items?: Maybe<OrderItemRelateToManyInput>;
-  user?: Maybe<UserRelateToOneInput>;
-  charge?: Maybe<Scalars['String']>;
+  charge?: Maybe<Scalars["String"]>;
+  items?: Maybe<OrderItemRelateToManyForUpdateInput>;
+  total?: Maybe<Scalars["Int"]>;
+  user?: Maybe<UserRelateToOneForUpdateInput>;
 };
 
 export type OrderWhereInput = {
   AND?: Maybe<Array<OrderWhereInput>>;
+  NOT?: Maybe<Array<OrderWhereInput>>;
   OR?: Maybe<Array<OrderWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  total?: Maybe<Scalars['Int']>;
-  total_not?: Maybe<Scalars['Int']>;
-  total_lt?: Maybe<Scalars['Int']>;
-  total_lte?: Maybe<Scalars['Int']>;
-  total_gt?: Maybe<Scalars['Int']>;
-  total_gte?: Maybe<Scalars['Int']>;
-  total_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  total_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  /**  condition must be true for all nodes */
-  items_every?: Maybe<OrderItemWhereInput>;
-  /**  condition must be true for at least 1 node */
-  items_some?: Maybe<OrderItemWhereInput>;
-  /**  condition must be false for all nodes */
-  items_none?: Maybe<OrderItemWhereInput>;
+  charge?: Maybe<StringFilter>;
+  id?: Maybe<IdFilter>;
+  items?: Maybe<OrderItemManyRelationFilter>;
+  total?: Maybe<IntNullableFilter>;
   user?: Maybe<UserWhereInput>;
-  user_is_null?: Maybe<Scalars['Boolean']>;
-  charge?: Maybe<Scalars['String']>;
-  charge_not?: Maybe<Scalars['String']>;
-  charge_contains?: Maybe<Scalars['String']>;
-  charge_not_contains?: Maybe<Scalars['String']>;
-  charge_starts_with?: Maybe<Scalars['String']>;
-  charge_not_starts_with?: Maybe<Scalars['String']>;
-  charge_ends_with?: Maybe<Scalars['String']>;
-  charge_not_ends_with?: Maybe<Scalars['String']>;
-  charge_i?: Maybe<Scalars['String']>;
-  charge_not_i?: Maybe<Scalars['String']>;
-  charge_contains_i?: Maybe<Scalars['String']>;
-  charge_not_contains_i?: Maybe<Scalars['String']>;
-  charge_starts_with_i?: Maybe<Scalars['String']>;
-  charge_not_starts_with_i?: Maybe<Scalars['String']>;
-  charge_ends_with_i?: Maybe<Scalars['String']>;
-  charge_not_ends_with_i?: Maybe<Scalars['String']>;
-  charge_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  charge_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type OrderWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars["ID"]>;
 };
 
-export type OrdersCreateInput = {
-  data?: Maybe<OrderCreateInput>;
+export type PasswordFilter = {
+  isSet: Scalars["Boolean"];
 };
-
-export type OrdersUpdateInput = {
-  id: Scalars['ID'];
-  data?: Maybe<OrderUpdateInput>;
-};
-
-export enum PasswordAuthErrorCode {
-  Failure = 'FAILURE',
-  IdentityNotFound = 'IDENTITY_NOT_FOUND',
-  SecretNotSet = 'SECRET_NOT_SET',
-  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES',
-  SecretMismatch = 'SECRET_MISMATCH'
-}
 
 export enum PasswordResetRedemptionErrorCode {
-  Failure = 'FAILURE',
-  IdentityNotFound = 'IDENTITY_NOT_FOUND',
-  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES',
-  TokenNotSet = 'TOKEN_NOT_SET',
-  TokenMismatch = 'TOKEN_MISMATCH',
-  TokenExpired = 'TOKEN_EXPIRED',
-  TokenRedeemed = 'TOKEN_REDEEMED'
-}
-
-export enum PasswordResetRequestErrorCode {
-  IdentityNotFound = 'IDENTITY_NOT_FOUND',
-  MultipleIdentityMatches = 'MULTIPLE_IDENTITY_MATCHES'
+  Failure = "FAILURE",
+  TokenExpired = "TOKEN_EXPIRED",
+  TokenRedeemed = "TOKEN_REDEEMED",
 }
 
 export type PasswordState = {
-  __typename?: 'PasswordState';
-  isSet: Scalars['Boolean'];
+  __typename?: "PasswordState";
+  isSet: Scalars["Boolean"];
 };
 
-/**  A keystone list */
 export type Product = {
-  __typename?: 'Product';
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
+  __typename?: "Product";
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  name?: Maybe<Scalars["String"]>;
   photo?: Maybe<ProductImage>;
-  status?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Int']>;
+  price?: Maybe<Scalars["Int"]>;
+  status?: Maybe<Scalars["String"]>;
 };
 
 export type ProductCreateInput = {
-  name?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  photo?: Maybe<ProductImageRelateToOneInput>;
-  status?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  photo?: Maybe<ProductImageRelateToOneForCreateInput>;
+  price?: Maybe<Scalars["Int"]>;
+  status?: Maybe<Scalars["String"]>;
 };
 
-/**  A keystone list */
 export type ProductImage = {
-  __typename?: 'ProductImage';
-  id: Scalars['ID'];
+  __typename?: "ProductImage";
+  altText?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
   image?: Maybe<CloudinaryImage_File>;
-  altText?: Maybe<Scalars['String']>;
   product?: Maybe<Product>;
 };
 
 export type ProductImageCreateInput = {
-  image?: Maybe<Scalars['Upload']>;
-  altText?: Maybe<Scalars['String']>;
-  product?: Maybe<ProductRelateToOneInput>;
+  altText?: Maybe<Scalars["String"]>;
+  image?: Maybe<Scalars["Upload"]>;
+  product?: Maybe<ProductRelateToOneForCreateInput>;
 };
 
 export type ProductImageOrderByInput = {
-  id?: Maybe<OrderDirection>;
   altText?: Maybe<OrderDirection>;
+  id?: Maybe<OrderDirection>;
 };
 
-export type ProductImageRelateToOneInput = {
-  create?: Maybe<ProductImageCreateInput>;
+export type ProductImageRelateToOneForCreateInput = {
   connect?: Maybe<ProductImageWhereUniqueInput>;
-  disconnect?: Maybe<ProductImageWhereUniqueInput>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
+  create?: Maybe<ProductImageCreateInput>;
+};
+
+export type ProductImageRelateToOneForUpdateInput = {
+  connect?: Maybe<ProductImageWhereUniqueInput>;
+  create?: Maybe<ProductImageCreateInput>;
+  disconnect?: Maybe<Scalars["Boolean"]>;
+};
+
+export type ProductImageUpdateArgs = {
+  data: ProductImageUpdateInput;
+  where: ProductImageWhereUniqueInput;
 };
 
 export type ProductImageUpdateInput = {
-  image?: Maybe<Scalars['Upload']>;
-  altText?: Maybe<Scalars['String']>;
-  product?: Maybe<ProductRelateToOneInput>;
+  altText?: Maybe<Scalars["String"]>;
+  image?: Maybe<Scalars["Upload"]>;
+  product?: Maybe<ProductRelateToOneForUpdateInput>;
 };
 
 export type ProductImageWhereInput = {
   AND?: Maybe<Array<ProductImageWhereInput>>;
+  NOT?: Maybe<Array<ProductImageWhereInput>>;
   OR?: Maybe<Array<ProductImageWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  image?: Maybe<Scalars['String']>;
-  image_not?: Maybe<Scalars['String']>;
-  image_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  image_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  altText?: Maybe<Scalars['String']>;
-  altText_not?: Maybe<Scalars['String']>;
-  altText_contains?: Maybe<Scalars['String']>;
-  altText_not_contains?: Maybe<Scalars['String']>;
-  altText_starts_with?: Maybe<Scalars['String']>;
-  altText_not_starts_with?: Maybe<Scalars['String']>;
-  altText_ends_with?: Maybe<Scalars['String']>;
-  altText_not_ends_with?: Maybe<Scalars['String']>;
-  altText_i?: Maybe<Scalars['String']>;
-  altText_not_i?: Maybe<Scalars['String']>;
-  altText_contains_i?: Maybe<Scalars['String']>;
-  altText_not_contains_i?: Maybe<Scalars['String']>;
-  altText_starts_with_i?: Maybe<Scalars['String']>;
-  altText_not_starts_with_i?: Maybe<Scalars['String']>;
-  altText_ends_with_i?: Maybe<Scalars['String']>;
-  altText_not_ends_with_i?: Maybe<Scalars['String']>;
-  altText_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  altText_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  altText?: Maybe<StringFilter>;
+  id?: Maybe<IdFilter>;
   product?: Maybe<ProductWhereInput>;
-  product_is_null?: Maybe<Scalars['Boolean']>;
 };
 
 export type ProductImageWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type ProductImagesCreateInput = {
-  data?: Maybe<ProductImageCreateInput>;
-};
-
-export type ProductImagesUpdateInput = {
-  id: Scalars['ID'];
-  data?: Maybe<ProductImageUpdateInput>;
+  id?: Maybe<Scalars["ID"]>;
 };
 
 export type ProductOrderByInput = {
+  description?: Maybe<OrderDirection>;
   id?: Maybe<OrderDirection>;
   name?: Maybe<OrderDirection>;
-  description?: Maybe<OrderDirection>;
-  status?: Maybe<OrderDirection>;
   price?: Maybe<OrderDirection>;
+  status?: Maybe<OrderDirection>;
 };
 
-export type ProductRelateToOneInput = {
-  create?: Maybe<ProductCreateInput>;
+export type ProductRelateToOneForCreateInput = {
   connect?: Maybe<ProductWhereUniqueInput>;
-  disconnect?: Maybe<ProductWhereUniqueInput>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
+  create?: Maybe<ProductCreateInput>;
+};
+
+export type ProductRelateToOneForUpdateInput = {
+  connect?: Maybe<ProductWhereUniqueInput>;
+  create?: Maybe<ProductCreateInput>;
+  disconnect?: Maybe<Scalars["Boolean"]>;
+};
+
+export type ProductUpdateArgs = {
+  data: ProductUpdateInput;
+  where: ProductWhereUniqueInput;
 };
 
 export type ProductUpdateInput = {
-  name?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  photo?: Maybe<ProductImageRelateToOneInput>;
-  status?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  photo?: Maybe<ProductImageRelateToOneForUpdateInput>;
+  price?: Maybe<Scalars["Int"]>;
+  status?: Maybe<Scalars["String"]>;
 };
 
 export type ProductWhereInput = {
   AND?: Maybe<Array<ProductWhereInput>>;
+  NOT?: Maybe<Array<ProductWhereInput>>;
   OR?: Maybe<Array<ProductWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  name?: Maybe<Scalars['String']>;
-  name_not?: Maybe<Scalars['String']>;
-  name_contains?: Maybe<Scalars['String']>;
-  name_not_contains?: Maybe<Scalars['String']>;
-  name_starts_with?: Maybe<Scalars['String']>;
-  name_not_starts_with?: Maybe<Scalars['String']>;
-  name_ends_with?: Maybe<Scalars['String']>;
-  name_not_ends_with?: Maybe<Scalars['String']>;
-  name_i?: Maybe<Scalars['String']>;
-  name_not_i?: Maybe<Scalars['String']>;
-  name_contains_i?: Maybe<Scalars['String']>;
-  name_not_contains_i?: Maybe<Scalars['String']>;
-  name_starts_with_i?: Maybe<Scalars['String']>;
-  name_not_starts_with_i?: Maybe<Scalars['String']>;
-  name_ends_with_i?: Maybe<Scalars['String']>;
-  name_not_ends_with_i?: Maybe<Scalars['String']>;
-  name_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  description?: Maybe<Scalars['String']>;
-  description_not?: Maybe<Scalars['String']>;
-  description_contains?: Maybe<Scalars['String']>;
-  description_not_contains?: Maybe<Scalars['String']>;
-  description_starts_with?: Maybe<Scalars['String']>;
-  description_not_starts_with?: Maybe<Scalars['String']>;
-  description_ends_with?: Maybe<Scalars['String']>;
-  description_not_ends_with?: Maybe<Scalars['String']>;
-  description_i?: Maybe<Scalars['String']>;
-  description_not_i?: Maybe<Scalars['String']>;
-  description_contains_i?: Maybe<Scalars['String']>;
-  description_not_contains_i?: Maybe<Scalars['String']>;
-  description_starts_with_i?: Maybe<Scalars['String']>;
-  description_not_starts_with_i?: Maybe<Scalars['String']>;
-  description_ends_with_i?: Maybe<Scalars['String']>;
-  description_not_ends_with_i?: Maybe<Scalars['String']>;
-  description_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  description_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  description?: Maybe<StringFilter>;
+  id?: Maybe<IdFilter>;
+  name?: Maybe<StringFilter>;
   photo?: Maybe<ProductImageWhereInput>;
-  photo_is_null?: Maybe<Scalars['Boolean']>;
-  status?: Maybe<Scalars['String']>;
-  status_not?: Maybe<Scalars['String']>;
-  status_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  status_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  price?: Maybe<Scalars['Int']>;
-  price_not?: Maybe<Scalars['Int']>;
-  price_lt?: Maybe<Scalars['Int']>;
-  price_lte?: Maybe<Scalars['Int']>;
-  price_gt?: Maybe<Scalars['Int']>;
-  price_gte?: Maybe<Scalars['Int']>;
-  price_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  price_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  price?: Maybe<IntNullableFilter>;
+  status?: Maybe<StringNullableFilter>;
 };
 
 export type ProductWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-};
-
-export type ProductsCreateInput = {
-  data?: Maybe<ProductCreateInput>;
-};
-
-export type ProductsUpdateInput = {
-  id: Scalars['ID'];
-  data?: Maybe<ProductUpdateInput>;
+  id?: Maybe<Scalars["ID"]>;
 };
 
 export type Query = {
-  __typename?: 'Query';
-  /**  Search for all User items which match the where clause. */
-  allUsers?: Maybe<Array<User>>;
-  /**  Search for the User item with the matching ID. */
-  User?: Maybe<User>;
-  /**
-   *  Perform a meta-query on all User items which match the where clause.
-   * @deprecated This query will be removed in a future version. Please use usersCount instead.
-   */
-  _allUsersMeta?: Maybe<_QueryMeta>;
-  usersCount?: Maybe<Scalars['Int']>;
-  /**  Search for all Product items which match the where clause. */
-  allProducts?: Maybe<Array<Product>>;
-  /**  Search for the Product item with the matching ID. */
-  Product?: Maybe<Product>;
-  /**
-   *  Perform a meta-query on all Product items which match the where clause.
-   * @deprecated This query will be removed in a future version. Please use productsCount instead.
-   */
-  _allProductsMeta?: Maybe<_QueryMeta>;
-  productsCount?: Maybe<Scalars['Int']>;
-  /**  Search for all ProductImage items which match the where clause. */
-  allProductImages?: Maybe<Array<ProductImage>>;
-  /**  Search for the ProductImage item with the matching ID. */
-  ProductImage?: Maybe<ProductImage>;
-  /**
-   *  Perform a meta-query on all ProductImage items which match the where clause.
-   * @deprecated This query will be removed in a future version. Please use productImagesCount instead.
-   */
-  _allProductImagesMeta?: Maybe<_QueryMeta>;
-  productImagesCount?: Maybe<Scalars['Int']>;
-  /**  Search for all CartItem items which match the where clause. */
-  allCartItems?: Maybe<Array<CartItem>>;
-  /**  Search for the CartItem item with the matching ID. */
-  CartItem?: Maybe<CartItem>;
-  /**
-   *  Perform a meta-query on all CartItem items which match the where clause.
-   * @deprecated This query will be removed in a future version. Please use cartItemsCount instead.
-   */
-  _allCartItemsMeta?: Maybe<_QueryMeta>;
-  cartItemsCount?: Maybe<Scalars['Int']>;
-  /**  Search for all OrderItem items which match the where clause. */
-  allOrderItems?: Maybe<Array<OrderItem>>;
-  /**  Search for the OrderItem item with the matching ID. */
-  OrderItem?: Maybe<OrderItem>;
-  /**
-   *  Perform a meta-query on all OrderItem items which match the where clause.
-   * @deprecated This query will be removed in a future version. Please use orderItemsCount instead.
-   */
-  _allOrderItemsMeta?: Maybe<_QueryMeta>;
-  orderItemsCount?: Maybe<Scalars['Int']>;
-  /**  Search for all Order items which match the where clause. */
-  allOrders?: Maybe<Array<Order>>;
-  /**  Search for the Order item with the matching ID. */
-  Order?: Maybe<Order>;
-  /**
-   *  Perform a meta-query on all Order items which match the where clause.
-   * @deprecated This query will be removed in a future version. Please use ordersCount instead.
-   */
-  _allOrdersMeta?: Maybe<_QueryMeta>;
-  ordersCount?: Maybe<Scalars['Int']>;
+  __typename?: "Query";
   authenticatedItem?: Maybe<AuthenticatedItem>;
-  validateUserPasswordResetToken?: Maybe<ValidateUserPasswordResetTokenResult>;
+  cartItem?: Maybe<CartItem>;
+  cartItems?: Maybe<Array<CartItem>>;
+  cartItemsCount?: Maybe<Scalars["Int"]>;
   keystone: KeystoneMeta;
+  order?: Maybe<Order>;
+  orderItem?: Maybe<OrderItem>;
+  orderItems?: Maybe<Array<OrderItem>>;
+  orderItemsCount?: Maybe<Scalars["Int"]>;
+  orders?: Maybe<Array<Order>>;
+  ordersCount?: Maybe<Scalars["Int"]>;
+  product?: Maybe<Product>;
+  productImage?: Maybe<ProductImage>;
+  productImages?: Maybe<Array<ProductImage>>;
+  productImagesCount?: Maybe<Scalars["Int"]>;
+  products?: Maybe<Array<Product>>;
+  productsCount?: Maybe<Scalars["Int"]>;
+  user?: Maybe<User>;
+  users?: Maybe<Array<User>>;
+  usersCount?: Maybe<Scalars["Int"]>;
+  validateUserPasswordResetToken?: Maybe<ValidateUserPasswordResetTokenResult>;
 };
-
-
-export type QueryAllUsersArgs = {
-  where?: UserWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<UserOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-export type QueryUserArgs = {
-  where: UserWhereUniqueInput;
-};
-
-
-export type Query_AllUsersMetaArgs = {
-  where?: UserWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<UserOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-export type QueryUsersCountArgs = {
-  where?: UserWhereInput;
-};
-
-
-export type QueryAllProductsArgs = {
-  where?: ProductWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<ProductOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-export type QueryProductArgs = {
-  where: ProductWhereUniqueInput;
-};
-
-
-export type Query_AllProductsMetaArgs = {
-  where?: ProductWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<ProductOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-export type QueryProductsCountArgs = {
-  where?: ProductWhereInput;
-};
-
-
-export type QueryAllProductImagesArgs = {
-  where?: ProductImageWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<ProductImageOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-export type QueryProductImageArgs = {
-  where: ProductImageWhereUniqueInput;
-};
-
-
-export type Query_AllProductImagesMetaArgs = {
-  where?: ProductImageWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<ProductImageOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-export type QueryProductImagesCountArgs = {
-  where?: ProductImageWhereInput;
-};
-
-
-export type QueryAllCartItemsArgs = {
-  where?: CartItemWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<CartItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
 
 export type QueryCartItemArgs = {
   where: CartItemWhereUniqueInput;
 };
 
-
-export type Query_AllCartItemsMetaArgs = {
-  where?: CartItemWhereInput;
-  search?: Maybe<Scalars['String']>;
+export type QueryCartItemsArgs = {
   orderBy?: Array<CartItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: CartItemWhereInput;
 };
-
 
 export type QueryCartItemsCountArgs = {
   where?: CartItemWhereInput;
 };
 
-
-export type QueryAllOrderItemsArgs = {
-  where?: OrderItemWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<OrderItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
+export type QueryOrderArgs = {
+  where: OrderWhereUniqueInput;
 };
-
 
 export type QueryOrderItemArgs = {
   where: OrderItemWhereUniqueInput;
 };
 
-
-export type Query_AllOrderItemsMetaArgs = {
-  where?: OrderItemWhereInput;
-  search?: Maybe<Scalars['String']>;
+export type QueryOrderItemsArgs = {
   orderBy?: Array<OrderItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: OrderItemWhereInput;
 };
-
 
 export type QueryOrderItemsCountArgs = {
   where?: OrderItemWhereInput;
 };
 
-
-export type QueryAllOrdersArgs = {
-  where?: OrderWhereInput;
-  search?: Maybe<Scalars['String']>;
+export type QueryOrdersArgs = {
   orderBy?: Array<OrderOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-export type QueryOrderArgs = {
-  where: OrderWhereUniqueInput;
-};
-
-
-export type Query_AllOrdersMetaArgs = {
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
   where?: OrderWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<OrderOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
 };
-
 
 export type QueryOrdersCountArgs = {
   where?: OrderWhereInput;
 };
 
+export type QueryProductArgs = {
+  where: ProductWhereUniqueInput;
+};
+
+export type QueryProductImageArgs = {
+  where: ProductImageWhereUniqueInput;
+};
+
+export type QueryProductImagesArgs = {
+  orderBy?: Array<ProductImageOrderByInput>;
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: ProductImageWhereInput;
+};
+
+export type QueryProductImagesCountArgs = {
+  where?: ProductImageWhereInput;
+};
+
+export type QueryProductsArgs = {
+  orderBy?: Array<ProductOrderByInput>;
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: ProductWhereInput;
+};
+
+export type QueryProductsCountArgs = {
+  where?: ProductWhereInput;
+};
+
+export type QueryUserArgs = {
+  where: UserWhereUniqueInput;
+};
+
+export type QueryUsersArgs = {
+  orderBy?: Array<UserOrderByInput>;
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: UserWhereInput;
+};
+
+export type QueryUsersCountArgs = {
+  where?: UserWhereInput;
+};
 
 export type QueryValidateUserPasswordResetTokenArgs = {
-  email: Scalars['String'];
-  token: Scalars['String'];
+  email: Scalars["String"];
+  token: Scalars["String"];
 };
+
+export enum QueryMode {
+  Default = "default",
+  Insensitive = "insensitive",
+}
 
 export type RedeemUserPasswordResetTokenResult = {
-  __typename?: 'RedeemUserPasswordResetTokenResult';
+  __typename?: "RedeemUserPasswordResetTokenResult";
   code: PasswordResetRedemptionErrorCode;
-  message: Scalars['String'];
+  message: Scalars["String"];
 };
 
-export type SendUserPasswordResetLinkResult = {
-  __typename?: 'SendUserPasswordResetLinkResult';
-  code: PasswordResetRequestErrorCode;
-  message: Scalars['String'];
+export type StringFilter = {
+  contains?: Maybe<Scalars["String"]>;
+  endsWith?: Maybe<Scalars["String"]>;
+  equals?: Maybe<Scalars["String"]>;
+  gt?: Maybe<Scalars["String"]>;
+  gte?: Maybe<Scalars["String"]>;
+  in?: Maybe<Array<Scalars["String"]>>;
+  lt?: Maybe<Scalars["String"]>;
+  lte?: Maybe<Scalars["String"]>;
+  mode?: Maybe<QueryMode>;
+  not?: Maybe<NestedStringFilter>;
+  notIn?: Maybe<Array<Scalars["String"]>>;
+  startsWith?: Maybe<Scalars["String"]>;
 };
 
-export enum SortCartItemsBy {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  QuantityAsc = 'quantity_ASC',
-  QuantityDesc = 'quantity_DESC'
-}
+export type StringNullableFilter = {
+  contains?: Maybe<Scalars["String"]>;
+  endsWith?: Maybe<Scalars["String"]>;
+  equals?: Maybe<Scalars["String"]>;
+  gt?: Maybe<Scalars["String"]>;
+  gte?: Maybe<Scalars["String"]>;
+  in?: Maybe<Array<Scalars["String"]>>;
+  lt?: Maybe<Scalars["String"]>;
+  lte?: Maybe<Scalars["String"]>;
+  mode?: Maybe<QueryMode>;
+  not?: Maybe<NestedStringNullableFilter>;
+  notIn?: Maybe<Array<Scalars["String"]>>;
+  startsWith?: Maybe<Scalars["String"]>;
+};
 
-export enum SortOrderItemsBy {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC',
-  DescriptionAsc = 'description_ASC',
-  DescriptionDesc = 'description_DESC',
-  PriceAsc = 'price_ASC',
-  PriceDesc = 'price_DESC',
-  QuantityAsc = 'quantity_ASC',
-  QuantityDesc = 'quantity_DESC'
-}
-
-export enum SortOrdersBy {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  TotalAsc = 'total_ASC',
-  TotalDesc = 'total_DESC',
-  ChargeAsc = 'charge_ASC',
-  ChargeDesc = 'charge_DESC'
-}
-
-export enum SortProductImagesBy {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  AltTextAsc = 'altText_ASC',
-  AltTextDesc = 'altText_DESC'
-}
-
-export enum SortProductsBy {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC',
-  DescriptionAsc = 'description_ASC',
-  DescriptionDesc = 'description_DESC',
-  StatusAsc = 'status_ASC',
-  StatusDesc = 'status_DESC',
-  PriceAsc = 'price_ASC',
-  PriceDesc = 'price_DESC'
-}
-
-export enum SortUsersBy {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC',
-  EmailAsc = 'email_ASC',
-  EmailDesc = 'email_DESC',
-  PasswordResetIssuedAtAsc = 'passwordResetIssuedAt_ASC',
-  PasswordResetIssuedAtDesc = 'passwordResetIssuedAt_DESC',
-  PasswordResetRedeemedAtAsc = 'passwordResetRedeemedAt_ASC',
-  PasswordResetRedeemedAtDesc = 'passwordResetRedeemedAt_DESC'
-}
-
-
-/**  A keystone list */
 export type User = {
-  __typename?: 'User';
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  password?: Maybe<PasswordState>;
+  __typename?: "User";
   cart?: Maybe<Array<CartItem>>;
-  /** @deprecated This query will be removed in a future version. Please use cartCount instead. */
-  _cartMeta?: Maybe<_QueryMeta>;
-  cartCount?: Maybe<Scalars['Int']>;
+  cartCount?: Maybe<Scalars["Int"]>;
+  email?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  name?: Maybe<Scalars["String"]>;
   orders?: Maybe<Array<Order>>;
-  /** @deprecated This query will be removed in a future version. Please use ordersCount instead. */
-  _ordersMeta?: Maybe<_QueryMeta>;
-  ordersCount?: Maybe<Scalars['Int']>;
+  ordersCount?: Maybe<Scalars["Int"]>;
+  password?: Maybe<PasswordState>;
+  passwordResetIssuedAt?: Maybe<Scalars["DateTime"]>;
+  passwordResetRedeemedAt?: Maybe<Scalars["DateTime"]>;
   passwordResetToken?: Maybe<PasswordState>;
-  passwordResetIssuedAt?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
 };
 
-
-/**  A keystone list */
 export type UserCartArgs = {
-  where?: CartItemWhereInput;
-  search?: Maybe<Scalars['String']>;
   orderBy?: Array<CartItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: CartItemWhereInput;
 };
 
-
-/**  A keystone list */
-export type User_CartMetaArgs = {
-  where?: CartItemWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<CartItemOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-/**  A keystone list */
 export type UserCartCountArgs = {
   where?: CartItemWhereInput;
 };
 
-
-/**  A keystone list */
 export type UserOrdersArgs = {
-  where?: OrderWhereInput;
-  search?: Maybe<Scalars['String']>;
   orderBy?: Array<OrderOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
+  skip?: Scalars["Int"];
+  take?: Maybe<Scalars["Int"]>;
+  where?: OrderWhereInput;
 };
 
-
-/**  A keystone list */
-export type User_OrdersMetaArgs = {
-  where?: OrderWhereInput;
-  search?: Maybe<Scalars['String']>;
-  orderBy?: Array<OrderOrderByInput>;
-  first?: Maybe<Scalars['Int']>;
-  skip?: Scalars['Int'];
-};
-
-
-/**  A keystone list */
 export type UserOrdersCountArgs = {
   where?: OrderWhereInput;
 };
 
 export type UserAuthenticationWithPasswordFailure = {
-  __typename?: 'UserAuthenticationWithPasswordFailure';
-  code: PasswordAuthErrorCode;
-  message: Scalars['String'];
+  __typename?: "UserAuthenticationWithPasswordFailure";
+  message: Scalars["String"];
 };
 
-export type UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure;
+export type UserAuthenticationWithPasswordResult =
+  | UserAuthenticationWithPasswordFailure
+  | UserAuthenticationWithPasswordSuccess;
 
 export type UserAuthenticationWithPasswordSuccess = {
-  __typename?: 'UserAuthenticationWithPasswordSuccess';
-  sessionToken: Scalars['String'];
+  __typename?: "UserAuthenticationWithPasswordSuccess";
   item: User;
+  sessionToken: Scalars["String"];
 };
 
 export type UserCreateInput = {
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-  cart?: Maybe<CartItemRelateToManyInput>;
-  orders?: Maybe<OrderRelateToManyInput>;
-  passwordResetToken?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
+  cart?: Maybe<CartItemRelateToManyForCreateInput>;
+  email?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  orders?: Maybe<OrderRelateToManyForCreateInput>;
+  password?: Maybe<Scalars["String"]>;
+  passwordResetIssuedAt?: Maybe<Scalars["DateTime"]>;
+  passwordResetRedeemedAt?: Maybe<Scalars["DateTime"]>;
+  passwordResetToken?: Maybe<Scalars["String"]>;
 };
 
 export type UserOrderByInput = {
+  email?: Maybe<OrderDirection>;
   id?: Maybe<OrderDirection>;
   name?: Maybe<OrderDirection>;
-  email?: Maybe<OrderDirection>;
   passwordResetIssuedAt?: Maybe<OrderDirection>;
   passwordResetRedeemedAt?: Maybe<OrderDirection>;
 };
 
-export type UserRelateToOneInput = {
-  create?: Maybe<UserCreateInput>;
+export type UserRelateToOneForCreateInput = {
   connect?: Maybe<UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput>;
-  disconnectAll?: Maybe<Scalars['Boolean']>;
+  create?: Maybe<UserCreateInput>;
+};
+
+export type UserRelateToOneForUpdateInput = {
+  connect?: Maybe<UserWhereUniqueInput>;
+  create?: Maybe<UserCreateInput>;
+  disconnect?: Maybe<Scalars["Boolean"]>;
+};
+
+export type UserUpdateArgs = {
+  data: UserUpdateInput;
+  where: UserWhereUniqueInput;
 };
 
 export type UserUpdateInput = {
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-  cart?: Maybe<CartItemRelateToManyInput>;
-  orders?: Maybe<OrderRelateToManyInput>;
-  passwordResetToken?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
+  cart?: Maybe<CartItemRelateToManyForUpdateInput>;
+  email?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  orders?: Maybe<OrderRelateToManyForUpdateInput>;
+  password?: Maybe<Scalars["String"]>;
+  passwordResetIssuedAt?: Maybe<Scalars["DateTime"]>;
+  passwordResetRedeemedAt?: Maybe<Scalars["DateTime"]>;
+  passwordResetToken?: Maybe<Scalars["String"]>;
 };
 
 export type UserWhereInput = {
   AND?: Maybe<Array<UserWhereInput>>;
+  NOT?: Maybe<Array<UserWhereInput>>;
   OR?: Maybe<Array<UserWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  id_not?: Maybe<Scalars['ID']>;
-  id_lt?: Maybe<Scalars['ID']>;
-  id_lte?: Maybe<Scalars['ID']>;
-  id_gt?: Maybe<Scalars['ID']>;
-  id_gte?: Maybe<Scalars['ID']>;
-  id_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  id_not_in?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  name?: Maybe<Scalars['String']>;
-  name_not?: Maybe<Scalars['String']>;
-  name_contains?: Maybe<Scalars['String']>;
-  name_not_contains?: Maybe<Scalars['String']>;
-  name_starts_with?: Maybe<Scalars['String']>;
-  name_not_starts_with?: Maybe<Scalars['String']>;
-  name_ends_with?: Maybe<Scalars['String']>;
-  name_not_ends_with?: Maybe<Scalars['String']>;
-  name_i?: Maybe<Scalars['String']>;
-  name_not_i?: Maybe<Scalars['String']>;
-  name_contains_i?: Maybe<Scalars['String']>;
-  name_not_contains_i?: Maybe<Scalars['String']>;
-  name_starts_with_i?: Maybe<Scalars['String']>;
-  name_not_starts_with_i?: Maybe<Scalars['String']>;
-  name_ends_with_i?: Maybe<Scalars['String']>;
-  name_not_ends_with_i?: Maybe<Scalars['String']>;
-  name_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  email?: Maybe<Scalars['String']>;
-  email_not?: Maybe<Scalars['String']>;
-  email_contains?: Maybe<Scalars['String']>;
-  email_not_contains?: Maybe<Scalars['String']>;
-  email_starts_with?: Maybe<Scalars['String']>;
-  email_not_starts_with?: Maybe<Scalars['String']>;
-  email_ends_with?: Maybe<Scalars['String']>;
-  email_not_ends_with?: Maybe<Scalars['String']>;
-  email_i?: Maybe<Scalars['String']>;
-  email_not_i?: Maybe<Scalars['String']>;
-  email_contains_i?: Maybe<Scalars['String']>;
-  email_not_contains_i?: Maybe<Scalars['String']>;
-  email_starts_with_i?: Maybe<Scalars['String']>;
-  email_not_starts_with_i?: Maybe<Scalars['String']>;
-  email_ends_with_i?: Maybe<Scalars['String']>;
-  email_not_ends_with_i?: Maybe<Scalars['String']>;
-  email_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  email_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  password_is_set?: Maybe<Scalars['Boolean']>;
-  /**  condition must be true for all nodes */
-  cart_every?: Maybe<CartItemWhereInput>;
-  /**  condition must be true for at least 1 node */
-  cart_some?: Maybe<CartItemWhereInput>;
-  /**  condition must be false for all nodes */
-  cart_none?: Maybe<CartItemWhereInput>;
-  /**  condition must be true for all nodes */
-  orders_every?: Maybe<OrderWhereInput>;
-  /**  condition must be true for at least 1 node */
-  orders_some?: Maybe<OrderWhereInput>;
-  /**  condition must be false for all nodes */
-  orders_none?: Maybe<OrderWhereInput>;
-  passwordResetToken_is_set?: Maybe<Scalars['Boolean']>;
-  passwordResetIssuedAt?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt_not?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt_lt?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt_lte?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt_gt?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt_gte?: Maybe<Scalars['String']>;
-  passwordResetIssuedAt_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  passwordResetIssuedAt_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  passwordResetRedeemedAt?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt_not?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt_lt?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt_lte?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt_gt?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt_gte?: Maybe<Scalars['String']>;
-  passwordResetRedeemedAt_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  passwordResetRedeemedAt_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  cart?: Maybe<CartItemManyRelationFilter>;
+  email?: Maybe<StringFilter>;
+  id?: Maybe<IdFilter>;
+  name?: Maybe<StringFilter>;
+  orders?: Maybe<OrderManyRelationFilter>;
+  password?: Maybe<PasswordFilter>;
+  passwordResetIssuedAt?: Maybe<DateTimeNullableFilter>;
+  passwordResetRedeemedAt?: Maybe<DateTimeNullableFilter>;
+  passwordResetToken?: Maybe<PasswordFilter>;
 };
 
 export type UserWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-  email?: Maybe<Scalars['String']>;
-};
-
-export type UsersCreateInput = {
-  data?: Maybe<UserCreateInput>;
-};
-
-export type UsersUpdateInput = {
-  id: Scalars['ID'];
-  data?: Maybe<UserUpdateInput>;
+  email?: Maybe<Scalars["String"]>;
+  id?: Maybe<Scalars["ID"]>;
 };
 
 export type ValidateUserPasswordResetTokenResult = {
-  __typename?: 'ValidateUserPasswordResetTokenResult';
+  __typename?: "ValidateUserPasswordResetTokenResult";
   code: PasswordResetRedemptionErrorCode;
-  message: Scalars['String'];
-};
-
-export type _QueryMeta = {
-  __typename?: '_QueryMeta';
-  count?: Maybe<Scalars['Int']>;
+  message: Scalars["String"];
 };
 
 export type AddToCartMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars["ID"];
 }>;
 
+export type AddToCartMutation = {
+  __typename?: "Mutation";
+  addToCart?: { __typename?: "CartItem"; id: string } | null | undefined;
+};
 
-export type AddToCartMutation = (
-  { __typename?: 'Mutation' }
-  & { addToCart?: Maybe<(
-    { __typename?: 'CartItem' }
-    & Pick<CartItem, 'id'>
-  )> }
-);
+export type AllOrdersQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AllOrdersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllOrdersQuery = (
-  { __typename?: 'Query' }
-  & { allOrders?: Maybe<Array<(
-    { __typename?: 'Order' }
-    & Pick<Order, 'id' | 'charge' | 'total'>
-    & { user?: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id'>
-    )>, items?: Maybe<Array<(
-      { __typename?: 'OrderItem' }
-      & Pick<OrderItem, 'id' | 'name' | 'description' | 'price' | 'quantity'>
-      & { photo?: Maybe<(
-        { __typename?: 'ProductImage' }
-        & Pick<ProductImage, 'altText'>
-        & { image?: Maybe<(
-          { __typename?: 'CloudinaryImage_File' }
-          & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
-        )> }
-      )> }
-    )>> }
-  )>> }
-);
+export type AllOrdersQuery = {
+  __typename?: "Query";
+  orders?:
+    | Array<{
+        __typename?: "Order";
+        id: string;
+        charge?: string | null | undefined;
+        total?: number | null | undefined;
+        user?: { __typename?: "User"; id: string } | null | undefined;
+        items?:
+          | Array<{
+              __typename?: "OrderItem";
+              id: string;
+              name?: string | null | undefined;
+              description?: string | null | undefined;
+              price?: number | null | undefined;
+              quantity?: number | null | undefined;
+              photo?:
+                | {
+                    __typename?: "ProductImage";
+                    altText?: string | null | undefined;
+                    image?:
+                      | { __typename?: "CloudinaryImage_File"; publicUrlTransformed?: string | null | undefined }
+                      | null
+                      | undefined;
+                  }
+                | null
+                | undefined;
+            }>
+          | null
+          | undefined;
+      }>
+    | null
+    | undefined;
+};
 
 export type AllProductsQueryVariables = Exact<{
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars["Int"]>;
+  first?: Maybe<Scalars["Int"]>;
 }>;
 
+export type AllProductsQuery = {
+  __typename?: "Query";
+  products?:
+    | Array<{
+        __typename?: "Product";
+        id: string;
+        name?: string | null | undefined;
+        description?: string | null | undefined;
+        price?: number | null | undefined;
+        photo?:
+          | {
+              __typename?: "ProductImage";
+              id: string;
+              altText?: string | null | undefined;
+              image?:
+                | { __typename?: "CloudinaryImage_File"; publicUrlTransformed?: string | null | undefined }
+                | null
+                | undefined;
+            }
+          | null
+          | undefined;
+      }>
+    | null
+    | undefined;
+};
 
-export type AllProductsQuery = (
-  { __typename?: 'Query' }
-  & { allProducts?: Maybe<Array<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name' | 'description' | 'price'>
-    & { photo?: Maybe<(
-      { __typename?: 'ProductImage' }
-      & Pick<ProductImage, 'id' | 'altText'>
-      & { image?: Maybe<(
-        { __typename?: 'CloudinaryImage_File' }
-        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
-      )> }
-    )> }
-  )>> }
-);
+export type AllProductsCountQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AllProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllProductsCountQuery = (
-  { __typename?: 'Query' }
-  & { _allProductsMeta?: Maybe<(
-    { __typename?: '_QueryMeta' }
-    & Pick<_QueryMeta, 'count'>
-  )> }
-);
+export type AllProductsCountQuery = { __typename?: "Query"; productsCount?: number | null | undefined };
 
 export type CreateOrderMutationVariables = Exact<{
-  token: Scalars['String'];
+  token: Scalars["String"];
 }>;
 
-
-export type CreateOrderMutation = (
-  { __typename?: 'Mutation' }
-  & { checkout?: Maybe<(
-    { __typename?: 'Order' }
-    & Pick<Order, 'id' | 'charge' | 'total'>
-    & { items?: Maybe<Array<(
-      { __typename?: 'OrderItem' }
-      & Pick<OrderItem, 'id' | 'name'>
-    )>> }
-  )> }
-);
+export type CreateOrderMutation = {
+  __typename?: "Mutation";
+  checkout?:
+    | {
+        __typename?: "Order";
+        id: string;
+        charge?: string | null | undefined;
+        total?: number | null | undefined;
+        items?: Array<{ __typename?: "OrderItem"; id: string; name?: string | null | undefined }> | null | undefined;
+      }
+    | null
+    | undefined;
+};
 
 export type CreateProductMutationVariables = Exact<{
-  name: Scalars['String'];
-  description: Scalars['String'];
-  price: Scalars['Int'];
-  image?: Maybe<Scalars['Upload']>;
+  name: Scalars["String"];
+  description: Scalars["String"];
+  price: Scalars["Int"];
+  image?: Maybe<Scalars["Upload"]>;
 }>;
 
-
-export type CreateProductMutation = (
-  { __typename?: 'Mutation' }
-  & { createProduct?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name'>
-  )> }
-);
+export type CreateProductMutation = {
+  __typename?: "Mutation";
+  createProduct?: { __typename?: "Product"; id: string; name?: string | null | undefined } | null | undefined;
+};
 
 export type DeleteCartItemMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars["ID"];
 }>;
 
-
-export type DeleteCartItemMutation = (
-  { __typename?: 'Mutation' }
-  & { deleteCartItem?: Maybe<(
-    { __typename?: 'CartItem' }
-    & Pick<CartItem, 'id'>
-  )> }
-);
+export type DeleteCartItemMutation = {
+  __typename?: "Mutation";
+  deleteCartItem?: { __typename?: "CartItem"; id: string } | null | undefined;
+};
 
 export type DeleteProductMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars["ID"];
 }>;
 
-
-export type DeleteProductMutation = (
-  { __typename?: 'Mutation' }
-  & { deleteProduct?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id'>
-  )> }
-);
+export type DeleteProductMutation = {
+  __typename?: "Mutation";
+  deleteProduct?: { __typename?: "Product"; id: string } | null | undefined;
+};
 
 export type GetOrderQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars["ID"];
 }>;
 
-
-export type GetOrderQuery = (
-  { __typename?: 'Query' }
-  & { order?: Maybe<(
-    { __typename?: 'Order' }
-    & Pick<Order, 'id' | 'charge' | 'total'>
-    & { user?: Maybe<(
-      { __typename?: 'User' }
-      & Pick<User, 'id'>
-    )>, items?: Maybe<Array<(
-      { __typename?: 'OrderItem' }
-      & Pick<OrderItem, 'id' | 'name' | 'description' | 'price' | 'quantity'>
-      & { photo?: Maybe<(
-        { __typename?: 'ProductImage' }
-        & Pick<ProductImage, 'altText'>
-        & { image?: Maybe<(
-          { __typename?: 'CloudinaryImage_File' }
-          & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
-        )> }
-      )> }
-    )>> }
-  )> }
-);
+export type GetOrderQuery = {
+  __typename?: "Query";
+  order?:
+    | {
+        __typename?: "Order";
+        id: string;
+        charge?: string | null | undefined;
+        total?: number | null | undefined;
+        user?: { __typename?: "User"; id: string } | null | undefined;
+        items?:
+          | Array<{
+              __typename?: "OrderItem";
+              id: string;
+              name?: string | null | undefined;
+              description?: string | null | undefined;
+              price?: number | null | undefined;
+              quantity?: number | null | undefined;
+              photo?:
+                | {
+                    __typename?: "ProductImage";
+                    altText?: string | null | undefined;
+                    image?:
+                      | { __typename?: "CloudinaryImage_File"; publicUrlTransformed?: string | null | undefined }
+                      | null
+                      | undefined;
+                  }
+                | null
+                | undefined;
+            }>
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
 
 export type ProductQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars["ID"];
 }>;
 
+export type ProductQuery = {
+  __typename?: "Query";
+  product?:
+    | {
+        __typename?: "Product";
+        id: string;
+        name?: string | null | undefined;
+        description?: string | null | undefined;
+        price?: number | null | undefined;
+        photo?:
+          | {
+              __typename?: "ProductImage";
+              altText?: string | null | undefined;
+              image?:
+                | { __typename?: "CloudinaryImage_File"; publicUrlTransformed?: string | null | undefined }
+                | null
+                | undefined;
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
 
-export type ProductQuery = (
-  { __typename?: 'Query' }
-  & { Product?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name' | 'description' | 'price'>
-    & { photo?: Maybe<(
-      { __typename?: 'ProductImage' }
-      & Pick<ProductImage, 'altText'>
-      & { image?: Maybe<(
-        { __typename?: 'CloudinaryImage_File' }
-        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
-      )> }
-    )> }
-  )> }
-);
+export type UserQueryVariables = Exact<{ [key: string]: never }>;
 
-export type UserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UserQuery = (
-  { __typename?: 'Query' }
-  & { authenticatedItem?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'email'>
-    & { cart?: Maybe<Array<(
-      { __typename?: 'CartItem' }
-      & Pick<CartItem, 'id' | 'quantity'>
-      & { product?: Maybe<(
-        { __typename?: 'Product' }
-        & Pick<Product, 'id' | 'name' | 'description' | 'price'>
-        & { photo?: Maybe<(
-          { __typename?: 'ProductImage' }
-          & { image?: Maybe<(
-            { __typename?: 'CloudinaryImage_File' }
-            & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
-          )> }
-        )> }
-      )> }
-    )>> }
-  )> }
-);
+export type UserQuery = {
+  __typename?: "Query";
+  authenticatedItem?:
+    | {
+        __typename?: "User";
+        id: string;
+        name?: string | null | undefined;
+        email?: string | null | undefined;
+        cart?:
+          | Array<{
+              __typename?: "CartItem";
+              id: string;
+              quantity?: number | null | undefined;
+              product?:
+                | {
+                    __typename?: "Product";
+                    id: string;
+                    name?: string | null | undefined;
+                    description?: string | null | undefined;
+                    price?: number | null | undefined;
+                    photo?:
+                      | {
+                          __typename?: "ProductImage";
+                          image?:
+                            | { __typename?: "CloudinaryImage_File"; publicUrlTransformed?: string | null | undefined }
+                            | null
+                            | undefined;
+                        }
+                      | null
+                      | undefined;
+                  }
+                | null
+                | undefined;
+            }>
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
 
 export type RequestResetMutationVariables = Exact<{
-  email: Scalars['String'];
+  email: Scalars["String"];
 }>;
 
-
-export type RequestResetMutation = (
-  { __typename?: 'Mutation' }
-  & { sendUserPasswordResetLink?: Maybe<(
-    { __typename?: 'SendUserPasswordResetLinkResult' }
-    & Pick<SendUserPasswordResetLinkResult, 'code' | 'message'>
-  )> }
-);
+export type RequestResetMutation = { __typename?: "Mutation"; sendUserPasswordResetLink: boolean };
 
 export type RedeemPasswordResetMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
-  token: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
+  token: Scalars["String"];
 }>;
 
-
-export type RedeemPasswordResetMutation = (
-  { __typename?: 'Mutation' }
-  & { redeemUserPasswordResetToken?: Maybe<(
-    { __typename?: 'RedeemUserPasswordResetTokenResult' }
-    & Pick<RedeemUserPasswordResetTokenResult, 'code' | 'message'>
-  )> }
-);
+export type RedeemPasswordResetMutation = {
+  __typename?: "Mutation";
+  redeemUserPasswordResetToken?:
+    | { __typename?: "RedeemUserPasswordResetTokenResult"; code: PasswordResetRedemptionErrorCode; message: string }
+    | null
+    | undefined;
+};
 
 export type SearchProductsQueryVariables = Exact<{
-  searchTerm: Scalars['String'];
+  searchTerm: Scalars["String"];
 }>;
 
-
-export type SearchProductsQuery = (
-  { __typename?: 'Query' }
-  & { searchTerms?: Maybe<Array<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name'>
-    & { photo?: Maybe<(
-      { __typename?: 'ProductImage' }
-      & Pick<ProductImage, 'altText'>
-      & { image?: Maybe<(
-        { __typename?: 'CloudinaryImage_File' }
-        & Pick<CloudinaryImage_File, 'publicUrlTransformed'>
-      )> }
-    )> }
-  )>> }
-);
+export type SearchProductsQuery = {
+  __typename?: "Query";
+  searchTerms?:
+    | Array<{
+        __typename?: "Product";
+        id: string;
+        name?: string | null | undefined;
+        photo?:
+          | {
+              __typename?: "ProductImage";
+              altText?: string | null | undefined;
+              image?:
+                | { __typename?: "CloudinaryImage_File"; publicUrlTransformed?: string | null | undefined }
+                | null
+                | undefined;
+            }
+          | null
+          | undefined;
+      }>
+    | null
+    | undefined;
+};
 
 export type SignInMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
 }>;
 
+export type SignInMutation = {
+  __typename?: "Mutation";
+  authenticateUserWithPassword:
+    | { __typename?: "UserAuthenticationWithPasswordFailure"; message: string }
+    | {
+        __typename?: "UserAuthenticationWithPasswordSuccess";
+        item: { __typename?: "User"; id: string; email?: string | null | undefined; name?: string | null | undefined };
+      };
+};
 
-export type SignInMutation = (
-  { __typename?: 'Mutation' }
-  & { authenticateUserWithPassword: (
-    { __typename?: 'UserAuthenticationWithPasswordSuccess' }
-    & { item: (
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'email' | 'name'>
-    ) }
-  ) | (
-    { __typename?: 'UserAuthenticationWithPasswordFailure' }
-    & Pick<UserAuthenticationWithPasswordFailure, 'code' | 'message'>
-  ) }
-);
+export type SignOutMutationVariables = Exact<{ [key: string]: never }>;
 
-export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type SignOutMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'endSession'>
-);
+export type SignOutMutation = { __typename?: "Mutation"; endSession: boolean };
 
 export type SignUpMutationVariables = Exact<{
-  name: Scalars['String'];
-  email: Scalars['String'];
-  password: Scalars['String'];
+  name: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 }>;
 
-
-export type SignUpMutation = (
-  { __typename?: 'Mutation' }
-  & { createUser?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'name'>
-  )> }
-);
+export type SignUpMutation = {
+  __typename?: "Mutation";
+  createUser?:
+    | { __typename?: "User"; id: string; email?: string | null | undefined; name?: string | null | undefined }
+    | null
+    | undefined;
+};
 
 export type UpdateProductMutationVariables = Exact<{
-  id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Int']>;
+  id: Scalars["ID"];
+  name?: Maybe<Scalars["String"]>;
+  description?: Maybe<Scalars["String"]>;
+  price?: Maybe<Scalars["Int"]>;
 }>;
 
-
-export type UpdateProductMutation = (
-  { __typename?: 'Mutation' }
-  & { updateProduct?: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'name' | 'description' | 'price'>
-  )> }
-);
-
+export type UpdateProductMutation = {
+  __typename?: "Mutation";
+  updateProduct?:
+    | {
+        __typename?: "Product";
+        id: string;
+        name?: string | null | undefined;
+        description?: string | null | undefined;
+        price?: number | null | undefined;
+      }
+    | null
+    | undefined;
+};
 
 export const AddToCartDocument = gql`
-    mutation addToCart($id: ID!) {
-  addToCart(productId: $id) {
-    id
+  mutation addToCart($id: ID!) {
+    addToCart(productId: $id) {
+      id
+    }
   }
-}
-    `;
+`;
 export type AddToCartMutationFn = Apollo.MutationFunction<AddToCartMutation, AddToCartMutationVariables>;
 
 /**
@@ -1931,38 +1487,40 @@ export type AddToCartMutationFn = Apollo.MutationFunction<AddToCartMutation, Add
  *   },
  * });
  */
-export function useAddToCartMutation(baseOptions?: Apollo.MutationHookOptions<AddToCartMutation, AddToCartMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddToCartMutation, AddToCartMutationVariables>(AddToCartDocument, options);
-      }
+export function useAddToCartMutation(
+  baseOptions?: Apollo.MutationHookOptions<AddToCartMutation, AddToCartMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddToCartMutation, AddToCartMutationVariables>(AddToCartDocument, options);
+}
 export type AddToCartMutationHookResult = ReturnType<typeof useAddToCartMutation>;
 export type AddToCartMutationResult = Apollo.MutationResult<AddToCartMutation>;
 export type AddToCartMutationOptions = Apollo.BaseMutationOptions<AddToCartMutation, AddToCartMutationVariables>;
 export const AllOrdersDocument = gql`
-    query allOrders {
-  allOrders {
-    id
-    charge
-    total
-    user {
+  query allOrders {
+    orders {
       id
-    }
-    items {
-      id
-      name
-      description
-      price
-      quantity
-      photo {
-        altText
-        image {
-          publicUrlTransformed
+      charge
+      total
+      user {
+        id
+      }
+      items {
+        id
+        name
+        description
+        price
+        quantity
+        photo {
+          altText
+          image {
+            publicUrlTransformed
+          }
         }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useAllOrdersQuery__
@@ -1980,36 +1538,38 @@ export const AllOrdersDocument = gql`
  * });
  */
 export function useAllOrdersQuery(baseOptions?: Apollo.QueryHookOptions<AllOrdersQuery, AllOrdersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllOrdersQuery, AllOrdersQueryVariables>(AllOrdersDocument, options);
-      }
-export function useAllOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllOrdersQuery, AllOrdersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllOrdersQuery, AllOrdersQueryVariables>(AllOrdersDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AllOrdersQuery, AllOrdersQueryVariables>(AllOrdersDocument, options);
+}
+export function useAllOrdersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<AllOrdersQuery, AllOrdersQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AllOrdersQuery, AllOrdersQueryVariables>(AllOrdersDocument, options);
+}
 export type AllOrdersQueryHookResult = ReturnType<typeof useAllOrdersQuery>;
 export type AllOrdersLazyQueryHookResult = ReturnType<typeof useAllOrdersLazyQuery>;
 export type AllOrdersQueryResult = Apollo.QueryResult<AllOrdersQuery, AllOrdersQueryVariables>;
 export function refetchAllOrdersQuery(variables?: AllOrdersQueryVariables) {
-      return { query: AllOrdersDocument, variables: variables }
-    }
+  return { query: AllOrdersDocument, variables: variables };
+}
 export const AllProductsDocument = gql`
-    query allProducts($skip: Int = 0, $first: Int) {
-  allProducts(skip: $skip, first: $first) {
-    id
-    name
-    description
-    price
-    photo {
+  query allProducts($skip: Int = 0, $first: Int) {
+    products(skip: $skip, take: $first) {
       id
-      image {
-        publicUrlTransformed
+      name
+      description
+      price
+      photo {
+        id
+        image {
+          publicUrlTransformed
+        }
+        altText
       }
-      altText
     }
   }
-}
-    `;
+`;
 
 /**
  * __useAllProductsQuery__
@@ -2028,27 +1588,29 @@ export const AllProductsDocument = gql`
  *   },
  * });
  */
-export function useAllProductsQuery(baseOptions?: Apollo.QueryHookOptions<AllProductsQuery, AllProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllProductsQuery, AllProductsQueryVariables>(AllProductsDocument, options);
-      }
-export function useAllProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllProductsQuery, AllProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllProductsQuery, AllProductsQueryVariables>(AllProductsDocument, options);
-        }
+export function useAllProductsQuery(
+  baseOptions?: Apollo.QueryHookOptions<AllProductsQuery, AllProductsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AllProductsQuery, AllProductsQueryVariables>(AllProductsDocument, options);
+}
+export function useAllProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<AllProductsQuery, AllProductsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AllProductsQuery, AllProductsQueryVariables>(AllProductsDocument, options);
+}
 export type AllProductsQueryHookResult = ReturnType<typeof useAllProductsQuery>;
 export type AllProductsLazyQueryHookResult = ReturnType<typeof useAllProductsLazyQuery>;
 export type AllProductsQueryResult = Apollo.QueryResult<AllProductsQuery, AllProductsQueryVariables>;
 export function refetchAllProductsQuery(variables?: AllProductsQueryVariables) {
-      return { query: AllProductsDocument, variables: variables }
-    }
-export const AllProductsCountDocument = gql`
-    query allProductsCount {
-  _allProductsMeta {
-    count
-  }
+  return { query: AllProductsDocument, variables: variables };
 }
-    `;
+export const AllProductsCountDocument = gql`
+  query allProductsCount {
+    productsCount
+  }
+`;
 
 /**
  * __useAllProductsCountQuery__
@@ -2065,33 +1627,37 @@ export const AllProductsCountDocument = gql`
  *   },
  * });
  */
-export function useAllProductsCountQuery(baseOptions?: Apollo.QueryHookOptions<AllProductsCountQuery, AllProductsCountQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllProductsCountQuery, AllProductsCountQueryVariables>(AllProductsCountDocument, options);
-      }
-export function useAllProductsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllProductsCountQuery, AllProductsCountQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllProductsCountQuery, AllProductsCountQueryVariables>(AllProductsCountDocument, options);
-        }
+export function useAllProductsCountQuery(
+  baseOptions?: Apollo.QueryHookOptions<AllProductsCountQuery, AllProductsCountQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AllProductsCountQuery, AllProductsCountQueryVariables>(AllProductsCountDocument, options);
+}
+export function useAllProductsCountLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<AllProductsCountQuery, AllProductsCountQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AllProductsCountQuery, AllProductsCountQueryVariables>(AllProductsCountDocument, options);
+}
 export type AllProductsCountQueryHookResult = ReturnType<typeof useAllProductsCountQuery>;
 export type AllProductsCountLazyQueryHookResult = ReturnType<typeof useAllProductsCountLazyQuery>;
 export type AllProductsCountQueryResult = Apollo.QueryResult<AllProductsCountQuery, AllProductsCountQueryVariables>;
 export function refetchAllProductsCountQuery(variables?: AllProductsCountQueryVariables) {
-      return { query: AllProductsCountDocument, variables: variables }
-    }
+  return { query: AllProductsCountDocument, variables: variables };
+}
 export const CreateOrderDocument = gql`
-    mutation createOrder($token: String!) {
-  checkout(token: $token) {
-    id
-    charge
-    total
-    items {
+  mutation createOrder($token: String!) {
+    checkout(token: $token) {
       id
-      name
+      charge
+      total
+      items {
+        id
+        name
+      }
     }
   }
-}
-    `;
+`;
 export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
 
 /**
@@ -2111,23 +1677,31 @@ export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation,
  *   },
  * });
  */
-export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
-      }
+export function useCreateOrderMutation(
+  baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
+}
 export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
 export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
 export const CreateProductDocument = gql`
-    mutation createProduct($name: String!, $description: String!, $price: Int!, $image: Upload) {
-  createProduct(
-    data: {name: $name, description: $description, price: $price, status: "AVAILABLE", photo: {create: {image: $image, altText: $name}}}
-  ) {
-    id
-    name
+  mutation createProduct($name: String!, $description: String!, $price: Int!, $image: Upload) {
+    createProduct(
+      data: {
+        name: $name
+        description: $description
+        price: $price
+        status: "AVAILABLE"
+        photo: { create: { image: $image, altText: $name } }
+      }
+    ) {
+      id
+      name
+    }
   }
-}
-    `;
+`;
 export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
 
 /**
@@ -2150,20 +1724,25 @@ export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutat
  *   },
  * });
  */
-export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
-      }
+export function useCreateProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
+}
 export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
-export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<
+  CreateProductMutation,
+  CreateProductMutationVariables
+>;
 export const DeleteCartItemDocument = gql`
-    mutation deleteCartItem($id: ID!) {
-  deleteCartItem(id: $id) {
-    id
+  mutation deleteCartItem($id: ID!) {
+    deleteCartItem(where: { id: $id }) {
+      id
+    }
   }
-}
-    `;
+`;
 export type DeleteCartItemMutationFn = Apollo.MutationFunction<DeleteCartItemMutation, DeleteCartItemMutationVariables>;
 
 /**
@@ -2183,20 +1762,25 @@ export type DeleteCartItemMutationFn = Apollo.MutationFunction<DeleteCartItemMut
  *   },
  * });
  */
-export function useDeleteCartItemMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCartItemMutation, DeleteCartItemMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteCartItemMutation, DeleteCartItemMutationVariables>(DeleteCartItemDocument, options);
-      }
+export function useDeleteCartItemMutation(
+  baseOptions?: Apollo.MutationHookOptions<DeleteCartItemMutation, DeleteCartItemMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<DeleteCartItemMutation, DeleteCartItemMutationVariables>(DeleteCartItemDocument, options);
+}
 export type DeleteCartItemMutationHookResult = ReturnType<typeof useDeleteCartItemMutation>;
 export type DeleteCartItemMutationResult = Apollo.MutationResult<DeleteCartItemMutation>;
-export type DeleteCartItemMutationOptions = Apollo.BaseMutationOptions<DeleteCartItemMutation, DeleteCartItemMutationVariables>;
+export type DeleteCartItemMutationOptions = Apollo.BaseMutationOptions<
+  DeleteCartItemMutation,
+  DeleteCartItemMutationVariables
+>;
 export const DeleteProductDocument = gql`
-    mutation deleteProduct($id: ID!) {
-  deleteProduct(id: $id) {
-    id
+  mutation deleteProduct($id: ID!) {
+    deleteProduct(where: { id: $id }) {
+      id
+    }
   }
-}
-    `;
+`;
 export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
 
 /**
@@ -2216,38 +1800,43 @@ export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutat
  *   },
  * });
  */
-export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
-      }
+export function useDeleteProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
+}
 export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
 export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
-export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<
+  DeleteProductMutation,
+  DeleteProductMutationVariables
+>;
 export const GetOrderDocument = gql`
-    query getOrder($id: ID!) {
-  order: Order(where: {id: $id}) {
-    id
-    charge
-    total
-    user {
+  query getOrder($id: ID!) {
+    order(where: { id: $id }) {
       id
-    }
-    items {
-      id
-      name
-      description
-      price
-      quantity
-      photo {
-        altText
-        image {
-          publicUrlTransformed
+      charge
+      total
+      user {
+        id
+      }
+      items {
+        id
+        name
+        description
+        price
+        quantity
+        photo {
+          altText
+          image {
+            publicUrlTransformed
+          }
         }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useGetOrderQuery__
@@ -2266,35 +1855,35 @@ export const GetOrderDocument = gql`
  * });
  */
 export function useGetOrderQuery(baseOptions: Apollo.QueryHookOptions<GetOrderQuery, GetOrderQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOrderQuery, GetOrderQueryVariables>(GetOrderDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetOrderQuery, GetOrderQueryVariables>(GetOrderDocument, options);
+}
 export function useGetOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrderQuery, GetOrderQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOrderQuery, GetOrderQueryVariables>(GetOrderDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetOrderQuery, GetOrderQueryVariables>(GetOrderDocument, options);
+}
 export type GetOrderQueryHookResult = ReturnType<typeof useGetOrderQuery>;
 export type GetOrderLazyQueryHookResult = ReturnType<typeof useGetOrderLazyQuery>;
 export type GetOrderQueryResult = Apollo.QueryResult<GetOrderQuery, GetOrderQueryVariables>;
 export function refetchGetOrderQuery(variables?: GetOrderQueryVariables) {
-      return { query: GetOrderDocument, variables: variables }
-    }
-export const ProductDocument = gql`
-    query Product($id: ID!) {
-  Product(where: {id: $id}) {
-    id
-    name
-    description
-    photo {
-      image {
-        publicUrlTransformed
-      }
-      altText
-    }
-    price
-  }
+  return { query: GetOrderDocument, variables: variables };
 }
-    `;
+export const ProductDocument = gql`
+  query Product($id: ID!) {
+    product(where: { id: $id }) {
+      id
+      name
+      description
+      photo {
+        image {
+          publicUrlTransformed
+        }
+        altText
+      }
+      price
+    }
+  }
+`;
 
 /**
  * __useProductQuery__
@@ -2313,45 +1902,45 @@ export const ProductDocument = gql`
  * });
  */
 export function useProductQuery(baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+}
 export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+}
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
 export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
 export function refetchProductQuery(variables?: ProductQueryVariables) {
-      return { query: ProductDocument, variables: variables }
-    }
+  return { query: ProductDocument, variables: variables };
+}
 export const UserDocument = gql`
-    query User {
-  authenticatedItem {
-    ... on User {
-      id
-      name
-      email
-      cart {
+  query User {
+    authenticatedItem {
+      ... on User {
         id
-        quantity
-        product {
+        name
+        email
+        cart {
           id
-          name
-          description
-          price
-          photo {
-            image {
-              publicUrlTransformed
+          quantity
+          product {
+            id
+            name
+            description
+            price
+            photo {
+              image {
+                publicUrlTransformed
+              }
             }
           }
         }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useUserQuery__
@@ -2369,27 +1958,24 @@ export const UserDocument = gql`
  * });
  */
 export function useUserQuery(baseOptions?: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+}
 export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+}
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export function refetchUserQuery(variables?: UserQueryVariables) {
-      return { query: UserDocument, variables: variables }
-    }
-export const RequestResetDocument = gql`
-    mutation requestReset($email: String!) {
-  sendUserPasswordResetLink(email: $email) {
-    code
-    message
-  }
+  return { query: UserDocument, variables: variables };
 }
-    `;
+export const RequestResetDocument = gql`
+  mutation requestReset($email: String!) {
+    sendUserPasswordResetLink(email: $email)
+  }
+`;
 export type RequestResetMutationFn = Apollo.MutationFunction<RequestResetMutation, RequestResetMutationVariables>;
 
 /**
@@ -2409,22 +1995,30 @@ export type RequestResetMutationFn = Apollo.MutationFunction<RequestResetMutatio
  *   },
  * });
  */
-export function useRequestResetMutation(baseOptions?: Apollo.MutationHookOptions<RequestResetMutation, RequestResetMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RequestResetMutation, RequestResetMutationVariables>(RequestResetDocument, options);
-      }
+export function useRequestResetMutation(
+  baseOptions?: Apollo.MutationHookOptions<RequestResetMutation, RequestResetMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<RequestResetMutation, RequestResetMutationVariables>(RequestResetDocument, options);
+}
 export type RequestResetMutationHookResult = ReturnType<typeof useRequestResetMutation>;
 export type RequestResetMutationResult = Apollo.MutationResult<RequestResetMutation>;
-export type RequestResetMutationOptions = Apollo.BaseMutationOptions<RequestResetMutation, RequestResetMutationVariables>;
+export type RequestResetMutationOptions = Apollo.BaseMutationOptions<
+  RequestResetMutation,
+  RequestResetMutationVariables
+>;
 export const RedeemPasswordResetDocument = gql`
-    mutation redeemPasswordReset($email: String!, $password: String!, $token: String!) {
-  redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {
-    code
-    message
+  mutation redeemPasswordReset($email: String!, $password: String!, $token: String!) {
+    redeemUserPasswordResetToken(email: $email, password: $password, token: $token) {
+      code
+      message
+    }
   }
-}
-    `;
-export type RedeemPasswordResetMutationFn = Apollo.MutationFunction<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>;
+`;
+export type RedeemPasswordResetMutationFn = Apollo.MutationFunction<
+  RedeemPasswordResetMutation,
+  RedeemPasswordResetMutationVariables
+>;
 
 /**
  * __useRedeemPasswordResetMutation__
@@ -2445,29 +2039,37 @@ export type RedeemPasswordResetMutationFn = Apollo.MutationFunction<RedeemPasswo
  *   },
  * });
  */
-export function useRedeemPasswordResetMutation(baseOptions?: Apollo.MutationHookOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>(RedeemPasswordResetDocument, options);
-      }
+export function useRedeemPasswordResetMutation(
+  baseOptions?: Apollo.MutationHookOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>(
+    RedeemPasswordResetDocument,
+    options,
+  );
+}
 export type RedeemPasswordResetMutationHookResult = ReturnType<typeof useRedeemPasswordResetMutation>;
 export type RedeemPasswordResetMutationResult = Apollo.MutationResult<RedeemPasswordResetMutation>;
-export type RedeemPasswordResetMutationOptions = Apollo.BaseMutationOptions<RedeemPasswordResetMutation, RedeemPasswordResetMutationVariables>;
+export type RedeemPasswordResetMutationOptions = Apollo.BaseMutationOptions<
+  RedeemPasswordResetMutation,
+  RedeemPasswordResetMutationVariables
+>;
 export const SearchProductsDocument = gql`
-    query searchProducts($searchTerm: String!) {
-  searchTerms: allProducts(
-    where: {OR: [{name_contains: $searchTerm}, {description_contains: $searchTerm}]}
-  ) {
-    id
-    name
-    photo {
-      altText
-      image {
-        publicUrlTransformed
+  query searchProducts($searchTerm: String!) {
+    searchTerms: products(
+      where: { OR: [{ name: { equals: $searchTerm } }, { description: { equals: $searchTerm } }] }
+    ) {
+      id
+      name
+      photo {
+        altText
+        image {
+          publicUrlTransformed
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useSearchProductsQuery__
@@ -2485,37 +2087,40 @@ export const SearchProductsDocument = gql`
  *   },
  * });
  */
-export function useSearchProductsQuery(baseOptions: Apollo.QueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
-      }
-export function useSearchProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
-        }
+export function useSearchProductsQuery(
+  baseOptions: Apollo.QueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+}
+export function useSearchProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+}
 export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQuery>;
 export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
 export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, SearchProductsQueryVariables>;
 export function refetchSearchProductsQuery(variables?: SearchProductsQueryVariables) {
-      return { query: SearchProductsDocument, variables: variables }
-    }
+  return { query: SearchProductsDocument, variables: variables };
+}
 export const SignInDocument = gql`
-    mutation signIn($email: String!, $password: String!) {
-  authenticateUserWithPassword(email: $email, password: $password) {
-    ... on UserAuthenticationWithPasswordSuccess {
-      item {
-        id
-        email
-        name
+  mutation signIn($email: String!, $password: String!) {
+    authenticateUserWithPassword(email: $email, password: $password) {
+      ... on UserAuthenticationWithPasswordSuccess {
+        item {
+          id
+          email
+          name
+        }
+      }
+      ... on UserAuthenticationWithPasswordFailure {
+        message
       }
     }
-    ... on UserAuthenticationWithPasswordFailure {
-      code
-      message
-    }
   }
-}
-    `;
+`;
 export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMutationVariables>;
 
 /**
@@ -2537,17 +2142,17 @@ export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMut
  * });
  */
 export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignInMutation, SignInMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
+}
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
 export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
 export const SignOutDocument = gql`
-    mutation signOut {
-  endSession
-}
-    `;
+  mutation signOut {
+    endSession
+  }
+`;
 export type SignOutMutationFn = Apollo.MutationFunction<SignOutMutation, SignOutMutationVariables>;
 
 /**
@@ -2566,22 +2171,24 @@ export type SignOutMutationFn = Apollo.MutationFunction<SignOutMutation, SignOut
  *   },
  * });
  */
-export function useSignOutMutation(baseOptions?: Apollo.MutationHookOptions<SignOutMutation, SignOutMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument, options);
-      }
+export function useSignOutMutation(
+  baseOptions?: Apollo.MutationHookOptions<SignOutMutation, SignOutMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument, options);
+}
 export type SignOutMutationHookResult = ReturnType<typeof useSignOutMutation>;
 export type SignOutMutationResult = Apollo.MutationResult<SignOutMutation>;
 export type SignOutMutationOptions = Apollo.BaseMutationOptions<SignOutMutation, SignOutMutationVariables>;
 export const SignUpDocument = gql`
-    mutation signUp($name: String!, $email: String!, $password: String!) {
-  createUser(data: {name: $name, email: $email, password: $password}) {
-    id
-    email
-    name
+  mutation signUp($name: String!, $email: String!, $password: String!) {
+    createUser(data: { name: $name, email: $email, password: $password }) {
+      id
+      email
+      name
+    }
   }
-}
-    `;
+`;
 export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
 
 /**
@@ -2604,25 +2211,22 @@ export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMut
  * });
  */
 export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
+}
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
 export const UpdateProductDocument = gql`
-    mutation updateProduct($id: ID!, $name: String, $description: String, $price: Int) {
-  updateProduct(
-    id: $id
-    data: {name: $name, description: $description, price: $price}
-  ) {
-    id
-    name
-    description
-    price
+  mutation updateProduct($id: ID!, $name: String, $description: String, $price: Int) {
+    updateProduct(where: { id: $id }, data: { name: $name, description: $description, price: $price }) {
+      id
+      name
+      description
+      price
+    }
   }
-}
-    `;
+`;
 export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
 
 /**
@@ -2645,346 +2249,525 @@ export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutat
  *   },
  * });
  */
-export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
-      }
+export function useUpdateProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+}
 export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
 export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
-export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
-export type CartItemKeySpecifier = ('id' | 'quantity' | 'product' | 'user' | CartItemKeySpecifier)[];
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<
+  UpdateProductMutation,
+  UpdateProductMutationVariables
+>;
+export type CartItemKeySpecifier = ("id" | "product" | "quantity" | "user" | CartItemKeySpecifier)[];
 export type CartItemFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
-	product?: FieldPolicy<any> | FieldReadFunction<any>,
-	user?: FieldPolicy<any> | FieldReadFunction<any>
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  product?: FieldPolicy<any> | FieldReadFunction<any>;
+  quantity?: FieldPolicy<any> | FieldReadFunction<any>;
+  user?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type CloudinaryImage_FileKeySpecifier = ('id' | 'filename' | 'originalFilename' | 'mimetype' | 'encoding' | 'publicUrl' | 'publicUrlTransformed' | CloudinaryImage_FileKeySpecifier)[];
+export type CloudinaryImage_FileKeySpecifier = (
+  | "encoding"
+  | "filename"
+  | "id"
+  | "mimetype"
+  | "originalFilename"
+  | "publicUrl"
+  | "publicUrlTransformed"
+  | CloudinaryImage_FileKeySpecifier
+)[];
 export type CloudinaryImage_FileFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	filename?: FieldPolicy<any> | FieldReadFunction<any>,
-	originalFilename?: FieldPolicy<any> | FieldReadFunction<any>,
-	mimetype?: FieldPolicy<any> | FieldReadFunction<any>,
-	encoding?: FieldPolicy<any> | FieldReadFunction<any>,
-	publicUrl?: FieldPolicy<any> | FieldReadFunction<any>,
-	publicUrlTransformed?: FieldPolicy<any> | FieldReadFunction<any>
+  encoding?: FieldPolicy<any> | FieldReadFunction<any>;
+  filename?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  mimetype?: FieldPolicy<any> | FieldReadFunction<any>;
+  originalFilename?: FieldPolicy<any> | FieldReadFunction<any>;
+  publicUrl?: FieldPolicy<any> | FieldReadFunction<any>;
+  publicUrlTransformed?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneAdminMetaKeySpecifier = ('enableSignout' | 'enableSessionItem' | 'lists' | 'list' | KeystoneAdminMetaKeySpecifier)[];
+export type KeystoneAdminMetaKeySpecifier = (
+  | "enableSessionItem"
+  | "enableSignout"
+  | "list"
+  | "lists"
+  | KeystoneAdminMetaKeySpecifier
+)[];
 export type KeystoneAdminMetaFieldPolicy = {
-	enableSignout?: FieldPolicy<any> | FieldReadFunction<any>,
-	enableSessionItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	lists?: FieldPolicy<any> | FieldReadFunction<any>,
-	list?: FieldPolicy<any> | FieldReadFunction<any>
+  enableSessionItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  enableSignout?: FieldPolicy<any> | FieldReadFunction<any>;
+  list?: FieldPolicy<any> | FieldReadFunction<any>;
+  lists?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneAdminUIFieldMetaKeySpecifier = ('path' | 'label' | 'isOrderable' | 'fieldMeta' | 'viewsIndex' | 'customViewsIndex' | 'createView' | 'listView' | 'itemView' | KeystoneAdminUIFieldMetaKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaKeySpecifier = (
+  | "createView"
+  | "customViewsIndex"
+  | "fieldMeta"
+  | "isFilterable"
+  | "isOrderable"
+  | "itemView"
+  | "label"
+  | "listView"
+  | "path"
+  | "search"
+  | "viewsIndex"
+  | KeystoneAdminUIFieldMetaKeySpecifier
+)[];
 export type KeystoneAdminUIFieldMetaFieldPolicy = {
-	path?: FieldPolicy<any> | FieldReadFunction<any>,
-	label?: FieldPolicy<any> | FieldReadFunction<any>,
-	isOrderable?: FieldPolicy<any> | FieldReadFunction<any>,
-	fieldMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	viewsIndex?: FieldPolicy<any> | FieldReadFunction<any>,
-	customViewsIndex?: FieldPolicy<any> | FieldReadFunction<any>,
-	createView?: FieldPolicy<any> | FieldReadFunction<any>,
-	listView?: FieldPolicy<any> | FieldReadFunction<any>,
-	itemView?: FieldPolicy<any> | FieldReadFunction<any>
+  createView?: FieldPolicy<any> | FieldReadFunction<any>;
+  customViewsIndex?: FieldPolicy<any> | FieldReadFunction<any>;
+  fieldMeta?: FieldPolicy<any> | FieldReadFunction<any>;
+  isFilterable?: FieldPolicy<any> | FieldReadFunction<any>;
+  isOrderable?: FieldPolicy<any> | FieldReadFunction<any>;
+  itemView?: FieldPolicy<any> | FieldReadFunction<any>;
+  label?: FieldPolicy<any> | FieldReadFunction<any>;
+  listView?: FieldPolicy<any> | FieldReadFunction<any>;
+  path?: FieldPolicy<any> | FieldReadFunction<any>;
+  search?: FieldPolicy<any> | FieldReadFunction<any>;
+  viewsIndex?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneAdminUIFieldMetaCreateViewKeySpecifier = ('fieldMode' | KeystoneAdminUIFieldMetaCreateViewKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaCreateViewKeySpecifier = (
+  | "fieldMode"
+  | KeystoneAdminUIFieldMetaCreateViewKeySpecifier
+)[];
 export type KeystoneAdminUIFieldMetaCreateViewFieldPolicy = {
-	fieldMode?: FieldPolicy<any> | FieldReadFunction<any>
+  fieldMode?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneAdminUIFieldMetaItemViewKeySpecifier = ('fieldMode' | KeystoneAdminUIFieldMetaItemViewKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaItemViewKeySpecifier = (
+  | "fieldMode"
+  | KeystoneAdminUIFieldMetaItemViewKeySpecifier
+)[];
 export type KeystoneAdminUIFieldMetaItemViewFieldPolicy = {
-	fieldMode?: FieldPolicy<any> | FieldReadFunction<any>
+  fieldMode?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneAdminUIFieldMetaListViewKeySpecifier = ('fieldMode' | KeystoneAdminUIFieldMetaListViewKeySpecifier)[];
+export type KeystoneAdminUIFieldMetaListViewKeySpecifier = (
+  | "fieldMode"
+  | KeystoneAdminUIFieldMetaListViewKeySpecifier
+)[];
 export type KeystoneAdminUIFieldMetaListViewFieldPolicy = {
-	fieldMode?: FieldPolicy<any> | FieldReadFunction<any>
+  fieldMode?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneAdminUIListMetaKeySpecifier = ('key' | 'itemQueryName' | 'listQueryName' | 'hideCreate' | 'hideDelete' | 'path' | 'label' | 'singular' | 'plural' | 'description' | 'initialColumns' | 'pageSize' | 'labelField' | 'fields' | 'initialSort' | 'isHidden' | KeystoneAdminUIListMetaKeySpecifier)[];
+export type KeystoneAdminUIListMetaKeySpecifier = (
+  | "description"
+  | "fields"
+  | "hideCreate"
+  | "hideDelete"
+  | "initialColumns"
+  | "initialSort"
+  | "isHidden"
+  | "itemQueryName"
+  | "key"
+  | "label"
+  | "labelField"
+  | "listQueryName"
+  | "pageSize"
+  | "path"
+  | "plural"
+  | "singular"
+  | KeystoneAdminUIListMetaKeySpecifier
+)[];
 export type KeystoneAdminUIListMetaFieldPolicy = {
-	key?: FieldPolicy<any> | FieldReadFunction<any>,
-	itemQueryName?: FieldPolicy<any> | FieldReadFunction<any>,
-	listQueryName?: FieldPolicy<any> | FieldReadFunction<any>,
-	hideCreate?: FieldPolicy<any> | FieldReadFunction<any>,
-	hideDelete?: FieldPolicy<any> | FieldReadFunction<any>,
-	path?: FieldPolicy<any> | FieldReadFunction<any>,
-	label?: FieldPolicy<any> | FieldReadFunction<any>,
-	singular?: FieldPolicy<any> | FieldReadFunction<any>,
-	plural?: FieldPolicy<any> | FieldReadFunction<any>,
-	description?: FieldPolicy<any> | FieldReadFunction<any>,
-	initialColumns?: FieldPolicy<any> | FieldReadFunction<any>,
-	pageSize?: FieldPolicy<any> | FieldReadFunction<any>,
-	labelField?: FieldPolicy<any> | FieldReadFunction<any>,
-	fields?: FieldPolicy<any> | FieldReadFunction<any>,
-	initialSort?: FieldPolicy<any> | FieldReadFunction<any>,
-	isHidden?: FieldPolicy<any> | FieldReadFunction<any>
+  description?: FieldPolicy<any> | FieldReadFunction<any>;
+  fields?: FieldPolicy<any> | FieldReadFunction<any>;
+  hideCreate?: FieldPolicy<any> | FieldReadFunction<any>;
+  hideDelete?: FieldPolicy<any> | FieldReadFunction<any>;
+  initialColumns?: FieldPolicy<any> | FieldReadFunction<any>;
+  initialSort?: FieldPolicy<any> | FieldReadFunction<any>;
+  isHidden?: FieldPolicy<any> | FieldReadFunction<any>;
+  itemQueryName?: FieldPolicy<any> | FieldReadFunction<any>;
+  key?: FieldPolicy<any> | FieldReadFunction<any>;
+  label?: FieldPolicy<any> | FieldReadFunction<any>;
+  labelField?: FieldPolicy<any> | FieldReadFunction<any>;
+  listQueryName?: FieldPolicy<any> | FieldReadFunction<any>;
+  pageSize?: FieldPolicy<any> | FieldReadFunction<any>;
+  path?: FieldPolicy<any> | FieldReadFunction<any>;
+  plural?: FieldPolicy<any> | FieldReadFunction<any>;
+  singular?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneAdminUISortKeySpecifier = ('field' | 'direction' | KeystoneAdminUISortKeySpecifier)[];
+export type KeystoneAdminUISortKeySpecifier = ("direction" | "field" | KeystoneAdminUISortKeySpecifier)[];
 export type KeystoneAdminUISortFieldPolicy = {
-	field?: FieldPolicy<any> | FieldReadFunction<any>,
-	direction?: FieldPolicy<any> | FieldReadFunction<any>
+  direction?: FieldPolicy<any> | FieldReadFunction<any>;
+  field?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type KeystoneMetaKeySpecifier = ('adminMeta' | KeystoneMetaKeySpecifier)[];
+export type KeystoneMetaKeySpecifier = ("adminMeta" | KeystoneMetaKeySpecifier)[];
 export type KeystoneMetaFieldPolicy = {
-	adminMeta?: FieldPolicy<any> | FieldReadFunction<any>
+  adminMeta?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type MutationKeySpecifier = ('createUser' | 'createUsers' | 'updateUser' | 'updateUsers' | 'deleteUser' | 'deleteUsers' | 'createProduct' | 'createProducts' | 'updateProduct' | 'updateProducts' | 'deleteProduct' | 'deleteProducts' | 'createProductImage' | 'createProductImages' | 'updateProductImage' | 'updateProductImages' | 'deleteProductImage' | 'deleteProductImages' | 'createCartItem' | 'createCartItems' | 'updateCartItem' | 'updateCartItems' | 'deleteCartItem' | 'deleteCartItems' | 'createOrderItem' | 'createOrderItems' | 'updateOrderItem' | 'updateOrderItems' | 'deleteOrderItem' | 'deleteOrderItems' | 'createOrder' | 'createOrders' | 'updateOrder' | 'updateOrders' | 'deleteOrder' | 'deleteOrders' | 'authenticateUserWithPassword' | 'createInitialUser' | 'sendUserPasswordResetLink' | 'redeemUserPasswordResetToken' | 'addToCart' | 'checkout' | 'endSession' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = (
+  | "addToCart"
+  | "authenticateUserWithPassword"
+  | "checkout"
+  | "createCartItem"
+  | "createCartItems"
+  | "createInitialUser"
+  | "createOrder"
+  | "createOrderItem"
+  | "createOrderItems"
+  | "createOrders"
+  | "createProduct"
+  | "createProductImage"
+  | "createProductImages"
+  | "createProducts"
+  | "createUser"
+  | "createUsers"
+  | "deleteCartItem"
+  | "deleteCartItems"
+  | "deleteOrder"
+  | "deleteOrderItem"
+  | "deleteOrderItems"
+  | "deleteOrders"
+  | "deleteProduct"
+  | "deleteProductImage"
+  | "deleteProductImages"
+  | "deleteProducts"
+  | "deleteUser"
+  | "deleteUsers"
+  | "endSession"
+  | "redeemUserPasswordResetToken"
+  | "sendUserPasswordResetLink"
+  | "updateCartItem"
+  | "updateCartItems"
+  | "updateOrder"
+  | "updateOrderItem"
+  | "updateOrderItems"
+  | "updateOrders"
+  | "updateProduct"
+  | "updateProductImage"
+  | "updateProductImages"
+  | "updateProducts"
+  | "updateUser"
+  | "updateUsers"
+  | MutationKeySpecifier
+)[];
 export type MutationFieldPolicy = {
-	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
-	createUsers?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateUser?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateUsers?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteUser?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteUsers?: FieldPolicy<any> | FieldReadFunction<any>,
-	createProduct?: FieldPolicy<any> | FieldReadFunction<any>,
-	createProducts?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateProduct?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateProducts?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteProduct?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteProducts?: FieldPolicy<any> | FieldReadFunction<any>,
-	createProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
-	createProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
-	createCartItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	createCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateCartItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteCartItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	createOrderItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	createOrderItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateOrderItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateOrderItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteOrderItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteOrderItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	createOrder?: FieldPolicy<any> | FieldReadFunction<any>,
-	createOrders?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateOrder?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateOrders?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteOrder?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteOrders?: FieldPolicy<any> | FieldReadFunction<any>,
-	authenticateUserWithPassword?: FieldPolicy<any> | FieldReadFunction<any>,
-	createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>,
-	sendUserPasswordResetLink?: FieldPolicy<any> | FieldReadFunction<any>,
-	redeemUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
-	addToCart?: FieldPolicy<any> | FieldReadFunction<any>,
-	checkout?: FieldPolicy<any> | FieldReadFunction<any>,
-	endSession?: FieldPolicy<any> | FieldReadFunction<any>
+  addToCart?: FieldPolicy<any> | FieldReadFunction<any>;
+  authenticateUserWithPassword?: FieldPolicy<any> | FieldReadFunction<any>;
+  checkout?: FieldPolicy<any> | FieldReadFunction<any>;
+  createCartItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  createCartItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  createInitialUser?: FieldPolicy<any> | FieldReadFunction<any>;
+  createOrder?: FieldPolicy<any> | FieldReadFunction<any>;
+  createOrderItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  createOrderItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  createOrders?: FieldPolicy<any> | FieldReadFunction<any>;
+  createProduct?: FieldPolicy<any> | FieldReadFunction<any>;
+  createProductImage?: FieldPolicy<any> | FieldReadFunction<any>;
+  createProductImages?: FieldPolicy<any> | FieldReadFunction<any>;
+  createProducts?: FieldPolicy<any> | FieldReadFunction<any>;
+  createUser?: FieldPolicy<any> | FieldReadFunction<any>;
+  createUsers?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteCartItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteCartItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteOrder?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteOrderItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteOrderItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteOrders?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteProduct?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteProductImage?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteProductImages?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteProducts?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteUser?: FieldPolicy<any> | FieldReadFunction<any>;
+  deleteUsers?: FieldPolicy<any> | FieldReadFunction<any>;
+  endSession?: FieldPolicy<any> | FieldReadFunction<any>;
+  redeemUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>;
+  sendUserPasswordResetLink?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateCartItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateCartItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateOrder?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateOrderItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateOrderItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateOrders?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateProduct?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateProductImage?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateProductImages?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateProducts?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateUser?: FieldPolicy<any> | FieldReadFunction<any>;
+  updateUsers?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type OrderKeySpecifier = ('id' | 'label' | 'total' | 'items' | '_itemsMeta' | 'itemsCount' | 'user' | 'charge' | OrderKeySpecifier)[];
+export type OrderKeySpecifier = (
+  | "charge"
+  | "id"
+  | "items"
+  | "itemsCount"
+  | "label"
+  | "total"
+  | "user"
+  | OrderKeySpecifier
+)[];
 export type OrderFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	label?: FieldPolicy<any> | FieldReadFunction<any>,
-	total?: FieldPolicy<any> | FieldReadFunction<any>,
-	items?: FieldPolicy<any> | FieldReadFunction<any>,
-	_itemsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	itemsCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	user?: FieldPolicy<any> | FieldReadFunction<any>,
-	charge?: FieldPolicy<any> | FieldReadFunction<any>
+  charge?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  items?: FieldPolicy<any> | FieldReadFunction<any>;
+  itemsCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  label?: FieldPolicy<any> | FieldReadFunction<any>;
+  total?: FieldPolicy<any> | FieldReadFunction<any>;
+  user?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type OrderItemKeySpecifier = ('id' | 'name' | 'description' | 'photo' | 'price' | 'quantity' | 'order' | OrderItemKeySpecifier)[];
+export type OrderItemKeySpecifier = (
+  | "description"
+  | "id"
+  | "name"
+  | "order"
+  | "photo"
+  | "price"
+  | "quantity"
+  | OrderItemKeySpecifier
+)[];
 export type OrderItemFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	description?: FieldPolicy<any> | FieldReadFunction<any>,
-	photo?: FieldPolicy<any> | FieldReadFunction<any>,
-	price?: FieldPolicy<any> | FieldReadFunction<any>,
-	quantity?: FieldPolicy<any> | FieldReadFunction<any>,
-	order?: FieldPolicy<any> | FieldReadFunction<any>
+  description?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  name?: FieldPolicy<any> | FieldReadFunction<any>;
+  order?: FieldPolicy<any> | FieldReadFunction<any>;
+  photo?: FieldPolicy<any> | FieldReadFunction<any>;
+  price?: FieldPolicy<any> | FieldReadFunction<any>;
+  quantity?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type PasswordStateKeySpecifier = ('isSet' | PasswordStateKeySpecifier)[];
+export type PasswordStateKeySpecifier = ("isSet" | PasswordStateKeySpecifier)[];
 export type PasswordStateFieldPolicy = {
-	isSet?: FieldPolicy<any> | FieldReadFunction<any>
+  isSet?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type ProductKeySpecifier = ('id' | 'name' | 'description' | 'photo' | 'status' | 'price' | ProductKeySpecifier)[];
+export type ProductKeySpecifier = (
+  | "description"
+  | "id"
+  | "name"
+  | "photo"
+  | "price"
+  | "status"
+  | ProductKeySpecifier
+)[];
 export type ProductFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	description?: FieldPolicy<any> | FieldReadFunction<any>,
-	photo?: FieldPolicy<any> | FieldReadFunction<any>,
-	status?: FieldPolicy<any> | FieldReadFunction<any>,
-	price?: FieldPolicy<any> | FieldReadFunction<any>
+  description?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  name?: FieldPolicy<any> | FieldReadFunction<any>;
+  photo?: FieldPolicy<any> | FieldReadFunction<any>;
+  price?: FieldPolicy<any> | FieldReadFunction<any>;
+  status?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type ProductImageKeySpecifier = ('id' | 'image' | 'altText' | 'product' | ProductImageKeySpecifier)[];
+export type ProductImageKeySpecifier = ("altText" | "id" | "image" | "product" | ProductImageKeySpecifier)[];
 export type ProductImageFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	image?: FieldPolicy<any> | FieldReadFunction<any>,
-	altText?: FieldPolicy<any> | FieldReadFunction<any>,
-	product?: FieldPolicy<any> | FieldReadFunction<any>
+  altText?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  image?: FieldPolicy<any> | FieldReadFunction<any>;
+  product?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type QueryKeySpecifier = ('allUsers' | 'User' | '_allUsersMeta' | 'usersCount' | 'allProducts' | 'Product' | '_allProductsMeta' | 'productsCount' | 'allProductImages' | 'ProductImage' | '_allProductImagesMeta' | 'productImagesCount' | 'allCartItems' | 'CartItem' | '_allCartItemsMeta' | 'cartItemsCount' | 'allOrderItems' | 'OrderItem' | '_allOrderItemsMeta' | 'orderItemsCount' | 'allOrders' | 'Order' | '_allOrdersMeta' | 'ordersCount' | 'authenticatedItem' | 'validateUserPasswordResetToken' | 'keystone' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = (
+  | "authenticatedItem"
+  | "cartItem"
+  | "cartItems"
+  | "cartItemsCount"
+  | "keystone"
+  | "order"
+  | "orderItem"
+  | "orderItems"
+  | "orderItemsCount"
+  | "orders"
+  | "ordersCount"
+  | "product"
+  | "productImage"
+  | "productImages"
+  | "productImagesCount"
+  | "products"
+  | "productsCount"
+  | "user"
+  | "users"
+  | "usersCount"
+  | "validateUserPasswordResetToken"
+  | QueryKeySpecifier
+)[];
 export type QueryFieldPolicy = {
-	allUsers?: FieldPolicy<any> | FieldReadFunction<any>,
-	User?: FieldPolicy<any> | FieldReadFunction<any>,
-	_allUsersMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	usersCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	allProducts?: FieldPolicy<any> | FieldReadFunction<any>,
-	Product?: FieldPolicy<any> | FieldReadFunction<any>,
-	_allProductsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	productsCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	allProductImages?: FieldPolicy<any> | FieldReadFunction<any>,
-	ProductImage?: FieldPolicy<any> | FieldReadFunction<any>,
-	_allProductImagesMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	productImagesCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	allCartItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	CartItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	_allCartItemsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	cartItemsCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	allOrderItems?: FieldPolicy<any> | FieldReadFunction<any>,
-	OrderItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	_allOrderItemsMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	orderItemsCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	allOrders?: FieldPolicy<any> | FieldReadFunction<any>,
-	Order?: FieldPolicy<any> | FieldReadFunction<any>,
-	_allOrdersMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	ordersCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	authenticatedItem?: FieldPolicy<any> | FieldReadFunction<any>,
-	validateUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
-	keystone?: FieldPolicy<any> | FieldReadFunction<any>
+  authenticatedItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  cartItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  cartItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  cartItemsCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  keystone?: FieldPolicy<any> | FieldReadFunction<any>;
+  order?: FieldPolicy<any> | FieldReadFunction<any>;
+  orderItem?: FieldPolicy<any> | FieldReadFunction<any>;
+  orderItems?: FieldPolicy<any> | FieldReadFunction<any>;
+  orderItemsCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  orders?: FieldPolicy<any> | FieldReadFunction<any>;
+  ordersCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  product?: FieldPolicy<any> | FieldReadFunction<any>;
+  productImage?: FieldPolicy<any> | FieldReadFunction<any>;
+  productImages?: FieldPolicy<any> | FieldReadFunction<any>;
+  productImagesCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  products?: FieldPolicy<any> | FieldReadFunction<any>;
+  productsCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  user?: FieldPolicy<any> | FieldReadFunction<any>;
+  users?: FieldPolicy<any> | FieldReadFunction<any>;
+  usersCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  validateUserPasswordResetToken?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type RedeemUserPasswordResetTokenResultKeySpecifier = ('code' | 'message' | RedeemUserPasswordResetTokenResultKeySpecifier)[];
+export type RedeemUserPasswordResetTokenResultKeySpecifier = (
+  | "code"
+  | "message"
+  | RedeemUserPasswordResetTokenResultKeySpecifier
+)[];
 export type RedeemUserPasswordResetTokenResultFieldPolicy = {
-	code?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
+  code?: FieldPolicy<any> | FieldReadFunction<any>;
+  message?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type SendUserPasswordResetLinkResultKeySpecifier = ('code' | 'message' | SendUserPasswordResetLinkResultKeySpecifier)[];
-export type SendUserPasswordResetLinkResultFieldPolicy = {
-	code?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type UserKeySpecifier = ('id' | 'name' | 'email' | 'password' | 'cart' | '_cartMeta' | 'cartCount' | 'orders' | '_ordersMeta' | 'ordersCount' | 'passwordResetToken' | 'passwordResetIssuedAt' | 'passwordResetRedeemedAt' | UserKeySpecifier)[];
+export type UserKeySpecifier = (
+  | "cart"
+  | "cartCount"
+  | "email"
+  | "id"
+  | "name"
+  | "orders"
+  | "ordersCount"
+  | "password"
+  | "passwordResetIssuedAt"
+  | "passwordResetRedeemedAt"
+  | "passwordResetToken"
+  | UserKeySpecifier
+)[];
 export type UserFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	email?: FieldPolicy<any> | FieldReadFunction<any>,
-	password?: FieldPolicy<any> | FieldReadFunction<any>,
-	cart?: FieldPolicy<any> | FieldReadFunction<any>,
-	_cartMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	cartCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	orders?: FieldPolicy<any> | FieldReadFunction<any>,
-	_ordersMeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	ordersCount?: FieldPolicy<any> | FieldReadFunction<any>,
-	passwordResetToken?: FieldPolicy<any> | FieldReadFunction<any>,
-	passwordResetIssuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	passwordResetRedeemedAt?: FieldPolicy<any> | FieldReadFunction<any>
+  cart?: FieldPolicy<any> | FieldReadFunction<any>;
+  cartCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  email?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
+  name?: FieldPolicy<any> | FieldReadFunction<any>;
+  orders?: FieldPolicy<any> | FieldReadFunction<any>;
+  ordersCount?: FieldPolicy<any> | FieldReadFunction<any>;
+  password?: FieldPolicy<any> | FieldReadFunction<any>;
+  passwordResetIssuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+  passwordResetRedeemedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+  passwordResetToken?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type UserAuthenticationWithPasswordFailureKeySpecifier = ('code' | 'message' | UserAuthenticationWithPasswordFailureKeySpecifier)[];
+export type UserAuthenticationWithPasswordFailureKeySpecifier = (
+  | "message"
+  | UserAuthenticationWithPasswordFailureKeySpecifier
+)[];
 export type UserAuthenticationWithPasswordFailureFieldPolicy = {
-	code?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
+  message?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type UserAuthenticationWithPasswordSuccessKeySpecifier = ('sessionToken' | 'item' | UserAuthenticationWithPasswordSuccessKeySpecifier)[];
+export type UserAuthenticationWithPasswordSuccessKeySpecifier = (
+  | "item"
+  | "sessionToken"
+  | UserAuthenticationWithPasswordSuccessKeySpecifier
+)[];
 export type UserAuthenticationWithPasswordSuccessFieldPolicy = {
-	sessionToken?: FieldPolicy<any> | FieldReadFunction<any>,
-	item?: FieldPolicy<any> | FieldReadFunction<any>
+  item?: FieldPolicy<any> | FieldReadFunction<any>;
+  sessionToken?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type ValidateUserPasswordResetTokenResultKeySpecifier = ('code' | 'message' | ValidateUserPasswordResetTokenResultKeySpecifier)[];
+export type ValidateUserPasswordResetTokenResultKeySpecifier = (
+  | "code"
+  | "message"
+  | ValidateUserPasswordResetTokenResultKeySpecifier
+)[];
 export type ValidateUserPasswordResetTokenResultFieldPolicy = {
-	code?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>
+  code?: FieldPolicy<any> | FieldReadFunction<any>;
+  message?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type _QueryMetaKeySpecifier = ('count' | _QueryMetaKeySpecifier)[];
-export type _QueryMetaFieldPolicy = {
-	count?: FieldPolicy<any> | FieldReadFunction<any>
+export type StrictTypedTypePolicies = {
+  CartItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | CartItemKeySpecifier | (() => undefined | CartItemKeySpecifier);
+    fields?: CartItemFieldPolicy;
+  };
+  CloudinaryImage_File?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | CloudinaryImage_FileKeySpecifier | (() => undefined | CloudinaryImage_FileKeySpecifier);
+    fields?: CloudinaryImage_FileFieldPolicy;
+  };
+  KeystoneAdminMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | KeystoneAdminMetaKeySpecifier | (() => undefined | KeystoneAdminMetaKeySpecifier);
+    fields?: KeystoneAdminMetaFieldPolicy;
+  };
+  KeystoneAdminUIFieldMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | KeystoneAdminUIFieldMetaKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaKeySpecifier);
+    fields?: KeystoneAdminUIFieldMetaFieldPolicy;
+  };
+  KeystoneAdminUIFieldMetaCreateView?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | KeystoneAdminUIFieldMetaCreateViewKeySpecifier
+      | (() => undefined | KeystoneAdminUIFieldMetaCreateViewKeySpecifier);
+    fields?: KeystoneAdminUIFieldMetaCreateViewFieldPolicy;
+  };
+  KeystoneAdminUIFieldMetaItemView?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | KeystoneAdminUIFieldMetaItemViewKeySpecifier
+      | (() => undefined | KeystoneAdminUIFieldMetaItemViewKeySpecifier);
+    fields?: KeystoneAdminUIFieldMetaItemViewFieldPolicy;
+  };
+  KeystoneAdminUIFieldMetaListView?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | KeystoneAdminUIFieldMetaListViewKeySpecifier
+      | (() => undefined | KeystoneAdminUIFieldMetaListViewKeySpecifier);
+    fields?: KeystoneAdminUIFieldMetaListViewFieldPolicy;
+  };
+  KeystoneAdminUIListMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | KeystoneAdminUIListMetaKeySpecifier | (() => undefined | KeystoneAdminUIListMetaKeySpecifier);
+    fields?: KeystoneAdminUIListMetaFieldPolicy;
+  };
+  KeystoneAdminUISort?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | KeystoneAdminUISortKeySpecifier | (() => undefined | KeystoneAdminUISortKeySpecifier);
+    fields?: KeystoneAdminUISortFieldPolicy;
+  };
+  KeystoneMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | KeystoneMetaKeySpecifier | (() => undefined | KeystoneMetaKeySpecifier);
+    fields?: KeystoneMetaFieldPolicy;
+  };
+  Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier);
+    fields?: MutationFieldPolicy;
+  };
+  Order?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | OrderKeySpecifier | (() => undefined | OrderKeySpecifier);
+    fields?: OrderFieldPolicy;
+  };
+  OrderItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | OrderItemKeySpecifier | (() => undefined | OrderItemKeySpecifier);
+    fields?: OrderItemFieldPolicy;
+  };
+  PasswordState?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | PasswordStateKeySpecifier | (() => undefined | PasswordStateKeySpecifier);
+    fields?: PasswordStateFieldPolicy;
+  };
+  Product?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | ProductKeySpecifier | (() => undefined | ProductKeySpecifier);
+    fields?: ProductFieldPolicy;
+  };
+  ProductImage?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | ProductImageKeySpecifier | (() => undefined | ProductImageKeySpecifier);
+    fields?: ProductImageFieldPolicy;
+  };
+  Query?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | QueryKeySpecifier | (() => undefined | QueryKeySpecifier);
+    fields?: QueryFieldPolicy;
+  };
+  RedeemUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | RedeemUserPasswordResetTokenResultKeySpecifier
+      | (() => undefined | RedeemUserPasswordResetTokenResultKeySpecifier);
+    fields?: RedeemUserPasswordResetTokenResultFieldPolicy;
+  };
+  User?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?: false | UserKeySpecifier | (() => undefined | UserKeySpecifier);
+    fields?: UserFieldPolicy;
+  };
+  UserAuthenticationWithPasswordFailure?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UserAuthenticationWithPasswordFailureKeySpecifier
+      | (() => undefined | UserAuthenticationWithPasswordFailureKeySpecifier);
+    fields?: UserAuthenticationWithPasswordFailureFieldPolicy;
+  };
+  UserAuthenticationWithPasswordSuccess?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | UserAuthenticationWithPasswordSuccessKeySpecifier
+      | (() => undefined | UserAuthenticationWithPasswordSuccessKeySpecifier);
+    fields?: UserAuthenticationWithPasswordSuccessFieldPolicy;
+  };
+  ValidateUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | ValidateUserPasswordResetTokenResultKeySpecifier
+      | (() => undefined | ValidateUserPasswordResetTokenResultKeySpecifier);
+    fields?: ValidateUserPasswordResetTokenResultFieldPolicy;
+  };
 };
-export type TypedTypePolicies = TypePolicies & {
-	CartItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CartItemKeySpecifier | (() => undefined | CartItemKeySpecifier),
-		fields?: CartItemFieldPolicy,
-	},
-	CloudinaryImage_File?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CloudinaryImage_FileKeySpecifier | (() => undefined | CloudinaryImage_FileKeySpecifier),
-		fields?: CloudinaryImage_FileFieldPolicy,
-	},
-	KeystoneAdminMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneAdminMetaKeySpecifier | (() => undefined | KeystoneAdminMetaKeySpecifier),
-		fields?: KeystoneAdminMetaFieldPolicy,
-	},
-	KeystoneAdminUIFieldMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneAdminUIFieldMetaKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaKeySpecifier),
-		fields?: KeystoneAdminUIFieldMetaFieldPolicy,
-	},
-	KeystoneAdminUIFieldMetaCreateView?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneAdminUIFieldMetaCreateViewKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaCreateViewKeySpecifier),
-		fields?: KeystoneAdminUIFieldMetaCreateViewFieldPolicy,
-	},
-	KeystoneAdminUIFieldMetaItemView?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneAdminUIFieldMetaItemViewKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaItemViewKeySpecifier),
-		fields?: KeystoneAdminUIFieldMetaItemViewFieldPolicy,
-	},
-	KeystoneAdminUIFieldMetaListView?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneAdminUIFieldMetaListViewKeySpecifier | (() => undefined | KeystoneAdminUIFieldMetaListViewKeySpecifier),
-		fields?: KeystoneAdminUIFieldMetaListViewFieldPolicy,
-	},
-	KeystoneAdminUIListMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneAdminUIListMetaKeySpecifier | (() => undefined | KeystoneAdminUIListMetaKeySpecifier),
-		fields?: KeystoneAdminUIListMetaFieldPolicy,
-	},
-	KeystoneAdminUISort?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneAdminUISortKeySpecifier | (() => undefined | KeystoneAdminUISortKeySpecifier),
-		fields?: KeystoneAdminUISortFieldPolicy,
-	},
-	KeystoneMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | KeystoneMetaKeySpecifier | (() => undefined | KeystoneMetaKeySpecifier),
-		fields?: KeystoneMetaFieldPolicy,
-	},
-	Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier),
-		fields?: MutationFieldPolicy,
-	},
-	Order?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | OrderKeySpecifier | (() => undefined | OrderKeySpecifier),
-		fields?: OrderFieldPolicy,
-	},
-	OrderItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | OrderItemKeySpecifier | (() => undefined | OrderItemKeySpecifier),
-		fields?: OrderItemFieldPolicy,
-	},
-	PasswordState?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | PasswordStateKeySpecifier | (() => undefined | PasswordStateKeySpecifier),
-		fields?: PasswordStateFieldPolicy,
-	},
-	Product?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | ProductKeySpecifier | (() => undefined | ProductKeySpecifier),
-		fields?: ProductFieldPolicy,
-	},
-	ProductImage?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | ProductImageKeySpecifier | (() => undefined | ProductImageKeySpecifier),
-		fields?: ProductImageFieldPolicy,
-	},
-	Query?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | QueryKeySpecifier | (() => undefined | QueryKeySpecifier),
-		fields?: QueryFieldPolicy,
-	},
-	RedeemUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | RedeemUserPasswordResetTokenResultKeySpecifier | (() => undefined | RedeemUserPasswordResetTokenResultKeySpecifier),
-		fields?: RedeemUserPasswordResetTokenResultFieldPolicy,
-	},
-	SendUserPasswordResetLinkResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | SendUserPasswordResetLinkResultKeySpecifier | (() => undefined | SendUserPasswordResetLinkResultKeySpecifier),
-		fields?: SendUserPasswordResetLinkResultFieldPolicy,
-	},
-	User?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | UserKeySpecifier | (() => undefined | UserKeySpecifier),
-		fields?: UserFieldPolicy,
-	},
-	UserAuthenticationWithPasswordFailure?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | UserAuthenticationWithPasswordFailureKeySpecifier | (() => undefined | UserAuthenticationWithPasswordFailureKeySpecifier),
-		fields?: UserAuthenticationWithPasswordFailureFieldPolicy,
-	},
-	UserAuthenticationWithPasswordSuccess?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | UserAuthenticationWithPasswordSuccessKeySpecifier | (() => undefined | UserAuthenticationWithPasswordSuccessKeySpecifier),
-		fields?: UserAuthenticationWithPasswordSuccessFieldPolicy,
-	},
-	ValidateUserPasswordResetTokenResult?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | ValidateUserPasswordResetTokenResultKeySpecifier | (() => undefined | ValidateUserPasswordResetTokenResultKeySpecifier),
-		fields?: ValidateUserPasswordResetTokenResultFieldPolicy,
-	},
-	_QueryMeta?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | _QueryMetaKeySpecifier | (() => undefined | _QueryMetaKeySpecifier),
-		fields?: _QueryMetaFieldPolicy,
-	}
-};
+export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies;

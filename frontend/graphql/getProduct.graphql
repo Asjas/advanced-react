@@ -1,5 +1,5 @@
 query Product($id: ID!) {
-  Product(where: { id: $id }) {
+  product(where: { id: $id }) {
     id
     name
     description

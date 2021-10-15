@@ -45,6 +45,7 @@
     "@babel/core": "7.15.8",
     "@babel/preset-env": "7.15.8",
     "@graphql-codegen/cli": "2.2.1",
+    "@graphql-codegen/near-operation-file-preset": "2.1.6",
     "@graphql-codegen/typescript": "2.2.4",
     "@graphql-codegen/typescript-apollo-client-helpers": "2.1.6",
     "@graphql-codegen/typescript-operations": "2.1.8",
@@ -83,7 +84,8 @@
             "styled-components",
             {
               "ssr": true,
-              "displayName": true
+              "displayName": true,
+              "preprocess": false
             }
           ]
         ]
@@ -97,7 +99,8 @@
             "styled-components",
             {
               "ssr": true,
-              "displayName": true
+              "displayName": true,
+              "preprocess": false
             }
           ]
         ]
@@ -118,7 +121,8 @@
             "styled-components",
             {
               "ssr": true,
-              "displayName": true
+              "displayName": true,
+              "preprocess": false
             }
           ]
         ]

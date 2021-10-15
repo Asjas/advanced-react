@@ -13,7 +13,7 @@ function Pagination({ page }: { page: number }) {
 
   if (error) return <DisplayError error={error} />;
 
-  const count = data?._allProductsMeta?.count;
+  const count = data?.productsCount;
   const pageCount = Math.ceil(count / NEXT_PUBLIC_PAGE);
 
   return (

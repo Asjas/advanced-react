@@ -12,6 +12,7 @@ const fakeItem = () => ({
   user: null,
   photo: {
     id: "abc123",
+    altText: "dogs are best",
     image: {
       publicUrlTransformed: "dog.jpg",
     },

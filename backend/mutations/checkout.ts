@@ -1,4 +1,4 @@
-import { KeystoneContext } from "@keystone-next/types";
+import { KeystoneContext } from "@keystone-next/keystone/types";
 import { Session } from "../types";
 // import { CartItemCreateInput, OrderCreateInput } from "../node_modules/.keystone/types";
 import stripeConfig from "../lib/stripe";
@@ -16,7 +16,7 @@ async function checkout(_root: unknown, { token }: Arguments, context: KeystoneC
     throw new Error("Sorry! You must be signed in to create an order!");
   }
 
-  const user = await context.lists.User.findOne({
+  const user = await context.query.User.findOne({
     where: { id: sesh.itemId },
     query: gql`
       id
@@ -72,7 +72,7 @@ async function checkout(_root: unknown, { token }: Arguments, context: KeystoneC
     return orderItem;
   });
 
-  const order = await context.db.lists.Order.createOne({
+  const order = await context.db.Order.createOne({
     data: {
       total: charge.amount,
       charge: charge.id,
@@ -81,9 +81,10 @@ async function checkout(_root: unknown, { token }: Arguments, context: KeystoneC
     },
   });
 
-  const cartItemsIds = user.cart.map((cartItem) => cartItem.id);
-  await context.lists.CartItem.deleteMany({
-    ids: cartItemsIds,
+  const cartItemIds = user.cart.map((cartItem) => cartItem.id);
+
+  await context.query.CartItem.deleteMany({
+    where: cartItemIds.map((id: string) => ({ id })),
   });
 
   return order;

@@ -1,5 +1,5 @@
 query getOrder($id: ID!) {
-  order: Order(where: { id: $id }) {
+  order(where: { id: $id }) {
     id
     charge
     total

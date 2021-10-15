@@ -1,5 +1,5 @@
 query searchProducts($searchTerm: String!) {
-  searchTerms: allProducts(where: { OR: [{ name_contains: $searchTerm }, { description_contains: $searchTerm }] }) {
+  searchTerms: products(where: { OR: [{ name: { equals: $searchTerm } }, { description: { equals: $searchTerm } }] }) {
     id
     name
     photo {

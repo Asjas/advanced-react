@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { config, createSchema } from "@keystone-next/keystone/schema";
+import { config } from "@keystone-next/keystone";
 import { createAuth } from "@keystone-next/auth";
 import { statelessSessions } from "@keystone-next/keystone/session";
 
@@ -43,9 +43,14 @@ export default withAuth(
   config({
     server: {
       cors: {
-        origin: [process.env.FRONTEND_URL],
+        origin: [process.env.FRONTEND_URL, process.env.APOLLO_STUDIO],
         credentials: true,
       },
+      healthCheck: {
+        path: "/my-health-check",
+        data: { status: "healthy" },
+      },
+      maxFileSize: 20000000,
     },
     db: process.env.DATABASE_URL
       ? {
@@ -71,22 +76,25 @@ export default withAuth(
           },
         },
     graphql: {
+      cors: {
+        origin: [process.env.FRONTEND_URL, process.env.APOLLO_STUDIO],
+        credentials: true,
+      },
       apolloConfig: {
         introspection: true,
-        playground: true,
       },
       queryLimits: {
         maxTotalResults: 100,
       },
     },
-    lists: createSchema({
+    lists: {
       User,
       Product,
       ProductImage,
       CartItem,
       OrderItem,
       Order,
-    }),
+    },
     extendGraphqlSchema,
     ui: {
       isAccessAllowed: ({ session }) => session?.data,

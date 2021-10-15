@@ -1,13 +1,24 @@
 overwrite: true
 schema: ${SCHEMA_ENDPOINT}
-documents: 'graphql/*.graphql'
+documents: "graphql/*.graphql"
+
 generates:
+  types/types.ts:
+    plugins:
+      - typescript
+  types/:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: types.ts
   types/generated-queries.ts:
     plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-react-apollo'
-      - 'typescript-apollo-client-helpers'
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      - "typescript-apollo-client-helpers"
     config:
       withRefetchFn: true
       withHooks: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write

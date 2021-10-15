@@ -17,4 +17,15 @@ describe("<Product />", () => {
     const link = screen.getByText(product.name);
     expect(link).toHaveAttribute("href", "/product/abc123");
   });
+
+  it("renders the image properly", () => {
+    render(
+      <MockedProvider>
+        <Product product={product} />
+      </MockedProvider>,
+    );
+
+    const img = screen.getByAltText(product.name);
+    expect(img).toBeInTheDocument();
+  });
 });

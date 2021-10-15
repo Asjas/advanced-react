@@ -1,13 +1,12 @@
-import { list } from "@keystone-next/keystone/schema";
-import { integer, relationship, text, virtual } from "@keystone-next/fields";
-import { schema } from "@keystone-next/types";
+import { list, graphql } from "@keystone-next/keystone";
+import { integer, relationship, text, virtual } from "@keystone-next/keystone/fields";
 import formatMoney from "../lib/formatMoney";
 
 export const Order = list({
   fields: {
     label: virtual({
-      field: schema.field({
-        type: schema.String,
+      field: graphql.field({
+        type: graphql.String,
         resolve(item) {
           return `${formatMoney((item as any).total)}`;
         },

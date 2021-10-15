@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import Product from './Product';
-import { useAllProductsQuery } from '../types/generated-queries';
+import styled from "styled-components";
+import Product from "./Product";
+import { useAllProductsQuery } from "../types/generated-queries";
 
 const NEXT_PUBLIC_PAGE = parseInt(process.env.NEXT_PUBLIC_PAGE);
 
@@ -25,7 +25,7 @@ function Products({ page }: { page: number }) {
 
   return (
     <ProductsListStyles>
-      {data.allProducts.map((product) => (
+      {data.products.map((product) => (
         <Product key={product.id} product={product} />
       ))}
     </ProductsListStyles>

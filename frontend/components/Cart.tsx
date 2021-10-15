@@ -1,14 +1,14 @@
-import styled from 'styled-components';
-import CartStyles from './styles/CartStyles';
-import Supreme from './styles/Supreme';
-import CloseButton from './styles/CloseButton';
-import calcTotalPrice from '../utils/calcTotalPrice';
-import formatMoney from '../utils/formatMoney';
-import { CartItem as CartItemType } from '../types/generated-queries';
-import { useCart } from '../hooks/Cart';
-import { useUser } from '../hooks/User';
-import RemoveFromCart from './RemoveFromCart';
-import Checkout from './Checkout';
+import styled from "styled-components";
+import CartStyles from "./styles/CartStyles";
+import Supreme from "./styles/Supreme";
+import CloseButton from "./styles/CloseButton";
+import calcTotalPrice from "../utils/calcTotalPrice";
+import formatMoney from "../utils/formatMoney";
+import { CartItem as CartItemType } from "../types/types";
+import { useCart } from "../hooks/Cart";
+import { useUser } from "../hooks/User";
+import RemoveFromCart from "./RemoveFromCart";
+import Checkout from "./Checkout";
 
 const CartItemStyles = styled.li`
   display: grid;

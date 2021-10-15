@@ -1,5 +1,5 @@
 mutation deleteProduct($id: ID!) {
-  deleteProduct(id: $id) {
+  deleteProduct(where: { id: $id }) {
     id
   }
 }

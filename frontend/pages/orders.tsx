@@ -1,11 +1,11 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import styled from 'styled-components';
-import DisplayError from '../components/ErrorMessage';
-import OrderItemStyles from '../components/styles/OrderItemStyles';
-import OrderStyles from '../components/styles/OrderStyles';
-import { Order, useAllOrdersQuery } from '../types/generated-queries';
-import formatMoney from '../utils/formatMoney';
+import Head from "next/head";
+import Link from "next/link";
+import styled from "styled-components";
+import DisplayError from "../components/ErrorMessage";
+import OrderItemStyles from "../components/styles/OrderItemStyles";
+import OrderStyles from "../components/styles/OrderStyles";
+import { Order, useAllOrdersQuery } from "../types/generated-queries";
+import formatMoney from "../utils/formatMoney";
 
 const OrderUl = styled.ul`
   display: grid;
@@ -30,20 +30,20 @@ function OrdersPage() {
         <title>Sick Fits - Orders</title>
       </Head>
       <div>
-        <h2>You have {data.allOrders.length} orders!</h2>
+        <h2>You have {data.orders.length} orders!</h2>
         <OrderUl>
-          {data.allOrders.map((order: Order) => (
+          {data.orders.map((order: Order) => (
             <OrderItemStyles>
               <Link href={`/order/${order.id}`}>
                 <a>
                   <div className="order-meta">
                     <p>
                       {countItemsInOrder(order)} Item
-                      {order.items.length > 1 ? 's' : null}
+                      {order.items.length > 1 ? "s" : null}
                     </p>
                     <p>
                       {order.items.length} Product
-                      {order.items.length > 1 ? 's' : null}
+                      {order.items.length > 1 ? "s" : null}
                     </p>
                     <p>{formatMoney(order.total)}</p>
                   </div>

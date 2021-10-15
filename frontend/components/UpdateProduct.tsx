@@ -1,17 +1,17 @@
-import { SyntheticEvent } from 'react';
-import DisplayError from './ErrorMessage';
-import Form from './styles/Form';
-import { useProductQuery, useUpdateProductMutation } from '../types/generated-queries';
-import useForm from '../utils/useForm';
+import { SyntheticEvent } from "react";
+import DisplayError from "./ErrorMessage";
+import Form from "./styles/Form";
+import { useProductQuery, useUpdateProductMutation } from "../types/generated-queries";
+import useForm from "../utils/useForm";
 
 function UpdateProduct({ id }: { id: string }) {
   const { data, loading, error } = useProductQuery({ variables: { id } });
   const [updateProduct, { data: updateData, loading: updateLoading, error: updateError }] = useUpdateProductMutation();
 
   const { inputs, handleChange, clearForm } = useForm({
-    name: data?.Product.name || '',
-    price: data?.Product.price || 0,
-    description: data?.Product.description || '',
+    name: data?.product.name || "",
+    price: data?.product.price || 0,
+    description: data?.product.description || "",
   });
 
   if (loading) return <p>Loading....</p>;
