@@ -3,7 +3,7 @@ import { integer, relationship, select, text } from "@keystone-next/keystone/fie
 
 export const Product = list({
   fields: {
-    name: text({ isRequired: true }),
+    name: text({ validation: { isRequired: true } }),
     description: text({
       ui: {
         displayMode: "textarea",
