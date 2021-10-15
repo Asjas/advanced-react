@@ -9,39 +9,15 @@
     "dev": "keystone-next dev",
     "seed-data": "keystone-next --seed-data"
   },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": 14,
-            "browsers": [
-              "last 2 chrome versions",
-              "last 2 firefox versions",
-              "last 2 safari versions",
-              "last 2 edge versions"
-            ]
-          }
-        }
-      ],
-      "@babel/preset-react",
-      "@babel/preset-typescript"
-    ]
-  },
   "dependencies": {
     "@babel/plugin-transform-runtime": "7.15.8",
     "@babel/preset-env": "7.15.8",
     "@babel/preset-react": "7.14.5",
     "@babel/preset-typescript": "7.15.0",
     "@babel/runtime": "7.15.4",
-    "@keystone-next/admin-ui": "15.0.0",
     "@keystone-next/auth": "34.0.0",
     "@keystone-next/cloudinary": "9.0.0",
-    "@keystone-next/fields": "15.0.0",
     "@keystone-next/keystone": "26.1.1",
-    "@keystone-next/types": "25.0.0",
-    "@keystonejs/server-side-graphql-client": "2.1.2",
     "dotenv": "10.0.0",
     "next": "11.1.2",
     "nodemailer": "6.7.0",
