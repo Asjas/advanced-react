@@ -1,4 +1,4 @@
-FROM node:16-lts
+FROM node:lts
 
 EXPOSE 8080
 
