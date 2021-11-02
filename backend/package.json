@@ -15,7 +15,7 @@
     "@babel/preset-react": "7.16.0",
     "@babel/preset-typescript": "7.16.0",
     "@babel/runtime": "7.16.0",
-    "@keystone-next/auth": "34.0.0",
+    "@keystone-next/auth": "35.0.0",
     "@keystone-next/cloudinary": "10.0.0",
     "@keystone-next/keystone": "26.1.1",
     "dotenv": "10.0.0",
