@@ -1,6 +1,13 @@
-// @ts-nocheck
-
 import casual from "casual";
+
+interface Overrides {
+  id?: string;
+  name?: string;
+  email?: string;
+  permissions?: string[];
+  orders?: any[];
+  cart?: any[];
+}
 
 // seed it so we get consistent results
 casual.seed(777);
@@ -21,7 +28,7 @@ const fakeItem = () => ({
   description: "dogs",
 });
 
-const fakeUser = (overrides) => ({
+const fakeUser = (overrides?: Overrides) => ({
   // __typename: 'User',
   id: "4234",
   name: casual.name,
@@ -52,7 +59,7 @@ const fakeOrder = () => ({
   user: fakeUser(),
 });
 
-const fakeCartItem = (overrides) => ({
+const fakeCartItem = (overrides?: Overrides) => ({
   __typename: "CartItem",
   id: "omg123",
   quantity: 3,
@@ -63,6 +70,8 @@ const fakeCartItem = (overrides) => ({
 
 // Fake LocalStorage
 class LocalStorageMock {
+  store: any;
+
   constructor() {
     this.store = {};
   }
@@ -71,15 +80,15 @@ class LocalStorageMock {
     this.store = {};
   }
 
-  getItem(key) {
+  getItem(key: string) {
     return this.store[key] || null;
   }
 
-  setItem(key, value) {
+  setItem(key: string, value: any) {
     this.store[key] = value.toString();
   }
 
-  removeItem(key) {
+  removeItem(key: string) {
     delete this.store[key];
   }
 }
