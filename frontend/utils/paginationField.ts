@@ -1,6 +1,6 @@
 // Buckle up folks
 
-import gql from 'graphql-tag';
+import { gql } from "@apollo/client";
 
 // We're gonna write one hell of a pagination logic
 // TODO: Convert to https://github.com/apollographql/apollo-client/blob/master/src/utilities/policies/pagination.ts#L25
@@ -13,7 +13,7 @@ export default function paginationField() {
     // skip = how many items to offset
 
     // 2. When we fire off a query, Apollo will check the cache first. Normally Apollo handles this, but we now control that with a read method
-    read(existing = [], { field, args, readField, cache }) {
+    read(existing = [], { field, args, readField, cache }: { field: any; args: any; readField: any; cache: any }) {
       const { skip, first } = args;
 
       // Read the number of items, so we can make pagination. For some reason when deleting an item, this is null the first time adn then runs two more times with the correct data?? ??!?!? ? ?? ? ? ? ? ?!?!?
@@ -43,17 +43,18 @@ export default function paginationField() {
       // It's possible that we only have 3 of the 4 items because we deleted something on the previous page, so if that is the case we need to go to the network
       if (items.length !== args.first) {
         // TODO: This breaks the last page where we might only have a few items....
-        return; // return undefined so it hits the network
+        return undefined; // return undefined so it hits the network
       }
       // 6. If there are items, return them.
       if (items.length) {
         return items;
       }
       // 7. Otherwise this function returns undefined and it will hit the network for the items, and call merge() for us
+      return undefined;
     },
 
     // 8. When items come back from the network, we need to merge them into our cache. We get the existing cache and the new incoming items. It's our job to merge them
-    merge(existing, incoming, { args, field }) {
+    merge(existing: any, incoming: any, { args, field }: { args: any; field: any }) {
       const { skip, first } = args;
 
       // 9. Take a copy of the existing array, or make a new empty one
