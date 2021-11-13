@@ -37,7 +37,7 @@ function useForm(initial: Inputs) {
       value = parseInt(value);
     }
 
-    if (type === "file") {
+    if (type === "file" && event.target.files) {
       value = event.target.files[0];
     }
 

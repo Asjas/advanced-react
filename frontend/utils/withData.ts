@@ -3,6 +3,7 @@ import { onError } from "@apollo/link-error";
 import { getDataFromTree } from "@apollo/client/react/ssr";
 import { createUploadLink } from "apollo-upload-client";
 import withApollo from "next-with-apollo";
+import type { IncomingHttpHeaders } from "http";
 import paginationField from "./paginationField";
 import { TypedTypePolicies } from "../types/generated-queries";
 
@@ -14,7 +15,7 @@ const allProductsTypePolicy: TypedTypePolicies = {
   allProducts: paginationField(),
 };
 
-function createClient({ headers, initialState }) {
+function createClient({ headers, initialState }: { headers?: IncomingHttpHeaders | undefined; initialState?: any }) {
   return new ApolloClient({
     ssrMode: true,
     link: ApolloLink.from([
