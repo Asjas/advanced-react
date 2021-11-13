@@ -52,7 +52,7 @@
     "@testing-library/jest-dom": "5.15.0",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
-    "@types/apollo-upload-client": "^14.1.0",
+    "@types/apollo-upload-client": "14.1.0",
     "@types/dotenv": "8.2.0",
     "@types/jest": "27.0.2",
     "@types/lodash.debounce": "4.0.6",
