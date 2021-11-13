@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode } from "react";
 
 type CartContext = {
   cartOpen: boolean;
@@ -7,7 +7,7 @@ type CartContext = {
   closeCart: () => void;
 };
 
-export const LocalStateContext = createContext<CartContext>(null);
+export const LocalStateContext = createContext<CartContext | null>(null);
 
 function CartStateProvider({ children }: { children: ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
