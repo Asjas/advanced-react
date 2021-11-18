@@ -54,7 +54,7 @@
     "@testing-library/user-event": "13.5.0",
     "@types/apollo-upload-client": "14.1.0",
     "@types/dotenv": "8.2.0",
-    "@types/jest": "27.0.2",
+    "@types/jest": "27.0.3",
     "@types/lodash.debounce": "4.0.6",
     "@types/nprogress": "0.2.0",
     "@types/react": "17.0.35",
