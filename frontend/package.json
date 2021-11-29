@@ -22,7 +22,7 @@
     "@stripe/stripe-js": "1.21.1",
     "apollo-upload-client": "16.0.0",
     "babel-core": "7.0.0-bridge.0",
-    "babel-plugin-styled-components": "2.0.1",
+    "babel-plugin-styled-components": "2.0.2",
     "date-fns": "2.26.0",
     "dotenv": "10.0.0",
     "downshift": "6.1.7",
