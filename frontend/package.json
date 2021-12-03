@@ -49,7 +49,7 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "2.1.8",
     "@graphql-codegen/typescript-operations": "2.2.1",
     "@graphql-codegen/typescript-react-apollo": "3.2.2",
-    "@testing-library/jest-dom": "5.15.1",
+    "@testing-library/jest-dom": "5.16.0",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
     "@types/apollo-upload-client": "14.1.0",
