@@ -41,8 +41,8 @@
   },
   "devDependencies": {
     "@apollo/react-testing": "4.0.0",
-    "@babel/core": "7.16.0",
-    "@babel/preset-env": "7.16.4",
+    "@babel/core": "7.16.5",
+    "@babel/preset-env": "7.16.5",
     "@graphql-codegen/cli": "2.3.0",
     "@graphql-codegen/near-operation-file-preset": "2.2.2",
     "@graphql-codegen/typescript": "2.4.1",
