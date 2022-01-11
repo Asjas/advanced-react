@@ -18,7 +18,7 @@
     "@keystone-next/auth": "37.0.0",
     "@keystone-next/cloudinary": "12.0.0",
     "@keystone-next/keystone": "29.0.0",
-    "dotenv": "10.0.0",
+    "dotenv": "11.0.0",
     "next": "12.0.7",
     "nodemailer": "6.7.2",
     "react": "17.0.2",
