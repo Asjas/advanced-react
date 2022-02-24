@@ -27,7 +27,7 @@
     "typescript": "4.5.5"
   },
   "devDependencies": {
-    "@types/node": "16.11.25",
+    "@types/node": "16.11.26",
     "@types/nodemailer": "6.4.4",
     "eslint-config-asjas": "1.0.0"
   }
