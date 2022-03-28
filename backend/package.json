@@ -29,6 +29,6 @@
   "devDependencies": {
     "@types/node": "16.11.26",
     "@types/nodemailer": "6.4.4",
-    "eslint-config-asjas": "2.0.1"
+    "eslint-config-asjas": "2.0.2"
   }
 }
