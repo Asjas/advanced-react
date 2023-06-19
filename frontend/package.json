@@ -25,7 +25,7 @@
     "babel-plugin-styled-components": "2.0.6",
     "date-fns": "2.28.0",
     "dotenv": "16.0.0",
-    "downshift": "6.1.7",
+    "downshift": "6.1.12",
     "graphql": "16.3.0",
     "graphql-tag": "2.12.6",
     "graphql-upload": "13.0.0",
