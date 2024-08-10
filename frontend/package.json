@@ -35,7 +35,7 @@
     "nprogress": "0.2.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-transition-group": "4.4.2",
+    "react-transition-group": "4.4.5",
     "styled-components": "5.3.5",
     "waait": "1.0.5"
   },
@@ -59,7 +59,7 @@
     "@types/nprogress": "0.2.0",
     "@types/react": "18.0.1",
     "@types/react-dom": "17.0.14",
-    "@types/react-transition-group": "4.4.4",
+    "@types/react-transition-group": "4.4.11",
     "@types/styled-components": "5.1.24",
     "babel-jest": "27.5.1",
     "casual": "1.6.2",
